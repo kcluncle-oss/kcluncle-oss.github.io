@@ -109,7 +109,7 @@
             border-bottom: 3px solid var(--accent);
         }
 
-        .service-content { padding: 30px; flex-grow: 1; }
+        .service-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
         .service-card h3 { font-size: 1.5rem; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 10px; }
         .service-card ul li { margin-bottom: 12px; color: var(--text-sub); display: flex; align-items: start; gap: 10px; font-size: 0.95rem; }
         .service-card i { color: var(--accent); }
@@ -154,30 +154,28 @@
 
         /* --- 頁尾 --- */
         footer { 
-            text-align: center; padding: 40px; background: #050505;
+            text-align: center; padding: 50px 20px; background: #050505;
             border-top: 1px solid #222; color: #555; font-size: 0.9rem; 
         }
+        .footer-qr {
+            margin-bottom: 30px;
+            display: inline-block;
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        .footer-qr img { width: 140px; border-radius: 5px; }
+        .footer-qr p { color: var(--accent); margin-bottom: 10px; font-size: 1rem; font-weight: bold; }
 
-        /* --- RWD 手機版強制修正 (關鍵修復) --- */
+        /* --- RWD 手機版強制修正 --- */
         @media (max-width: 768px) {
-            /* 1. 調整區塊邊距，讓內容不要貼齊邊緣 */
             .section { padding: 60px 5%; }
-            
-            /* 2. 強制單欄顯示，防止表格右移 */
             .services-grid { grid-template-columns: 1fr; }
             .portfolio-grid { grid-template-columns: 1fr; }
-            
-            /* 3. 修復關於我們區塊：內距縮小，防止撐爆畫面 */
             .about-studio { flex-direction: column; padding: 30px 20px; gap: 40px; }
-            
-            /* 4. 修復創辦人小卡：解除寬度限制，改為 100% */
-            .founder-card { 
-                min-width: auto; /* 關鍵：解除 280px 限制 */
-                width: 100%;     /* 關鍵：強制適應螢幕 */
-                padding: 25px; 
-            }
+            .founder-card { min-width: auto; width: 100%; padding: 25px; }
             .studio-story { min-width: auto; width: 100%; }
-            
             .hero h1 { font-size: 2.8rem; }
             .hero .subtitle { font-size: 1rem; }
             nav { display: none; }
@@ -243,6 +241,11 @@
                         <li><i class="fa-solid fa-check"></i> <b>主動導購：</b>對話中精準推薦，提升轉單率。</li>
                         <li><i class="fa-solid fa-check"></i> <b>全天候無休：</b>解決夜間與假日的人力斷層。</li>
                     </ul>
+                    <div style="text-align:center; margin-top: auto; padding-top: 20px;">
+                        <a href="https://lin.ee/PfwQdP7" target="_blank">
+                            <img src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png" alt="加入好友" height="36" border="0">
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -304,7 +307,7 @@
                 <div class="founder-title">Founder & Chief Consultant</div>
                 <div class="founder-name">K.C. (Peter)</div>
                 <div class="founder-desc">
-                    全方位行銷顧問<br>AI 商業落地專家<br>前嘉毅國際 執行副總
+                    全方位行銷顧問<br>AI 商業落地專家<br>硬直播執行長 (inLive CEO)
                 </div>
                 <div class="founder-stats">
                     <div class="f-stat"><b>20+</b><span>年資歷</span></div>
@@ -315,6 +318,11 @@
     </section>
 
     <footer id="contact">
+        <div class="footer-qr">
+            <p>立即體驗 AI 智能客服</p>
+            <img src="https://qr-official.line.me/gs/M_178maxda_BW.png?oat_content=qr" alt="Line@ QR Code">
+        </div>
+        
         <p>Contact: brand.decoderai@gmail.com</p>
         <p>&copy; 2026 Brand Decoder Studio. All Rights Reserved.</p>
     </footer>
