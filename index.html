@@ -86,10 +86,11 @@
         .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 60px; }
         .section-title span { border-bottom: 3px solid var(--accent); padding-bottom: 10px; display: inline-block; }
 
-        /* --- 三大核心業務 (修正版: 3欄位) --- */
+        /* --- 三大核心業務 --- */
         .services-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* 調整寬度適應三個 */
+            /* 修正點：將最小寬度改為 280px，適應小螢幕 */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 30px; 
         }
         .service-card {
@@ -100,7 +101,6 @@
         .service-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
         .service-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 3px solid var(--accent); }
-        /* 替代圖片的圖示區塊 */
         .service-icon-box {
             width: 100%; height: 200px; 
             display: flex; align-items: center; justify-content: center; 
@@ -113,7 +113,7 @@
         .service-card i { color: var(--accent); }
 
         /* --- 精選作品 --- */
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 40px; }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
         .video-card {
             background: #111; border-radius: 8px; overflow: hidden;
             border: 1px solid rgba(255,255,255,0.1);
@@ -156,8 +156,15 @@
             border-top: 1px solid #222; color: #555; font-size: 0.9rem; 
         }
 
-        /* --- RWD --- */
+        /* --- RWD 手機版強制修正 --- */
         @media (max-width: 768px) {
+            /* 修正點：縮小手機版邊距，讓內容有更多空間 */
+            .section { padding: 60px 5%; }
+            
+            /* 修正點：手機版強制變回單欄，防止表格右移 */
+            .services-grid { grid-template-columns: 1fr; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            
             .hero h1 { font-size: 2.8rem; }
             .hero .subtitle { font-size: 1rem; }
             nav { display: none; }
@@ -296,7 +303,7 @@
     </section>
 
     <footer id="contact">
-        <p>Contact: peterla0412@gmail.com</p>
+        <p>Contact: brand.decoderai@gmail.com</p>
         <p>&copy; 2026 Brand Decoder Studio. All Rights Reserved.</p>
     </footer>
 
