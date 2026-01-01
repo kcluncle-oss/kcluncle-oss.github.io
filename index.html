@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>品牌解碼室 | Brand Decoder - AI 視覺賦能專家</title>
+    
+    <link rel="icon" href="logo02.JPG" type="image/jpeg">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* --- 全域設定：黑金極簡奢華風 --- */
@@ -89,7 +92,6 @@
         /* --- 三大核心業務 --- */
         .services-grid { 
             display: grid; 
-            /* 修正點：將最小寬度改為 280px，適應小螢幕 */
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
             gap: 30px; 
         }
@@ -156,19 +158,29 @@
             border-top: 1px solid #222; color: #555; font-size: 0.9rem; 
         }
 
-        /* --- RWD 手機版強制修正 --- */
+        /* --- RWD 手機版強制修正 (關鍵修復) --- */
         @media (max-width: 768px) {
-            /* 修正點：縮小手機版邊距，讓內容有更多空間 */
+            /* 1. 調整區塊邊距，讓內容不要貼齊邊緣 */
             .section { padding: 60px 5%; }
             
-            /* 修正點：手機版強制變回單欄，防止表格右移 */
+            /* 2. 強制單欄顯示，防止表格右移 */
             .services-grid { grid-template-columns: 1fr; }
             .portfolio-grid { grid-template-columns: 1fr; }
+            
+            /* 3. 修復關於我們區塊：內距縮小，防止撐爆畫面 */
+            .about-studio { flex-direction: column; padding: 30px 20px; gap: 40px; }
+            
+            /* 4. 修復創辦人小卡：解除寬度限制，改為 100% */
+            .founder-card { 
+                min-width: auto; /* 關鍵：解除 280px 限制 */
+                width: 100%;     /* 關鍵：強制適應螢幕 */
+                padding: 25px; 
+            }
+            .studio-story { min-width: auto; width: 100%; }
             
             .hero h1 { font-size: 2.8rem; }
             .hero .subtitle { font-size: 1rem; }
             nav { display: none; }
-            .about-studio { flex-direction: column; padding: 30px; }
             .video-bg { display: none; } 
             .hero { background: #111; }
         }
