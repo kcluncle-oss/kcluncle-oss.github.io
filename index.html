@@ -3,214 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K.C. Peter | AI 商業落地顧問 & 品牌解碼師</title>
+    <title>品牌解碼室 | Brand Decoder - AI 視覺賦能專家</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* --- 全域設定：黑金極簡奢華風 --- */
         :root {
             --bg-color: #0a0a0a;
-            --card-bg: #141414;
+            --card-bg: rgba(20, 20, 20, 0.9);
             --text-main: #ffffff;
-            --text-sub: #a0a0a0;
+            --text-sub: #b0b0b0;
             --accent: #d4af37; /* 香檳金 */
-            --accent-glow: rgba(212, 175, 55, 0.3);
+            --accent-glow: rgba(212, 175, 55, 0.4);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, 'Microsoft JhengHei', sans-serif; }
         body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         ul { list-style: none; }
 
         /* --- 導覽列 --- */
         header {
-            padding: 20px 5%;
+            padding: 15px 5%;
             display: flex; justify-content: space-between; align-items: center;
             position: fixed; width: 100%; top: 0; z-index: 1000;
-            background: rgba(10, 10, 10, 0.9); backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; }
-        .logo span { color: var(--accent); }
+        
+        .logo-container { display: flex; align-items: center; gap: 10px; }
+        .logo-img {
+            height: 45px; border-radius: 50%; border: 2px solid var(--accent);
+        }
+        .logo-text { font-size: 1.2rem; font-weight: bold; color: #fff; letter-spacing: 1px;}
+        .logo-text span { color: var(--accent); }
+
         nav ul { display: flex; gap: 30px; }
         nav a:hover { color: var(--accent); }
 
         /* --- 主視覺 Hero Section --- */
         .hero {
-            min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 100px 20px;
-            background: radial-gradient(circle at 50% 30%, #222 0%, #0a0a0a 70%);
+            position: relative; height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 0 20px; overflow: hidden;
         }
+        .video-bg {
+            position: absolute; top: 50%; left: 50%;
+            min-width: 100%; min-height: 100%; width: auto; height: auto;
+            transform: translate(-50%, -50%); z-index: -2;
+            object-fit: cover; opacity: 0.5; filter: contrast(1.1);
+        }
+        .overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: -1;
+        }
+        
         .hero h1 {
-            font-size: 3.5rem; margin-bottom: 20px; line-height: 1.2;
-            background: linear-gradient(to right, #fff, #d4af37);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: 4rem; margin-bottom: 10px; line-height: 1.1;
+            text-shadow: 0 0 30px rgba(0,0,0,1);
+            font-weight: 800; letter-spacing: 2px;
+            color: #fff;
         }
-        .hero .subtitle { font-size: 1.5rem; color: var(--accent); margin-bottom: 20px; font-weight: 300; }
-        .hero p { font-size: 1.1rem; color: var(--text-sub); max-width: 700px; margin-bottom: 40px; }
+        .hero h1 span { color: var(--accent); }
+        
+        .hero .subtitle { 
+            font-size: 1.5rem; color: #ddd; margin-bottom: 30px; font-weight: 300; 
+            letter-spacing: 5px; text-transform: uppercase;
+            border-top: 1px solid var(--accent);
+            border-bottom: 1px solid var(--accent);
+            padding: 10px 20px;
+            background: rgba(0,0,0,0.3);
+        }
         
         .btn {
             padding: 15px 40px; border: 1px solid var(--accent); color: var(--accent);
-            border-radius: 50px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;
+            border-radius: 2px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase;
+            background: rgba(0,0,0,0.8); transition: 0.4s;
         }
-        .btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px var(--accent-glow); }
+        .btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent-glow); }
 
-        /* --- 通用區塊設定 --- */
-        .section { padding: 100px 10%; }
-        .section-title {
-            text-align: center; font-size: 2.2rem; margin-bottom: 60px;
-        }
-        .section-title span { border-bottom: 3px solid var(--accent); padding-bottom: 10px; }
+        /* --- 通用區塊 --- */
+        .section { padding: 100px 10%; position: relative; z-index: 1; }
+        .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 60px; }
+        .section-title span { border-bottom: 3px solid var(--accent); padding-bottom: 10px; display: inline-block; }
 
-        /* --- 核心服務 (Services) - 重點新增區塊 --- */
-        .services-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px;
+        /* --- 三大核心業務 (修正版: 3欄位) --- */
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* 調整寬度適應三個 */
+            gap: 30px; 
         }
         .service-card {
-            background: var(--card-bg); padding: 40px; border-radius: 15px;
-            border: 1px solid rgba(255,255,255,0.05); position: relative; overflow: hidden;
+            background: var(--card-bg); border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1); overflow: hidden; transition: 0.3s;
+            display: flex; flex-direction: column;
         }
-        .service-card::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent);
+        .service-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .service-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 3px solid var(--accent); }
+        /* 替代圖片的圖示區塊 */
+        .service-icon-box {
+            width: 100%; height: 200px; 
+            display: flex; align-items: center; justify-content: center; 
+            border-bottom: 3px solid var(--accent);
         }
-        .service-card h3 { font-size: 1.8rem; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 10px; }
-        .service-card h3 i { color: var(--accent); }
-        .service-card ul { margin-top: 20px; }
-        .service-card li { margin-bottom: 15px; color: var(--text-sub); display: flex; align-items: start; gap: 10px; }
-        .service-card li i { color: var(--accent); margin-top: 5px; }
 
-        /* --- 關於顧問 (About) --- */
-        .about-container {
-            display: flex; gap: 50px; align-items: center; flex-wrap: wrap;
-            background: #111; padding: 50px; border-radius: 20px;
-        }
-        .about-text h3 { color: var(--accent); margin-bottom: 15px; font-size: 1.5rem; }
-        .stats {
-            display: flex; gap: 40px; margin-top: 30px;
-        }
-        .stat-item h4 { font-size: 2.5rem; color: #fff; font-weight: bold; }
-        .stat-item p { color: var(--text-sub); font-size: 0.9rem; }
+        .service-content { padding: 30px; flex-grow: 1; }
+        .service-card h3 { font-size: 1.5rem; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 10px; }
+        .service-card ul li { margin-bottom: 12px; color: var(--text-sub); display: flex; align-items: start; gap: 10px; font-size: 0.95rem; }
+        .service-card i { color: var(--accent); }
 
-        /* --- 實戰經歷 (Experience) --- */
-        .exp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .exp-card {
-            padding: 30px; border-left: 1px solid #333; transition: 0.3s;
+        /* --- 精選作品 --- */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 40px; }
+        .video-card {
+            background: #111; border-radius: 8px; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        .exp-card:hover { border-left: 3px solid var(--accent); background: rgba(255,255,255,0.02); }
-        .exp-card h4 { font-size: 1.2rem; color: #fff; margin-bottom: 5px; }
-        .exp-card .company { color: var(--accent); font-size: 0.9rem; margin-bottom: 15px; display: block; }
+        .video-container {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+        }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .video-info { padding: 20px; background: #1a1a1a; }
+        .video-info h4 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
+        .video-info p { color: var(--accent); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- 關於品牌解碼室 --- */
+        .about-studio {
+            background: linear-gradient(145deg, #111, #1a1a1a);
+            padding: 60px; border-radius: 10px;
+            border-left: 5px solid var(--accent);
+            display: flex; gap: 60px; flex-wrap: wrap; align-items: center;
+        }
+        .studio-story { flex: 2; min-width: 300px; }
+        .studio-story h3 { font-size: 2rem; margin-bottom: 20px; color: #fff; }
+        .studio-story p { margin-bottom: 20px; font-size: 1.05rem; color: #ccc; }
+        
+        .founder-card {
+            flex: 1; min-width: 280px;
+            background: rgba(0,0,0,0.3); padding: 30px; border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+        }
+        .founder-title { color: var(--accent); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+        .founder-name { font-size: 1.4rem; font-weight: bold; color: #fff; margin-bottom: 15px; }
+        .founder-desc { font-size: 0.9rem; color: #999; line-height: 1.5; margin-bottom: 20px; }
+        .founder-stats { display: flex; gap: 20px; justify-content: center; border-top: 1px solid #333; padding-top: 15px; width: 100%; }
+        .f-stat b { display: block; color: #fff; font-size: 1.2rem; }
+        .f-stat span { font-size: 0.8rem; color: #666; }
 
         /* --- 頁尾 --- */
-        footer {
-            text-align: center; padding: 50px; border-top: 1px solid #222; color: #666; font-size: 0.9rem;
+        footer { 
+            text-align: center; padding: 40px; background: #050505;
+            border-top: 1px solid #222; color: #555; font-size: 0.9rem; 
         }
 
         /* --- RWD --- */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
+            .hero h1 { font-size: 2.8rem; }
+            .hero .subtitle { font-size: 1rem; }
             nav { display: none; }
-            .stats { flex-direction: column; gap: 20px; }
+            .about-studio { flex-direction: column; padding: 30px; }
+            .video-bg { display: none; } 
+            .hero { background: #111; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">K.C. <span>Peter</span></div>
+        <div class="logo-container">
+            <img src="logo02.JPG" alt="Logo" class="logo-img">
+            <div class="logo-text">BRAND <span>DECODER</span></div>
+        </div>
         <nav>
             <ul>
-                <li><a href="#services">核心服務</a></li>
-                <li><a href="#about">關於顧問</a></li>
-                <li><a href="#experience">實戰經歷</a></li>
-                <li><a href="#contact">聯絡我</a></li>
+                <li><a href="#services">三大業務</a></li>
+                <li><a href="#portfolio">精選案例</a></li>
+                <li><a href="#about">關於我們</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="hero">
-        <div class="subtitle">Visual Poverty Solution</div>
-        <h1>拒絕視覺貧窮<br>打造品牌溢價</h1>
-        <p>運用生成式 AI 技術，為傳統產業注入新靈魂。<br>不只是工具的導入，更是商業模式的維度升級。</p>
-        <a href="#services" class="btn">探索解決方案</a>
+        <video autoplay muted loop playsinline class="video-bg">
+            <source src="Yt_Start.mp4" type="video/mp4">
+        </video>
+        <div class="overlay"></div>
+
+        <h1>BRAND <span>DECODER</span></h1>
+        <div class="subtitle">Image Enablement x Smart CS x Marketing Strategy</div>
+        <p style="margin-bottom: 40px; max-width: 600px; color: #ccc;">整合 AI 影像、智能客服與商業策略。<br>一站式解決方案，為企業打造獲利閉環。</p>
+        <a href="#services" class="btn">探索服務</a>
     </section>
 
     <section id="services" class="section">
-        <div class="section-title"><span>AI 賦能解決方案</span></div>
+        <div class="section-title"><span>三大核心業務</span></div>
         <div class="services-grid">
             
             <div class="service-card">
-                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> 品牌解碼室</h3>
-                <p>針對傳產數位轉型痛點，透過 AI 深度解構品牌 DNA，將抽象的品牌理念轉化為具體的「高質感視覺語言」。</p>
-                <ul>
-                    <li><i class="fa-solid fa-check"></i> <b>視覺賦能：</b>解決素材質感不足問題，提升品牌定價權。</li>
-                    <li><i class="fa-solid fa-check"></i> <b>AI 廣告素材生成：</b>運用 Veo/Midjourney 產出 4A 廣告級素材。</li>
-                    <li><i class="fa-solid fa-check"></i> <b>低成本高效率：</b>大幅降低傳統拍攝成本，縮短製作週期。</li>
-                </ul>
+                <img src="BD_BG01_1118x364.png" alt="Brand Decoder Banner" class="service-img">
+                <div class="service-content">
+                    <h3><i class="fa-solid fa-wand-magic-sparkles"></i> AI 影像賦能</h3>
+                    <p>解決「視覺貧窮」，運用 Veo 與 GenAI 技術，產出 4A 廣告級視覺資產。</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> <b>品牌解碼：</b>深度轉化品牌 DNA 為視覺語言。</li>
+                        <li><i class="fa-solid fa-check"></i> <b>降本增效：</b>縮短 70% 製作週期。</li>
+                        <li><i class="fa-solid fa-check"></i> <b>高規素材：</b>打造具備溢價能力的品牌形象。</li>
+                    </ul>
+                </div>
             </div>
 
             <div class="service-card">
-                <h3><i class="fa-solid fa-robot"></i> 全球最強智能客服</h3>
-                <p>不只是聊天機器人，而是具備「導購能力」與「企業大腦」的 24/7 超級業務員。</p>
-                <ul>
-                    <li><i class="fa-solid fa-check"></i> <b>快速訓練：</b>可匯入企業專屬知識庫，幾分鐘內學會產品知識。</li>
-                    <li><i class="fa-solid fa-check"></i> <b>精準導購：</b>在對話中主動推薦商品，將流量轉化為訂單。</li>
-                    <li><i class="fa-solid fa-check"></i> <b>全天候服務：</b>7/24 無休，解決夜間客訴與諮詢斷層。</li>
-                    <li><i class="fa-solid fa-check"></i> <b>可調適 Persona：</b>自訂回覆口吻（專業/親切/幽默）與專業度比例。</li>
-                </ul>
+                <div class="service-icon-box" style="background:linear-gradient(135deg, #1e1e1e, #000);">
+                    <i class="fa-solid fa-robot" style="font-size:4rem; color:#d4af37; opacity:0.8;"></i>
+                </div>
+                <div class="service-content">
+                    <h3><i class="fa-solid fa-headset"></i> 智能客服系統</h3>
+                    <p>全球最強 AI 客服，具備「導購大腦」的 24/7 超級業務員。</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> <b>快速訓練：</b>匯入企業知識庫，秒變產品專家。</li>
+                        <li><i class="fa-solid fa-check"></i> <b>主動導購：</b>對話中精準推薦，提升轉單率。</li>
+                        <li><i class="fa-solid fa-check"></i> <b>全天候無休：</b>解決夜間與假日的人力斷層。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon-box" style="background:linear-gradient(135deg, #0a0a0a, #222);">
+                    <i class="fa-solid fa-chart-line" style="font-size:4rem; color:#d4af37; opacity:0.8;"></i>
+                </div>
+                <div class="service-content">
+                    <h3><i class="fa-solid fa-chess-knight"></i> 全方位行銷顧問</h3>
+                    <p>20 年電商實戰經驗，從策略端協助企業實現數位轉型與營收增長。</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check"></i> <b>OMO 佈局：</b>虛實整合，打通線上線下通路。</li>
+                        <li><i class="fa-solid fa-check"></i> <b>直播變現：</b>建構直播銷售體系與 KOL 媒合。</li>
+                        <li><i class="fa-solid fa-check"></i> <b>成效優化：</b>曾創造 150% 營收增長的實戰策略。</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="portfolio" class="section" style="background: #0f0f0f;">
+        <div class="section-title"><span>實戰案例展示</span></div>
+        <div class="portfolio-grid">
+            
+            <div class="video-card">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/zv4eaGMdVck" title="Korean Cheerleader" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <p>AI Motion Capture</p>
+                    <h4>動態影像生成：韓國啦啦隊</h4>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/3NR9cll28bM" title="Gogoro Project" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="video-info">
+                    <p>Brand Commercial</p>
+                    <h4>品牌形象專案：Gogoro</h4>
+                </div>
             </div>
 
         </div>
     </section>
 
     <section id="about" class="section">
-        <div class="about-container">
-            <img src="avatar.jpg" alt="K.C. Peter 專業形象照" class="avatar">
-            <div class="about-text">
-                <h3>資深電商操盤手 / AI 商業顧問</h3>
-                <p>我是林國宸 (Peter)，擁有超過 20 年跨領域實戰經驗。從早期的社群平台經營（RC語音、酷栗科技）到現今的 AI 商業落地，我始終專注於一件事：「如何用新技術變現」。</p>
-                <p>現致力於協助企業導入 Google Veo、Gemini 等生成式 AI 工具，優化工作流並解決商業痛點。</p>
-                
-                <div class="stats">
-                    <div class="stat-item">
-                        <h4>20+</h4>
-                        <p>年資歷</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>150%</h4>
-                        <p>營收增長實績</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>40%</h4>
-                        <p>工時節省 (AI導入)</p>
-                    </div>
+        <div class="about-studio">
+            <div class="studio-story">
+                <h3>品牌解碼室：商業影像的建築師</h3>
+                <p>在 AI 時代，技術不是門檻，<b>「美學」與「商業邏輯」</b>才是變現的關鍵。我們提供從<b>「影像製作、客服轉單到行銷策略」</b>的一站式解決方案。</p>
+                <p>品牌解碼室 (Brand Decoder) 成立的初衷，是為了打破傳統產業「視覺貧窮」與「數位轉型困難」的僵局。我們不只是工具的操作者，我們是您在 AI 浪潮中的戰略夥伴。</p>
+                <p style="color:var(--accent); font-weight:bold;">科技是手段，變現才是真理。</p>
+            </div>
+
+            <div class="founder-card">
+                <div class="founder-title">Founder & Chief Consultant</div>
+                <div class="founder-name">K.C. (Peter)</div>
+                <div class="founder-desc">
+                    全方位行銷顧問<br>AI 商業落地專家<br>前嘉毅國際 執行副總
+                </div>
+                <div class="founder-stats">
+                    <div class="f-stat"><b>20+</b><span>年資歷</span></div>
+                    <div class="f-stat"><b>150%</b><span>營收增長</span></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="experience" class="section">
-        <div class="section-title"><span>實戰軌跡</span></div>
-        <div class="exp-grid">
-            <div class="exp-card">
-                <h4>AI 視覺轉型顧問</h4>
-                <span class="company">現任 | 自由顧問</span>
-                <p>與頂尖媒體代理商（如貝立德 Dentsu X）合作，導入 AI 生成素材工作流，產出符合商業標準的高品質廣告。</p>
-            </div>
-            <div class="exp-card">
-                <h4>執行副總</h4>
-                <span class="company">嘉毅國際 (2015-2023)</span>
-                <p>統籌全通路電商佈局，建立直播銷售體系與 KOL 經紀團隊，推動品牌營收年增長 150%。</p>
-            </div>
-            <div class="exp-card">
-                <h4>經營管理主管</h4>
-                <span class="company">酷栗科技 / 奇斯娛樂</span>
-                <p>主導 RC 語音社群行銷，創下同時在線 90 萬人紀錄；發掘並簽約網路紅人，策劃大型導購直播。</p>
-            </div>
-        </div>
-    </section>
-
     <footer id="contact">
-        <p>聯絡顧問：peterla0412@gmail.com</p>
-        <p>© 2026 K.C. Peter. Powered by MSI Ultra 7 & Google Gemini.</p>
+        <p>Contact: peterla0412@gmail.com</p>
+        <p>&copy; 2026 Brand Decoder Studio. All Rights Reserved.</p>
     </footer>
 
 </body>
