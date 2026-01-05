@@ -6,6 +6,8 @@
     <title>品牌解碼室 | Brand Decoder - AI 賦能專家</title>
     
     <link rel="icon" href="icon_01.png" type="image/png">
+    
+    <!-- 引入 Font Awesome 圖標庫 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -103,7 +105,7 @@
         .service-card ul li { margin-bottom: 12px; color: var(--text-sub); display: flex; align-items: start; gap: 10px; font-size: 0.95rem; }
         .service-card i { color: var(--accent); }
 
-        /* --- NEW: AI SaaS 功能展示區 (新增區塊) --- */
+        /* --- AI SaaS 功能展示區 --- */
         .saas-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
         .feature-box {
             background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 10px;
@@ -114,7 +116,7 @@
         .feature-box h4 { font-size: 1.2rem; margin-bottom: 10px; color: #fff; }
         .feature-box p { font-size: 0.9rem; color: var(--text-sub); }
 
-        /* --- NEW: 聊天室模擬 (Demo) --- */
+        /* --- 聊天室模擬 (Demo) --- */
         .chat-demo-container {
             display: flex; justify-content: center; margin-top: 60px;
         }
@@ -133,23 +135,102 @@
         .card-body { padding: 10px; }
         .card-btn { display: block; background: var(--line-green); color: white; text-align: center; padding: 8px; margin: 10px 10px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; }
 
-        /* --- NEW: 價格方案 --- */
-        .pricing-card {
+        /* --- 價格方案 Pricing (雙欄版) --- */
+        .pricing-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .price-card {
+            flex: 1;
+            min-width: 300px;
             background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
-            border: 2px solid var(--accent); border-radius: 15px;
-            padding: 40px; text-align: center; max-width: 500px; margin: 0 auto;
-            position: relative; overflow: hidden;
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
         }
-        .pricing-tag {
-            background: var(--accent); color: #000; padding: 5px 20px;
-            position: absolute; top: 20px; right: -30px; transform: rotate(45deg);
-            font-weight: bold; width: 120px; font-size: 0.8rem;
+
+        /* 旗艦版特效 */
+        .price-card.premium {
+            border: 2px solid var(--accent);
+            transform: scale(1.05);
+            background: linear-gradient(145deg, #222, #0f0f0f);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+            z-index: 2;
         }
-        .price-val { font-size: 3rem; color: #fff; font-weight: bold; margin: 20px 0; }
-        .price-sub { font-size: 1rem; color: var(--text-sub); }
-        .features-list { text-align: left; margin: 30px 0; }
-        .features-list li { margin-bottom: 10px; color: #ccc; border-bottom: 1px solid #333; padding-bottom: 5px; }
-        .features-list i { color: var(--accent); margin-right: 10px; }
+
+        .price-card:hover { transform: translateY(-5px); }
+        .price-card.premium:hover { transform: scale(1.05) translateY(-5px); }
+
+        .plan-title { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+        .plan-title.gold { color: var(--accent); }
+        
+        .price-tag {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fff;
+            margin: 20px 0 5px 0;
+        }
+        .price-tag span { font-size: 1rem; color: #888; font-weight: normal; }
+        
+        .yearly-save {
+            color: var(--line-green);
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            background: rgba(6, 199, 85, 0.1);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .features-list {
+            text-align: left;
+            margin-bottom: 30px;
+            flex-grow: 1; /* 讓按鈕對齊底部 */
+        }
+        .features-list li {
+            margin-bottom: 12px;
+            color: #ccc;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+        }
+        .features-list i {
+            color: var(--accent);
+            margin-right: 10px;
+            margin-top: 4px;
+        }
+        .features-list .plus-feature {
+            color: #fff;
+            font-weight: bold;
+            border-bottom: 1px dashed #555;
+            padding-bottom: 2px;
+        }
+
+        /* 標籤 */
+        .badge {
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: var(--accent);
+            color: #000;
+            width: 120px;
+            padding: 5px 0;
+            transform: rotate(45deg);
+            font-weight: bold;
+            font-size: 0.8rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
 
         /* --- 精選作品 --- */
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
@@ -181,10 +262,13 @@
         .footer-qr img { width: 140px; border-radius: 5px; }
         .footer-qr p { color: var(--accent); margin-bottom: 10px; font-size: 1rem; font-weight: bold; }
 
-        /* --- RWD --- */
+        /* --- RWD 手機版強制修正 --- */
         @media (max-width: 768px) {
             .section { padding: 60px 5%; }
             .services-grid, .portfolio-grid, .saas-features { grid-template-columns: 1fr; }
+            .pricing-container { flex-direction: column; align-items: center; }
+            .price-card.premium { transform: scale(1); width: 100%; margin: 20px 0; }
+            .price-card { width: 100%; }
             .about-studio { flex-direction: column; padding: 30px 20px; gap: 40px; }
             .hero h1 { font-size: 2.8rem; }
             nav { display: none; }
@@ -204,8 +288,8 @@
             <ul>
                 <li><a href="#services">核心業務</a></li>
                 <li><a href="#ai-system">AI 系統</a></li>
-                <li><a href="#portfolio">精選案例</a></li>
                 <li><a href="#pricing">訂閱方案</a></li>
+                <li><a href="#portfolio">精選案例</a></li>
             </ul>
         </nav>
     </header>
@@ -302,39 +386,62 @@
         </div>
     </section>
 
-    <!-- 🔥 NEW: 價格方案區 (Pricing) -->
+    <!-- 🔥 NEW: 價格方案區 (Pricing - Dual Columns) -->
     <section id="pricing" class="section">
         <div class="section-title"><span>SaaS 訂閱方案</span></div>
+        <p style="text-align: center; color: #999; margin-bottom: 50px;">選擇最適合您的 AI 賦能方案，從客服自動化到精準導購。</p>
         
-        <div class="pricing-card">
-            <div class="pricing-tag">Best Value</div>
-            <h3 style="color: var(--accent); margin-bottom: 10px;">企業級 AI 客服系統</h3>
-            <p style="color: #999;">適合：品牌電商、實體門市、專業服務業</p>
+        <div class="pricing-container">
             
-            <div class="price-val">NT$ 1,999 <span style="font-size: 1rem; color: #666;">/ 月</span></div>
-            <p style="color: var(--line-green); font-weight: bold;">年繳優惠：NT$ 20,000 / 年 (省 $3,988)</p>
-            
-            <ul class="features-list">
-                <li><i class="fa-solid fa-check"></i> Gemini 2.0 AI 大腦 + RAG 知識庫</li>
-                <li><i class="fa-solid fa-check"></i> 視覺聯想 & 智慧導購卡片</li>
-                <li><i class="fa-solid fa-check"></i> CRM 會員分級 & 記憶功能</li>
-                <li><i class="fa-solid fa-check"></i> 官網商品自動同步 (XML)</li>
-                <li><i class="fa-solid fa-check"></i> 商機自動通報 & Google Maps 導航</li>
-                <li><i class="fa-solid fa-check"></i> 專屬 Google Sheet 後台管理</li>
-            </ul>
-            
-            <a href="https://lin.ee/PfwQdP7" class="btn" style="width: 100%; display: block; border-radius: 50px;">立即諮詢 / 訂閱</a>
+            <!-- 方案 A: 企業標準版 -->
+            <div class="price-card">
+                <h3 class="plan-title">企業標準版</h3>
+                <p style="color:#888; font-size:0.9rem;">適合服務業、諮詢顧問</p>
+                <div class="price-tag">NT$ 1,999<span> / 月</span></div>
+                <div class="yearly-save">年繳優惠：$20,000 (省 $3,988)</div>
+                
+                <ul class="features-list">
+                    <li><i class="fa-solid fa-brain"></i> Gemini 2.0 AI 大腦 + RAG 知識庫</li>
+                    <li><i class="fa-solid fa-users"></i> CRM 會員分級 & 記憶功能</li>
+                    <li><i class="fa-solid fa-bell"></i> LINE 商機自動通報 (不漏單)</li>
+                    <li><i class="fa-solid fa-map-location-dot"></i> Google Maps 一鍵導航</li>
+                    <li><i class="fa-solid fa-table"></i> 專屬 Google Sheet 後台管理</li>
+                </ul>
+                
+                <a href="https://lin.ee/PfwQdP7" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid #555; color: #fff;">立即訂閱</a>
+            </div>
+
+            <!-- 方案 B: 旗艦導購版 (主推) -->
+            <div class="price-card premium">
+                <div class="badge">熱門推薦</div>
+                <h3 class="plan-title gold">旗艦導購版</h3>
+                <p style="color:#888; font-size:0.9rem;">適合品牌電商、零售門市</p>
+                <div class="price-tag">NT$ 2,999<span> / 月</span></div>
+                <div class="yearly-save">年繳優惠：$30,000 (省 $5,988)</div>
+                
+                <ul class="features-list">
+                    <li style="color:var(--accent); margin-bottom:15px; font-weight:bold;">包含標準版所有功能，再加上：</li>
+                    <li><i class="fa-solid fa-eye"></i> <span class="plus-feature">鷹眼視覺聯想 & 智慧導購卡片</span><br><span style="font-size:0.8rem; color:#888; margin-left:25px;">(看圖推產品，對話直接變現)</span></li>
+                    <li><i class="fa-solid fa-database"></i> <span class="plus-feature">高階商品資料庫 (二選一)</span></li>
+                    <li style="margin-left: 25px; font-size: 0.85rem; border-bottom: none; color: #999;">
+                        A. Google Sheet 手動管理<br>
+                        B. 官網商品自動同步 (需平台支援 XML)
+                    </li>
+                </ul>
+                
+                <a href="https://lin.ee/PfwQdP7" class="btn" style="border-radius: 50px;">立即升級</a>
+            </div>
+
         </div>
     </section>
 
+    <!-- 精選作品 (已修復 YouTube) -->
     <section id="portfolio" class="section" style="background: #0f0f0f;">
         <div class="section-title"><span>實戰案例展示</span></div>
         <div class="portfolio-grid">
             
-            <!-- 影片 1 -->
             <div class="video-card">
                 <div class="video-container">
-                    <!-- 👇 這裡 src 修改為正確的 YouTube 格式 -->
                     <iframe src="https://www.youtube.com/embed/LXb3EKWsInQ?si=brand_decoder" 
                             title="Demo Video 1" frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -347,10 +454,8 @@
                 </div>
             </div>
 
-            <!-- 影片 2 -->
             <div class="video-card">
                 <div class="video-container">
-                    <!-- 👇 這裡 src 修改為正確的 YouTube 格式 -->
                     <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk?si=brand_decoder" 
                             title="Demo Video 2" frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
