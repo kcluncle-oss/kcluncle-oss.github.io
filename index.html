@@ -6,6 +6,7 @@
     <title>品牌解碼室 | Brand Decoder - AI 賦能專家</title>
     
     <link rel="icon" href="icon_01.png" type="image/png">
+    
     <meta name="description" content="品牌解碼室 (Brand Decoder) 由 K.C. (Peter) 創立，整合 AI 影像賦能、智能客服與商業策略。提供從視覺製作到營收變現的一站式解決方案。">
     <meta name="keywords" content="品牌解碼室, Brand Decoder, AI行銷, 智能客服, K.C., Peter, 商業策略, 品牌顧問, 數位轉型">
     <meta name="author" content="Brand Decoder Studio">
@@ -15,7 +16,7 @@
     <meta property="og:title" content="品牌解碼室 | AI 賦能與商業策略專家">
     <meta property="og:description" content="拒絕視覺貧窮，打造獲利閉環。我們提供 AI 影像製作、24/7 智能客服與全方位行銷諮詢。立即體驗未來的商業模式。">
     <meta property="og:image" content="https://branddecoder-studio.github.io/AIOptimization_AIO_01.jpg"> 
-    
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="品牌解碼室 | Brand Decoder">
     <meta name="twitter:description" content="AI 影像 x 智能客服 x 商業策略。一站式解決方案，為企業打造獲利閉環。">
@@ -51,7 +52,26 @@
         }
         
         .logo-container { display: flex; align-items: center; gap: 10px; }
-        .logo-img { height: 45px; border-radius: 50%; border: 2px solid var(--accent); }
+        
+        /* NEW: CSS 畫出來的黑金 Logo (取代原本的圖片) */
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(145deg, #d4af37, #f9d976); /* 金色漸層背景 */
+            color: #000; /* 黑色文字 */
+            border-radius: 50%; /* 圓形 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 900; /* 極粗體 */
+            font-size: 1.2rem;
+            letter-spacing: -1px; /* 字母緊湊一點比較潮 */
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); /* 金色發光 */
+            border: 2px solid #fff; /* 外圈加個白邊增加層次 */
+            margin-right: 5px; 
+            font-family: 'Arial Black', sans-serif;
+        }
+
         .logo-text { font-size: 1.2rem; font-weight: bold; color: #fff; letter-spacing: 1px;}
         .logo-text span { color: var(--accent); }
 
@@ -147,6 +167,46 @@
         .card-img { width: 100%; height: 120px; object-fit: cover; }
         .card-body { padding: 10px; }
         .card-btn { display: block; background: var(--line-green); color: white; text-align: center; padding: 8px; margin: 10px 10px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; }
+
+        /* --- NEW: 客戶案例區塊 CSS (修正版) --- */
+        .clients-container {
+            display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; margin-top: 30px;
+        }
+        .client-box {
+            text-align: center; width: 220px; transition: 0.3s;
+        }
+        
+        /* 客戶 Logo 圓框樣式 (滿版無留白) */
+        .client-logo-wrapper {
+            width: 180px; 
+            height: 180px;
+            margin: 0 auto 20px auto;
+            background: transparent; 
+            border-radius: 50%; /* 圓形裁切 */
+            display: flex; justify-content: center; align-items: center;
+            border: 3px solid #333;
+            transition: 0.4s;
+            overflow: hidden; /* 關鍵：超過圓圈的切掉 */
+            position: relative;
+        }
+        /* 確保圖片填滿圓框 */
+        .client-logo-wrapper img {
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* 滿版裁切 */
+            transition: 0.4s;
+        }
+        
+        /* 滑鼠懸停特效 */
+        .client-box:hover .client-logo-wrapper {
+            border-color: var(--accent); /* 變金色 */
+            box-shadow: 0 0 25px var(--accent-glow); /* 發光 */
+            transform: translateY(-5px);
+        }
+        .client-box:hover img { transform: scale(1.1); }
+        
+        .client-box h4 { color: #fff; margin-bottom: 5px; font-size: 1.2rem; letter-spacing: 1px; }
+        .client-box p { color: var(--accent); font-size: 0.9rem; font-weight: bold; }
 
         /* --- 價格方案 Pricing (雙欄版) --- */
         .pricing-container {
@@ -288,51 +348,13 @@
             .video-bg { display: none; } 
             .hero { background: #111; }
         }
-
-        /* --- NEW: 客戶案例區塊 --- */
-        .clients-container {
-            display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; margin-top: 30px;
-        }
-        .client-box {
-            text-align: center; width: 220px; transition: 0.3s;
-        }
-        /* --- 修改後的客戶 Logo 圓框樣式 (滿版) --- */
-        .client-logo-wrapper {
-            width: 180px; /* 稍微放大一點點，更有氣勢 */
-            height: 180px;
-            margin: 0 auto 20px auto;
-            background: transparent; /* 不需要白色背景了 */
-            border-radius: 50%; /* 圓形裁切 */
-            display: flex; justify-content: center; align-items: center;
-            border: 3px solid #333;
-            transition: 0.4s;
-            overflow: hidden; /* 這行是關鍵：超過圓圈的全部切掉 */
-            position: relative;
-        }
-        /* 確保圖片填滿圓框 */
-        .client-logo-wrapper img {
-            width: 100%; /* 寬度撐滿 */
-            height: 100%; /* 高度撐滿 */
-            object-fit: cover; /* 確保滿版裁切，不會變形 */
-            transition: 0.4s;
-        }
-        /* 滑鼠懸停特效 */
-        .client-box:hover .client-logo-wrapper {
-            border-color: var(--accent); /* 變金色 */
-            box-shadow: 0 0 25px var(--accent-glow); /* 發光 */
-            transform: translateY(-5px);
-        }
-        .client-box:hover img { transform: scale(1.1); }
-        
-        .client-box h4 { color: #fff; margin-bottom: 5px; font-size: 1.2rem; letter-spacing: 1px; }
-        .client-box p { color: var(--accent); font-size: 0.9rem; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo-container">
-            <img src="icon_01.png" alt="Logo" class="logo-img">
+            <div class="logo-icon">BD</div>
             <div class="logo-text">BRAND <span>DECODER</span></div>
         </div>
         <nav>
