@@ -286,6 +286,39 @@
             .video-bg { display: none; } 
             .hero { background: #111; }
         }
+
+        /* --- NEW: 客戶案例區塊 --- */
+        .clients-container {
+            display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; margin-top: 30px;
+        }
+        .client-box {
+            text-align: center; width: 220px; transition: 0.3s;
+        }
+        .client-logo-wrapper {
+            width: 160px; height: 160px; margin: 0 auto 20px auto;
+            background: #fff; /* 白色背景讓 Logo 更清晰 */
+            border-radius: 50%; /* 圓形設計 */
+            display: flex; justify-content: center; align-items: center;
+            border: 3px solid #333;
+            transition: 0.4s;
+            overflow: hidden;
+            padding: 20px; /* 留白呼吸感 */
+            position: relative;
+        }
+        .client-logo-wrapper img {
+            max-width: 100%; max-height: 100%; object-fit: contain;
+            transition: 0.4s;
+        }
+        /* 滑鼠懸停特效 */
+        .client-box:hover .client-logo-wrapper {
+            border-color: var(--accent); /* 變金色 */
+            box-shadow: 0 0 25px var(--accent-glow); /* 發光 */
+            transform: translateY(-5px);
+        }
+        .client-box:hover img { transform: scale(1.1); }
+        
+        .client-box h4 { color: #fff; margin-bottom: 5px; font-size: 1.2rem; letter-spacing: 1px; }
+        .client-box p { color: var(--accent); font-size: 0.9rem; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -397,6 +430,33 @@
         </div>
     </section>
 
+<section class="section" style="background: #0a0a0a; border-top: 1px solid #1a1a1a; padding-bottom: 50px;">
+        <div class="section-title"><span>AI 客服導入品牌</span></div>
+        <p style="text-align: center; color: #888; margin-bottom: 60px; margin-top: -40px; font-size: 1rem;">
+            賦能實體門市，實現 24 小時自動化接單。
+        </p>
+
+        <div class="clients-container">
+            
+            <div class="client-box">
+                <div class="client-logo-wrapper">
+                    <img src="chiayogalogo.jpg" alt="Chia-Yoga Studio">
+                </div>
+                <h4>Chia-Yoga Studio</h4>
+                <p>預約制瑜珈空間</p>
+            </div>
+
+            <div class="client-box">
+                <div class="client-logo-wrapper">
+                    <img src="Dingin_goldlogo.png" alt="Dingin Tea">
+                </div>
+                <h4>定迎高山茶</h4>
+                <p>頂級台灣茶葉品牌</p>
+            </div>
+
+        </div>
+    </section>
+    
     <!-- 🔥 NEW: 價格方案區 (Pricing - Dual Columns) -->
     <section id="pricing" class="section">
         <div class="section-title"><span>SaaS 訂閱方案</span></div>
