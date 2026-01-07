@@ -294,19 +294,35 @@
         .client-box {
             text-align: center; width: 220px; transition: 0.3s;
         }
-        .client-logo-wrapper {
+         {
             width: 160px; height: 160px; margin: 0 auto 20px auto;
-            background: #fff; /* 白色背景讓 Logo 更清晰 */
+            background: #000; /* 黑色背景讓 Logo 更清晰 */
             border-radius: 50%; /* 圓形設計 */
             display: flex; justify-content: center; align-items: center;
             border: 3px solid #333;
             transition: 0.4s;
             overflow: hidden;
-            padding: 20px; /* 留白呼吸感 */
             position: relative;
         }
+        /* --- 修改後的客戶 Logo 圓框樣式 (滿版) --- */
+        .client-logo-wrapper {
+            width: 180px; /* 稍微放大一點點，更有氣勢 */
+            height: 180px;
+            margin: 0 auto 20px auto;
+            background: transparent; /* 不需要白色背景了 */
+            border-radius: 50%; /* 圓形裁切 */
+            display: flex; justify-content: center; align-items: center;
+            border: 3px solid #333;
+            transition: 0.4s;
+            overflow: hidden; /* 這行是關鍵：超過圓圈的全部切掉 */
+            /* 移除了 padding: 20px; 讓圖片滿版 */
+            position: relative;
+        }
+        /* 確保圖片填滿圓框 */
         .client-logo-wrapper img {
-            max-width: 100%; max-height: 100%; object-fit: contain;
+            width: 100%; /* 寬度撐滿 */
+            height: 100%; /* 高度撐滿 */
+            object-fit: cover; /* 確保滿版裁切，不會變形 */
             transition: 0.4s;
         }
         /* 滑鼠懸停特效 */
