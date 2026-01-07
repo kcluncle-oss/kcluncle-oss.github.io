@@ -85,12 +85,20 @@
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 0 20px; overflow: hidden;
         }
+        
+        /* ★★★ 修正後的影片背景 CSS：確保手機版完美填滿 ★★★ */
         .video-bg {
-            position: absolute; top: 50%; left: 50%;
-            min-width: 100%; min-height: 100%; width: auto; height: auto;
-            transform: translate(-50%, -50%); z-index: -2;
-            object-fit: cover; opacity: 0.5; filter: contrast(1.1);
+            position: absolute; 
+            top: 0; 
+            left: 0;
+            width: 100%; 
+            height: 100%;
+            object-fit: cover; /* 關鍵：確保影片像背景圖一樣填滿視窗 */
+            z-index: -2;
+            opacity: 0.5; 
+            filter: contrast(1.1);
         }
+        
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); z-index: -1;
@@ -272,8 +280,7 @@
         .footer-qr img { width: 140px; border-radius: 5px; }
         .footer-qr p { color: var(--accent); margin-bottom: 10px; font-size: 1rem; font-weight: bold; }
 
-        /* --- RWD 手機版強制修正 (關鍵修改) --- */
-        /* --- RWD 手機版強制修正 (關鍵修改 V2) --- */
+        /* --- RWD 手機版強制修正 --- */
         @media (max-width: 768px) {
             .section { padding: 60px 5%; }
             .services-grid, .portfolio-grid, .saas-features { grid-template-columns: 1fr; }
@@ -291,20 +298,18 @@
             .hero h1 { font-size: 2.8rem; }
             .logo-text { font-size: 1rem; } 
 
-            /* --- 🔥 這次修正的重點：關於我們 (About) --- */
+            /* --- 關於我們 (About) 修正 --- */
             .about-studio { 
                 flex-direction: column; 
                 padding: 30px 20px; 
-                gap: 30px; /* 間距稍微縮小一點 */
+                gap: 30px; 
             }
             
-            /* 關鍵指令：取消最小寬度限制，讓文字自動換行 */
             .studio-story, .founder-card { 
                 min-width: auto; 
                 width: 100%; 
             }
             
-            /* 讓手機版標題字體稍微小一點，視覺比較平衡 */
             .studio-story h3 {
                 font-size: 1.6rem; 
                 line-height: 1.3;
@@ -330,8 +335,9 @@
     </header>
 
     <section class="hero">
-        <video autoplay muted loop playsinline class="video-bg">
+        <video autoplay muted loop playsinline class="video-bg" poster="AIOptimization_AIO_01.jpg">
             <source src="Yt_Start.mp4" type="video/mp4">
+            您的瀏覽器不支援 HTML5 影片。
         </video>
         <div class="overlay"></div>
 
