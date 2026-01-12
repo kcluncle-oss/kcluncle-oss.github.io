@@ -17,11 +17,6 @@
     <meta property="og:description" content="拒絕視覺貧窮，打造獲利閉環。我們提供 AI 影像製作、24/7 智能客服與全方位行銷諮詢。立即體驗未來的商業模式。">
     <meta property="og:image" content="https://branddecoder-studio.github.io/AIOptimization_AIO_01.jpg"> 
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="品牌解碼室 | Brand Decoder">
-    <meta name="twitter:description" content="AI 影像 x 智能客服 x 商業策略。一站式解決方案，為企業打造獲利閉環。">
-    <meta name="twitter:image" content="https://branddecoder-studio.github.io/AIOptimization_AIO_01.jpg">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
@@ -52,76 +47,41 @@
         }
         
         .logo-container { display: flex; align-items: center; gap: 10px; }
-        
         .logo-icon {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(145deg, #d4af37, #f9d976);
-            color: #000;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 900;
-            font-size: 1.2rem;
-            letter-spacing: -1px;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            border: 2px solid #fff;
-            margin-right: 5px; 
-            font-family: 'Arial Black', sans-serif;
-            flex-shrink: 0;
+            width: 45px; height: 45px; background: linear-gradient(145deg, #d4af37, #f9d976);
+            color: #000; border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-weight: 900; font-size: 1.2rem; letter-spacing: -1px;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); border: 2px solid #fff;
+            flex-shrink: 0; font-family: 'Arial Black', sans-serif;
         }
-
-        .logo-text { font-size: 1.2rem; font-weight: bold; color: #fff; letter-spacing: 1px; white-space: nowrap;}
+        .logo-text { font-size: 1.2rem; font-weight: bold; color: #fff; letter-spacing: 1px; }
         .logo-text span { color: var(--accent); }
 
         nav ul { display: flex; gap: 30px; }
         nav a:hover { color: var(--accent); }
 
-        /* --- 主視覺 Hero Section --- */
+        /* --- 主視覺 Hero Section (背景影片修正) --- */
         .hero {
             position: relative; height: 100vh;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 0 20px; overflow: hidden;
         }
-        
         .video-bg {
-            position: absolute; 
-            top: 0; 
-            left: 0;
-            width: 100%; 
-            height: 100%;
-            object-fit: cover; 
-            z-index: -2;
-            opacity: 0.5; 
-            filter: contrast(1.1);
-            /* 強制顯示設定 */
-            display: block !important; 
-            visibility: visible !important;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -2; opacity: 0.5; filter: contrast(1.1);
+            display: block !important; visibility: visible !important;
         }
-        
         .overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.6); z-index: -1;
         }
-        
-        .hero h1 {
-            font-size: 4rem; margin-bottom: 10px; line-height: 1.1;
-            text-shadow: 0 0 30px rgba(0,0,0,1);
-            font-weight: 800; letter-spacing: 2px;
-            color: #fff;
-        }
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; line-height: 1.1; font-weight: 800; letter-spacing: 2px; }
         .hero h1 span { color: var(--accent); }
-        
         .hero .subtitle { 
             font-size: 1.5rem; color: #ddd; margin-bottom: 30px; font-weight: 300; 
-            letter-spacing: 5px; text-transform: uppercase;
-            border-top: 1px solid var(--accent);
-            border-bottom: 1px solid var(--accent);
-            padding: 10px 20px;
-            background: rgba(0,0,0,0.3);
+            letter-spacing: 5px; text-transform: uppercase; border-top: 1px solid var(--accent);
+            border-bottom: 1px solid var(--accent); padding: 10px 20px; background: rgba(0,0,0,0.3);
         }
-        
         .btn {
             padding: 15px 40px; border: 1px solid var(--accent); color: var(--accent);
             border-radius: 2px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase;
@@ -129,127 +89,57 @@
         }
         .btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent-glow); }
 
-        /* --- 通用區塊 --- */
+        /* --- 通用區塊樣式 --- */
         .section { padding: 100px 10%; position: relative; z-index: 1; }
         .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 60px; }
         .section-title span { border-bottom: 3px solid var(--accent); padding-bottom: 10px; display: inline-block; }
 
-        /* --- 三大核心業務 --- */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .service-card {
-            background: var(--card-bg); border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1); overflow: hidden; transition: 0.3s;
-            display: flex; flex-direction: column;
+        /* --- 業務與功能 --- */
+        .services-grid, .saas-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card, .feature-box {
+            background: var(--card-bg); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); 
+            padding: 30px; transition: 0.3s;
         }
-        .service-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .service-img { width: 100%; height: 200px; object-fit: cover; border-bottom: 3px solid var(--accent); }
-        .service-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; }
-        .service-card h3 { font-size: 1.5rem; margin-bottom: 20px; color: #fff; display: flex; align-items: center; gap: 10px; }
-        .service-card ul li { margin-bottom: 12px; color: var(--text-sub); display: flex; align-items: start; gap: 10px; font-size: 0.95rem; }
-        .service-card i { color: var(--accent); }
+        .service-card:hover, .feature-box:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .service-img { width: 100%; height: 200px; object-fit: cover; margin-bottom: 20px; border-bottom: 3px solid var(--accent); }
+        .feature-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 15px; text-align: center; }
 
-        /* --- AI SaaS 功能展示區 --- */
-        .saas-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
-        .feature-box {
-            background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 10px;
-            text-align: center; border: 1px solid rgba(212, 175, 55, 0.2); transition: 0.3s;
-        }
-        .feature-box:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--accent); }
-        .feature-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 15px; }
-        .feature-box h4 { font-size: 1.2rem; margin-bottom: 10px; color: #fff; }
-        .feature-box p { font-size: 0.9rem; color: var(--text-sub); }
-
-        /* --- 聊天室模擬 --- */
-        .chat-demo-container { display: flex; justify-content: center; margin-top: 60px; }
-        .chat-mockup {
-            width: 100%; max-width: 400px; background: #fff; border-radius: 20px; overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); border: 5px solid #333;
-        }
-        .chat-header { background: #2c3e50; color: white; padding: 15px; font-weight: bold; display: flex; align-items: center; gap: 10px;}
-        .chat-body { padding: 20px; background: #89aab6; min-height: 400px; display: flex; flex-direction: column; gap: 15px; }
-        .msg { padding: 10px 15px; border-radius: 15px; font-size: 0.9rem; position: relative; max-width: 80%; line-height: 1.4; }
-        .msg.bot { background: #fff; color: #000; align-self: flex-start; border-top-left-radius: 2px; }
-        .msg.user { background: #98ec66; color: #000; align-self: flex-end; border-top-right-radius: 2px; }
-        .msg-img { width: 100%; border-radius: 10px; margin-top: 5px; }
-        .msg-card { background: #fff; border-radius: 10px; overflow: hidden; max-width: 80%; align-self: flex-start; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .card-img { width: 100%; height: 120px; object-fit: cover; }
-        .card-body { padding: 10px; }
-        .card-btn { display: block; background: var(--line-green); color: white; text-align: center; padding: 8px; margin: 10px 10px; border-radius: 5px; font-size: 0.8rem; font-weight: bold; }
-
-        /* --- 客戶案例區塊 --- */
-        .clients-container { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; margin-top: 30px; }
-        .client-box { text-align: center; width: 220px; transition: 0.3s; }
-        .client-logo-wrapper {
-            width: 180px; height: 180px; margin: 0 auto 20px auto;
-            background: transparent; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            border: 3px solid #333; transition: 0.4s; overflow: hidden; position: relative;
-        }
-        .client-logo-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; }
-        .client-box:hover .client-logo-wrapper { border-color: var(--accent); box-shadow: 0 0 25px var(--accent-glow); transform: translateY(-5px); }
-        .client-box:hover img { transform: scale(1.1); }
-        .client-box h4 { color: #fff; margin-bottom: 5px; font-size: 1.2rem; letter-spacing: 1px; }
-        .client-box p { color: var(--accent); font-size: 0.9rem; font-weight: bold; }
-
-        /* --- 價格方案 Pricing --- */
-        .pricing-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; max-width: 1000px; margin: 0 auto; }
+        /* --- 價格方案 Pricing (已整合綠界連結) --- */
+        .pricing-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 0 auto; }
         .price-card {
-            flex: 1; min-width: 300px; background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
-            border: 1px solid #333; border-radius: 15px; padding: 40px; text-align: center; position: relative; transition: 0.3s; display: flex; flex-direction: column;
+            flex: 1; min-width: 300px; max-width: 350px; background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border: 1px solid #333; border-radius: 15px; padding: 40px; text-align: center;
+            position: relative; transition: 0.3s; display: flex; flex-direction: column;
         }
-        .price-card.premium {
-            border: 2px solid var(--accent); transform: scale(1.05); background: linear-gradient(145deg, #222, #0f0f0f);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.1); z-index: 2;
+        .price-card.featured {
+            border: 2px solid var(--accent); transform: scale(1.05); z-index: 2;
+            background: linear-gradient(145deg, #222, #0f0f0f); box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
         }
-        .price-card:hover { transform: translateY(-5px); }
-        .price-card.premium:hover { transform: scale(1.05) translateY(-5px); }
-        .plan-title { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
-        .plan-title.gold { color: var(--accent); }
-        .price-tag { font-size: 2.5rem; font-weight: bold; color: #fff; margin: 20px 0 5px 0; }
+        .price-tag { font-size: 2.5rem; font-weight: bold; color: #fff; margin: 20px 0; }
         .price-tag span { font-size: 1rem; color: #888; font-weight: normal; }
-        .yearly-save { color: var(--line-green); font-size: 0.9rem; font-weight: bold; margin-bottom: 30px; background: rgba(6, 199, 85, 0.1); display: inline-block; padding: 5px 15px; border-radius: 20px; }
         .features-list { text-align: left; margin-bottom: 30px; flex-grow: 1; }
-        .features-list li { margin-bottom: 12px; color: #ccc; font-size: 0.95rem; display: flex; align-items: flex-start; }
-        .features-list i { color: var(--accent); margin-right: 10px; margin-top: 4px; }
-        .badge { position: absolute; top: 20px; right: -35px; background: var(--accent); color: #000; width: 120px; padding: 5px 0; transform: rotate(45deg); font-weight: bold; font-size: 0.8rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .features-list li { margin-bottom: 12px; color: #ccc; font-size: 0.95rem; display: flex; align-items: flex-start; gap: 10px; }
+        .features-list i { color: var(--accent); margin-top: 4px; }
+        .badge {
+            position: absolute; top: 20px; right: -35px; background: var(--accent); color: #000;
+            width: 140px; padding: 5px 0; transform: rotate(45deg); font-weight: bold; font-size: 0.8rem;
+        }
 
-        /* --- 精選作品 --- */
+        /* --- 其他區塊樣式 --- */
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
-        .video-card { background: #111; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+        .video-card { background: #111; border-radius: 8px; overflow: hidden; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-        .video-info { padding: 20px; background: #1a1a1a; }
-        .video-info h4 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
-        .video-info p { color: var(--accent); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .about-studio { background: linear-gradient(145deg, #111, #1a1a1a); padding: 60px; border-radius: 10px; border-left: 5px solid var(--accent); display: flex; gap: 40px; flex-wrap: wrap; }
+        footer { text-align: center; padding: 50px 20px; background: #050505; border-top: 1px solid #222; color: #555; }
+        .footer-qr img { width: 140px; margin-top: 20px; border: 1px solid var(--accent); padding: 5px; }
 
-        /* --- 關於品牌解碼室 --- */
-        .about-studio { background: linear-gradient(145deg, #111, #1a1a1a); padding: 60px; border-radius: 10px; border-left: 5px solid var(--accent); display: flex; gap: 60px; flex-wrap: wrap; align-items: center; }
-        .studio-story { flex: 2; min-width: 300px; }
-        .studio-story h3 { font-size: 2rem; margin-bottom: 20px; color: #fff; }
-        .founder-card { flex: 1; min-width: 280px; background: rgba(0,0,0,0.3); padding: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; align-items: center; text-align: center; }
-        .founder-name { font-size: 1.4rem; font-weight: bold; color: #fff; margin-bottom: 15px; }
-        .founder-stats { display: flex; gap: 20px; justify-content: center; border-top: 1px solid #333; padding-top: 15px; width: 100%; }
-        .f-stat b { display: block; color: #fff; font-size: 1.2rem; }
-
-        /* --- 頁尾 --- */
-        footer { text-align: center; padding: 50px 20px; background: #050505; border-top: 1px solid #222; color: #555; font-size: 0.9rem; }
-        .footer-qr { margin-bottom: 30px; display: inline-block; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border: 1px solid rgba(212, 175, 55, 0.3); }
-        .footer-qr img { width: 140px; border-radius: 5px; }
-        .footer-qr p { color: var(--accent); margin-bottom: 10px; font-size: 1rem; font-weight: bold; }
-
-        /* --- RWD 手機版修正 --- */
+        /* --- RWD 手機版 --- */
         @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
             .section { padding: 60px 5%; }
-            .services-grid, .portfolio-grid, .saas-features { grid-template-columns: 1fr; }
-            .pricing-container { flex-direction: column; align-items: center; }
-            .price-card.premium { transform: scale(1); width: 100%; margin: 20px 0; }
-            .price-card { width: 100%; }
             nav { display: none; }
-            .hero { background: #111; padding-top: 80px; }
-            .hero h1 { font-size: 2.8rem; }
-            .logo-text { font-size: 1rem; } 
-            .about-studio { flex-direction: column; padding: 30px 20px; gap: 30px; }
-            .studio-story, .founder-card { min-width: auto; width: 100%; }
-            .studio-story h3 { font-size: 1.6rem; line-height: 1.3; }
+            .price-card.featured { transform: scale(1); }
         }
     </style>
 </head>
@@ -263,8 +153,8 @@
         <nav>
             <ul>
                 <li><a href="#services">核心業務</a></li>
-                <li><a href="#ai-system">AI 系統</a></li>
-                <li><a href="#pricing">訂閱方案</a></li>
+                <li><a href="#ai-system">AI 優勢</a></li>
+                <li><a href="#pricing">方案連結</a></li>
                 <li><a href="#portfolio">精選案例</a></li>
             </ul>
         </nav>
@@ -273,104 +163,52 @@
     <section class="hero">
         <video autoplay muted loop playsinline class="video-bg" poster="AIOptimization_AIO_01.jpg">
             <source src="Yt_Start.mp4" type="video/mp4">
-            您的瀏覽器不支援 HTML5 影片。
         </video>
         <div class="overlay"></div>
-
         <h1>BRAND <span>DECODER</span></h1>
-        <div class="subtitle">Image Enablement x Smart CS x Marketing Strategy</div>
-        <p style="margin-bottom: 40px; max-width: 600px; color: #ccc;">整合 AI 影像、智能客服與商業策略。<br>一站式解決方案，為企業打造獲利閉環。</p>
-        <a href="#ai-system" class="btn">體驗最強 AI 大腦</a>
+        <div class="subtitle">AI Empowerment x Smart Strategy</div>
+        <p style="margin-bottom: 40px; max-width: 600px; color: #ccc;">拒絕視覺貧窮，打造獲利閉環。<br>一站式 AI 解決方案，為企業解碼未來商機。</p>
+        <a href="#pricing" class="btn">立即啟動 AI 轉型</a>
     </section>
 
     <section id="services" class="section">
         <div class="section-title"><span>三大核心業務</span></div>
         <div class="services-grid">
             <div class="service-card">
-                <img src="AIOptimization_AIO_01.jpg" alt="AI Image Empowerment" class="service-img">
-                <div class="service-content">
-                    <h3><i class="fa-solid fa-wand-magic-sparkles"></i> AI 影像賦能</h3>
-                    <p>解決「視覺貧窮」，運用智能系統與 AI 技術，產出 4A 廣告級視覺資產。</p>
-                </div>
+                <img src="AIOptimization_AIO_01.jpg" class="service-img">
+                <h3>AI 影像賦能</h3>
+                <p>運用 Gemini 2.0 與先進視覺技術，產出 4A 廣告級高品質資產，解決視覺貧窮。</p>
             </div>
             <div class="service-card">
-                <img src="AILINEBanner_01.jpg" alt="AI Customer Service" class="service-img">
-                <div class="service-content">
-                    <h3><i class="fa-solid fa-headset"></i> 智能客服系統</h3>
-                    <p>全球最強 AI 客服，具備「導購大腦」的 24/7 超級業務員。自動化、精準化、獲利化。</p>
-                </div>
+                <img src="AILINEBanner_01.jpg" class="service-img">
+                <h3>智能客服系統</h3>
+                <p>具備導購大腦的 24/7 超級業務員，自動化處理訂單與高階客戶諮詢。</p>
             </div>
             <div class="service-card">
-                <img src="Digital_Marketing_Consultant_01.jpg" alt="Marketing Consultant" class="service-img">
-                <div class="service-content">
-                    <h3><i class="fa-solid fa-chess-knight"></i> 全方位行銷顧問</h3>
-                    <p>20 年電商實戰經驗，從策略端協助企業實現數位轉型與營收增長。</p>
-                </div>
+                <img src="Digital_Marketing_Consultant_01.jpg" class="service-img">
+                <h3>商業策略顧問</h3>
+                <p>20 年實戰經驗，從營收增長到品牌解碼，為企業打造專屬變現閉環。</p>
             </div>
         </div>
     </section>
 
     <section id="ai-system" class="section" style="background: #0f0f0f;">
         <div class="section-title"><span>AI 系統核心優勢</span></div>
-        <p style="text-align: center; color: #999; margin-bottom: 40px;">不只是聊天機器人，而是能聽懂需求、看懂圖片、主動成交的頂尖業務。</p>
-        
         <div class="saas-features">
             <div class="feature-box">
                 <div class="feature-icon"><i class="fa-solid fa-eye"></i></div>
                 <h4>鷹眼視覺聯想</h4>
-                <p>客戶傳一張照片，AI 自動辨識並推薦相關產品。不懂產品名也能賣！</p>
-            </div>
-            <div class="feature-box">
-                <div class="feature-icon"><i class="fa-solid fa-users-gear"></i></div>
-                <h4>CRM 尊榮分級</h4>
-                <p>自動識別「陌生客」與「VIP」。看人說話，提供尊榮客製化服務。</p>
+                <p>Gemini 2.0 強大視覺能力，看圖即能精準推薦相關產品。</p>
             </div>
             <div class="feature-box">
                 <div class="feature-icon"><i class="fa-solid fa-sync"></i></div>
                 <h4>數據自動同步</h4>
-                <p>官網上架新品，LINE 機器人 1 小時內自動學會。價格庫存零時差。</p>
+                <p>官網上架新品，LINE 機器人 1 小時內自動學習，報價無時差。</p>
             </div>
             <div class="feature-box">
                 <div class="feature-icon"><i class="fa-solid fa-bell"></i></div>
                 <h4>商機自動捕獲</h4>
-                <p>雙重偵測機制。當客戶留下電話，AI 立即通知管理員，絕不漏單。</p>
-            </div>
-        </div>
-
-        <div class="chat-demo-container">
-            <div class="chat-mockup">
-                <div class="chat-header">
-                    <img src="icon_01.png" style="width:30px; border-radius:50%;"> 
-                    品牌解碼室 AI
-                </div>
-                <div class="chat-body">
-                    <div class="msg user">我是 K.C.，我有 VIP 會員嗎？</div>
-                    <div class="msg bot">K.C.總 您好！很高興再次為您服務 ✨。<br>系統確認您是我們尊貴的 <b>VIP</b> 會員，享有全館 9 折優惠！</div>
-                    <div class="msg user">（傳送一張茶葉照片）<br><img src="https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=300" class="msg-img"></div>
-                    <div class="msg bot">這張照片的光澤很棒！看起來像是高海拔的烏龍茶。</div>
-                    <div class="msg-card">
-                        <img src="https://images.unsplash.com/photo-1563822249548-9a72b6353cd1?w=300" class="card-img">
-                        <div class="card-body">
-                            <b style="color:#000;">梨山高冷茶 | 頂級手採</b><br>
-                            <span style="color:#d62828; font-weight:bold;">NT$ 2,500</span>
-                        </div>
-                        <a href="#" class="card-btn">立即購買</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" style="background: #0a0a0a; border-top: 1px solid #1a1a1a; padding-bottom: 50px;">
-        <div class="section-title"><span>AI 客服導入品牌</span></div>
-        <div class="clients-container">
-            <div class="client-box">
-                <div class="client-logo-wrapper"><img src="chiayogalogo.jpg" alt="Chia-Yoga Studio"></div>
-                <h4>Chia-Yoga Studio</h4><p>預約制瑜珈空間</p>
-            </div>
-            <div class="client-box">
-                <div class="client-logo-wrapper"><img src="Dingin_goldlogo.png" alt="Dingin Tea"></div>
-                <h4>定迎高山茶</h4><p>頂級台灣茶葉品牌</p>
+                <p>自動偵測客戶需求，關鍵字觸發立即通知管理員，絕不漏單。</p>
             </div>
         </div>
     </section>
@@ -379,23 +217,38 @@
         <div class="section-title"><span>SaaS 訂閱方案</span></div>
         <div class="pricing-container">
             <div class="price-card">
-                <h3 class="plan-title">企業標準版</h3>
+                <h3>智能客服 (月繳)</h3>
                 <div class="price-tag">NT$ 1,999<span> / 月</span></div>
                 <ul class="features-list">
-                    <li><i class="fa-solid fa-brain"></i> AI 大腦 + RAG 知識庫</li>
-                    <li><i class="fa-solid fa-users"></i> CRM 會員分級功能</li>
+                    <li><i class="fa-solid fa-check"></i> Gemini 2.0 AI 核心</li>
+                    <li><i class="fa-solid fa-check"></i> RAG 專業知識庫</li>
+                    <li><i class="fa-solid fa-check"></i> LINE 自動化接單</li>
                 </ul>
-                <a href="https://lin.ee/PfwQdP7" class="btn" style="border-radius: 50px;">立即訂閱</a>
+                <a href="https://p.ecpay.com.tw/36EB9E9" target="_blank" class="btn" style="border-radius: 50px;">立即訂閱</a>
             </div>
-            <div class="price-card premium">
-                <div class="badge">熱門推薦</div>
-                <h3 class="plan-title gold">旗艦導購版</h3>
-                <div class="price-tag">NT$ 2,999<span> / 月</span></div>
+
+            <div class="price-card featured">
+                <div class="badge">限時優惠</div>
+                <h3>專業建置方案</h3>
+                <div class="price-tag">NT$ 9,999<span> / 起</span></div>
                 <ul class="features-list">
-                    <li style="color:var(--accent);">包含標準版所有功能，再加上：</li>
-                    <li><i class="fa-solid fa-eye"></i> 鷹眼視覺聯想 & 智慧導購卡片</li>
+                    <li style="color: var(--accent); font-weight: bold;"><i class="fa-solid fa-gift"></i> 贈送首月訂閱 (值 $1999)</li>
+                    <li><i class="fa-solid fa-wand-magic-sparkles"></i> 專業 Prompt 調教</li>
+                    <li><i class="fa-solid fa-gears"></i> 全系統架構建置</li>
+                    <li><i class="fa-solid fa-database"></i> 專屬數據庫設計</li>
                 </ul>
-                <a href="https://lin.ee/PfwQdP7" class="btn" style="border-radius: 50px;">立即升級</a>
+                <a href="https://p.ecpay.com.tw/D1FF015" target="_blank" class="btn" style="border-radius: 50px;">立即下單</a>
+            </div>
+
+            <div class="price-card">
+                <h3>智能客服 (年繳)</h3>
+                <div class="price-tag">NT$ 20,000<span> / 年</span></div>
+                <ul class="features-list">
+                    <li><i class="fa-solid fa-check"></i> 包含標準版所有功能</li>
+                    <li style="color: var(--line-green); font-weight: bold;"><i class="fa-solid fa-star"></i> 現省 NT$ 3,988</li>
+                    <li><i class="fa-solid fa-check"></i> 優先技術支援</li>
+                </ul>
+                <a href="https://p.ecpay.com.tw/6B32233" target="_blank" class="btn" style="border-radius: 50px;">立即訂閱</a>
             </div>
         </div>
     </section>
@@ -404,30 +257,32 @@
         <div class="section-title"><span>實戰案例展示</span></div>
         <div class="portfolio-grid">
             <div class="video-card">
-                <div class="video-container"><iframe src="https://www.youtube.com/embed/zv4eaGMdVck" frameborder="0" allowfullscreen></iframe></div>
-                <div class="video-info"><h4>動態影像生成與 AI 應用</h4></div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/zv4eaGMdVck" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/4W_kfbuVZIY" frameborder="0" allowfullscreen></iframe>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="about" class="section">
+    <section class="section">
         <div class="about-studio">
-            <div class="studio-story">
-                <h3>品牌解碼室：商業影像的建築師</h3>
-                <p>科技是手段，變現才是真理。</p>
+            <div style="flex: 2; min-width: 300px;">
+                <h3 style="font-size: 2rem; margin-bottom: 20px;">品牌解碼室：K.C. Peter</h3>
+                <p>在 AI 浪潮中，我們不只是工具的操作者，更是您商業策略的戰略夥伴。目前頻道已達成 **1.7 萬次觀看** 與 **920 小時觀看時數**，這就是影像賦能與 AI 策略的實證。</p>
             </div>
-            <div class="founder-card">
-                <div class="founder-name">K.C. (Peter)</div>
-                <div class="founder-desc">全方位行銷顧問 / AI 商業落地專家</div>
+            <div style="flex: 1; text-align: center;">
+                <p>掃碼諮詢您的 AI 轉型方案</p>
+                <img src="https://qr-official.line.me/gs/M_178maxda_BW.png?oat_content=qr" style="width: 150px;">
             </div>
         </div>
     </section>
 
-    <footer id="contact">
-        <div class="footer-qr">
-            <p>立即體驗 AI 智能客服</p>
-            <img src="https://qr-official.line.me/gs/M_178maxda_BW.png?oat_content=qr" alt="Line@ QR Code">
-        </div>
+    <footer>
         <p>Contact: brand.decoderai@gmail.com</p>
         <p>&copy; 2026 Brand Decoder Studio. All Rights Reserved.</p>
     </footer>
