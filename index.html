@@ -85,7 +85,6 @@
             text-align: center; padding: 0 20px; overflow: hidden;
         }
         
-        /* ★★★ 修正後的影片背景 CSS：整合強制顯示與視覺效果 ★★★ */
         .video-bg {
             position: absolute; 
             top: 0; 
@@ -93,10 +92,10 @@
             width: 100%; 
             height: 100%;
             object-fit: cover; 
-            z-index: -2; /* 放在 overlay (-1) 的後方 */
+            z-index: -2;
             opacity: 0.5; 
             filter: contrast(1.1);
-            /* 以下為您要求的強制顯示屬性 */
+            /* 強制顯示設定 */
             display: block !important; 
             visibility: visible !important;
         }
@@ -160,7 +159,7 @@
         .feature-box h4 { font-size: 1.2rem; margin-bottom: 10px; color: #fff; }
         .feature-box p { font-size: 0.9rem; color: var(--text-sub); }
 
-        /* --- 聊天室模擬 (Demo) --- */
+        /* --- 聊天室模擬 --- */
         .chat-demo-container { display: flex; justify-content: center; margin-top: 60px; }
         .chat-mockup {
             width: 100%; max-width: 400px; background: #fff; border-radius: 20px; overflow: hidden;
@@ -237,7 +236,7 @@
         .footer-qr img { width: 140px; border-radius: 5px; }
         .footer-qr p { color: var(--accent); margin-bottom: 10px; font-size: 1rem; font-weight: bold; }
 
-        /* --- RWD 手機版強制修正 --- */
+        /* --- RWD 手機版修正 --- */
         @media (max-width: 768px) {
             .section { padding: 60px 5%; }
             .services-grid, .portfolio-grid, .saas-features { grid-template-columns: 1fr; }
@@ -307,6 +306,119 @@
                     <h3><i class="fa-solid fa-chess-knight"></i> 全方位行銷顧問</h3>
                     <p>20 年電商實戰經驗，從策略端協助企業實現數位轉型與營收增長。</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ai-system" class="section" style="background: #0f0f0f;">
+        <div class="section-title"><span>AI 系統核心優勢</span></div>
+        <p style="text-align: center; color: #999; margin-bottom: 40px;">不只是聊天機器人，而是能聽懂需求、看懂圖片、主動成交的頂尖業務。</p>
+        
+        <div class="saas-features">
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fa-solid fa-eye"></i></div>
+                <h4>鷹眼視覺聯想</h4>
+                <p>客戶傳一張照片，AI 自動辨識並推薦相關產品。不懂產品名也能賣！</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fa-solid fa-users-gear"></i></div>
+                <h4>CRM 尊榮分級</h4>
+                <p>自動識別「陌生客」與「VIP」。看人說話，提供尊榮客製化服務。</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fa-solid fa-sync"></i></div>
+                <h4>數據自動同步</h4>
+                <p>官網上架新品，LINE 機器人 1 小時內自動學會。價格庫存零時差。</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fa-solid fa-bell"></i></div>
+                <h4>商機自動捕獲</h4>
+                <p>雙重偵測機制。當客戶留下電話，AI 立即通知管理員，絕不漏單。</p>
+            </div>
+        </div>
+
+        <div class="chat-demo-container">
+            <div class="chat-mockup">
+                <div class="chat-header">
+                    <img src="icon_01.png" style="width:30px; border-radius:50%;"> 
+                    品牌解碼室 AI
+                </div>
+                <div class="chat-body">
+                    <div class="msg user">我是 K.C.，我有 VIP 會員嗎？</div>
+                    <div class="msg bot">K.C.總 您好！很高興再次為您服務 ✨。<br>系統確認您是我們尊貴的 <b>VIP</b> 會員，享有全館 9 折優惠！</div>
+                    <div class="msg user">（傳送一張茶葉照片）<br><img src="https://images.unsplash.com/photo-1597481499750-3e6b22637e12?w=300" class="msg-img"></div>
+                    <div class="msg bot">這張照片的光澤很棒！看起來像是高海拔的烏龍茶。</div>
+                    <div class="msg-card">
+                        <img src="https://images.unsplash.com/photo-1563822249548-9a72b6353cd1?w=300" class="card-img">
+                        <div class="card-body">
+                            <b style="color:#000;">梨山高冷茶 | 頂級手採</b><br>
+                            <span style="color:#d62828; font-weight:bold;">NT$ 2,500</span>
+                        </div>
+                        <a href="#" class="card-btn">立即購買</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: #0a0a0a; border-top: 1px solid #1a1a1a; padding-bottom: 50px;">
+        <div class="section-title"><span>AI 客服導入品牌</span></div>
+        <div class="clients-container">
+            <div class="client-box">
+                <div class="client-logo-wrapper"><img src="chiayogalogo.jpg" alt="Chia-Yoga Studio"></div>
+                <h4>Chia-Yoga Studio</h4><p>預約制瑜珈空間</p>
+            </div>
+            <div class="client-box">
+                <div class="client-logo-wrapper"><img src="Dingin_goldlogo.png" alt="Dingin Tea"></div>
+                <h4>定迎高山茶</h4><p>頂級台灣茶葉品牌</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="section">
+        <div class="section-title"><span>SaaS 訂閱方案</span></div>
+        <div class="pricing-container">
+            <div class="price-card">
+                <h3 class="plan-title">企業標準版</h3>
+                <div class="price-tag">NT$ 1,999<span> / 月</span></div>
+                <ul class="features-list">
+                    <li><i class="fa-solid fa-brain"></i> AI 大腦 + RAG 知識庫</li>
+                    <li><i class="fa-solid fa-users"></i> CRM 會員分級功能</li>
+                </ul>
+                <a href="https://lin.ee/PfwQdP7" class="btn" style="border-radius: 50px;">立即訂閱</a>
+            </div>
+            <div class="price-card premium">
+                <div class="badge">熱門推薦</div>
+                <h3 class="plan-title gold">旗艦導購版</h3>
+                <div class="price-tag">NT$ 2,999<span> / 月</span></div>
+                <ul class="features-list">
+                    <li style="color:var(--accent);">包含標準版所有功能，再加上：</li>
+                    <li><i class="fa-solid fa-eye"></i> 鷹眼視覺聯想 & 智慧導購卡片</li>
+                </ul>
+                <a href="https://lin.ee/PfwQdP7" class="btn" style="border-radius: 50px;">立即升級</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="section" style="background: #0f0f0f;">
+        <div class="section-title"><span>實戰案例展示</span></div>
+        <div class="portfolio-grid">
+            <div class="video-card">
+                <div class="video-container"><iframe src="https://www.youtube.com/embed/zv4eaGMdVck" frameborder="0" allowfullscreen></iframe></div>
+                <div class="video-info"><h4>動態影像生成與 AI 應用</h4></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="about-studio">
+            <div class="studio-story">
+                <h3>品牌解碼室：商業影像的建築師</h3>
+                <p>科技是手段，變現才是真理。</p>
+            </div>
+            <div class="founder-card">
+                <div class="founder-name">K.C. (Peter)</div>
+                <div class="founder-desc">全方位行銷顧問 / AI 商業落地專家</div>
             </div>
         </div>
     </section>
