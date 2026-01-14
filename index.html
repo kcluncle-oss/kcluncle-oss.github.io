@@ -48,7 +48,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* LOGO 樣式設定 */
         .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
         .logo-icon {
             width: 45px; height: 45px; background: linear-gradient(145deg, #d4af37, #f9d976);
@@ -111,30 +110,28 @@
         /* --- 價格方案 Pricing --- */
         .pricing-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 0 auto; max-width: 1100px; }
         .price-card {
-            flex: 1; min-width: 300px; max-width: 350px; background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            flex: 1; min-width: 300px; max-width: 380px; background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
             border: 1px solid #333; border-radius: 15px; padding: 40px; text-align: center;
             position: relative; transition: 0.3s; display: flex; flex-direction: column;
         }
         .price-card:hover { transform: translateY(-5px); border-color: #555; }
         
-        /* 旗艦版特效 */
         .price-card.featured {
-            border: 2px solid var(--accent); transform: scale(1.05); z-index: 2;
-            background: linear-gradient(145deg, #222, #0f0f0f); box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+            border: 2px solid var(--accent); transform: scale(1.02); z-index: 2;
+            background: linear-gradient(145deg, #222, #0f0f0f); box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
         }
-        .price-card.featured:hover { transform: scale(1.05) translateY(-5px); }
+        .price-card.premium-green {
+            border: 2px solid var(--line-green); transform: scale(1.02); z-index: 2;
+            background: linear-gradient(145deg, #1a2e1a, #0a0a0a); box-shadow: 0 0 30px rgba(6, 199, 85, 0.15);
+        }
+        .price-card.featured:hover, .price-card.premium-green:hover { transform: scale(1.02) translateY(-5px); }
 
-        .price-tag { font-size: 2.5rem; font-weight: bold; color: #fff; margin: 20px 0 5px 0; }
-        .price-tag span { font-size: 1rem; color: #888; font-weight: normal; }
+        .price-tag { font-size: 2.2rem; font-weight: bold; color: #fff; margin: 15px 0; }
+        .price-tag span { font-size: 0.9rem; color: #888; font-weight: normal; }
         
-        .yearly-save {
-            color: var(--line-green); font-size: 0.9rem; font-weight: bold; margin-bottom: 30px;
-            background: rgba(6, 199, 85, 0.1); display: inline-block; padding: 5px 15px; border-radius: 20px;
-        }
-
-        .features-list { text-align: left; margin-bottom: 30px; flex-grow: 1; list-style: none; }
-        .features-list li { margin-bottom: 12px; color: #ccc; font-size: 0.95rem; display: flex; align-items: flex-start; gap: 10px; }
-        .features-list i { color: var(--accent); margin-top: 4px; }
+        .features-list { text-align: left; margin: 20px 0 30px 0; flex-grow: 1; list-style: none; }
+        .features-list li { margin-bottom: 12px; color: #ccc; font-size: 0.9rem; display: flex; align-items: flex-start; gap: 8px; }
+        .features-list i { color: var(--accent); margin-top: 5px; font-size: 0.8rem; }
         
         .badge {
             position: absolute; top: 20px; right: -35px; background: var(--accent); color: #000;
@@ -151,31 +148,56 @@
         .video-info h4 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
         .video-info p { color: var(--accent); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- 關於我們 --- */
-        .about-studio { background: linear-gradient(145deg, #111, #1a1a1a); padding: 60px; border-radius: 10px; border-left: 5px solid var(--accent); display: flex; gap: 40px; flex-wrap: wrap; align-items: center; }
-        .studio-story h3 { font-size: 2rem; margin-bottom: 20px; color: #fff; }
+        /* --- 關於我們 (RWD 修復) --- */
+        .about-studio {
+            background: linear-gradient(145deg, #111, #1a1a1a);
+            padding: 60px;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent);
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap; /* 允許換行 */
+            align-items: center;
+        }
+        .about-content { flex: 2; min-width: 300px; }
+        .about-qr { flex: 1; text-align: center; }
         
+        .about-studio h3 { font-size: 2rem; margin-bottom: 20px; color: #fff; }
+        .about-studio p { color: #ccc; font-size: 1rem; line-height: 1.6; }
+
         /* --- 頁尾 --- */
         footer { text-align: center; padding: 50px 20px; background: #050505; border-top: 1px solid #222; color: #555; font-size: 0.9rem; }
         .footer-qr img { width: 140px; margin-top: 20px; border: 1px solid var(--accent); padding: 5px; border-radius: 5px; }
 
-        /* --- RWD 手機版 --- */
+        /* --- RWD 手機版強制修正 (關鍵修改) --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.8rem; }
             .section { padding: 60px 5%; }
             nav { display: none; }
-            .price-card.featured { transform: scale(1); width: 100%; margin: 20px 0; }
-            .price-card { width: 100%; }
-            .video-bg { display: none; } 
-            .hero { background: #111; }
-            .about-studio { flex-direction: column; text-align: center; }
+            
+            /* 價格卡片手機版設定 */
+            .pricing-container { flex-direction: column; align-items: center; }
+            .price-card, .price-card.featured, .price-card.premium-green { width: 100%; max-width: 100%; margin-bottom: 20px; transform: none; }
+            
+            /* 關於我們手機版設定 */
+            .about-studio {
+                flex-direction: column; /* 垂直排列 */
+                text-align: center;
+                padding: 40px 20px;
+                border-left: none; /* 移除左邊框 */
+                border-top: 5px solid var(--accent); /* 改為上方邊框 */
+                gap: 30px;
+            }
+            .about-content { min-width: 100%; }
+            
+            /* 影片 */
+            .video-bg { display: block; } /* 保持影片顯示，若太卡可改 none */
         }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- 👇 LOGO 已修改為連結 -->
         <a href="https://branddecoder-studio.github.io/" class="logo-container">
             <div class="logo-icon">BD</div>
             <div class="logo-text">BRAND <span>DECODER</span></div>
@@ -244,7 +266,7 @@
         </div>
     </section>
 
-    <!-- 價格方案區 (邏輯優化版) -->
+    <!-- 價格方案區 -->
     <section id="pricing" class="section">
         <div class="section-title"><span>SaaS 合作方案</span></div>
         <p style="text-align: center; color: #999; margin-bottom: 50px;">
@@ -254,7 +276,7 @@
         
         <div class="pricing-container">
             
-            <!-- 卡片 1: 首次建置 (入口) -->
+            <!-- 卡片 1: 建置方案 -->
             <div class="price-card featured">
                 <div class="badge" style="background:#d4af37; color:#000;">新手必選</div>
                 <h3 style="color:var(--accent);">專業建置方案</h3>
@@ -272,7 +294,7 @@
                 <a href="https://p.ecpay.com.tw/D1FF015" target="_blank" class="btn" style="border-radius: 50px;">立即下單建置</a>
             </div>
 
-            <!-- 卡片 2: 標準版 (續約) -->
+            <!-- 卡片 2: 標準版 -->
             <div class="price-card">
                 <h3 style="color:#fff;">智能客服 - 標準版</h3>
                 <p style="color:#888; font-size:0.9rem;">建置後次月開始繳費</p>
@@ -281,25 +303,26 @@
                 <ul class="features-list">
                     <li><i class="fa-solid fa-check"></i> Gemini 2.0 AI 核心</li>
                     <li><i class="fa-solid fa-check"></i> RAG 專業知識庫</li>
-                    <li><i class="fa-solid fa-check"></i> CRM 會員分級管理</li>
-                    <li><i class="fa-solid fa-check"></i> Google Maps 導航</li>
+                    <li><i class="fa-solid fa-check"></i> LINE 自動化接單</li>
+                    <li><i class="fa-solid fa-users"></i> CRM 會員分級管理</li>
+                    <li><i class="fa-solid fa-map-location-dot"></i> Google Maps 導航</li>
                 </ul>
 
                 <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
-                    <a href="https://p.ecpay.com.tw/36EB9E9" target="_blank" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid #555; color: #fff; padding: 10px;">月繳訂閱</a>
-                    <a href="https://p.ecpay.com.tw/6B32233" target="_blank" class="btn" style="border-radius: 50px; padding: 10px; font-size:0.9rem; background: rgba(255,255,255,0.1);">年繳優惠 $20,000 (省$3,988)</a>
+                    <a href="https://p.ecpay.com.tw/36EB9E9" target="_blank" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid #555; color: #fff; padding: 8px;">月繳訂閱</a>
+                    <a href="https://p.ecpay.com.tw/6B32233" target="_blank" class="btn" style="border-radius: 50px; padding: 8px; font-size:0.85rem; background: rgba(255,255,255,0.1);">年繳優惠 $20,000 (省$3,988)</a>
                 </div>
             </div>
 
-            <!-- 卡片 3: 進階版 (Upsell) -->
-            <div class="price-card" style="border: 1px solid var(--line-green);">
+            <!-- 卡片 3: 進階版 -->
+            <div class="price-card premium-green">
                 <div class="badge" style="background:var(--line-green); color:#fff; width:150px; right:-40px;">功能最強</div>
                 <h3 style="color:var(--line-green);">智能客服 - 進階版</h3>
                 <p style="color:#888; font-size:0.9rem;">全自動化與數據賦能</p>
                 <div class="price-tag">NT$ 2,999<span> / 月</span></div>
                 
                 <ul class="features-list">
-                    <li style="color: #fff; font-weight: bold; margin-bottom:15px;">包含標準版所有功能，再加上：</li>
+                    <li style="color: #fff; font-weight: bold; margin-bottom:15px; border-bottom: 1px solid #333; padding-bottom:5px;">包含標準版功能，再加上：</li>
                     <li><i class="fa-solid fa-chart-line"></i> <b>報表分析模組</b></li>
                     <li><i class="fa-solid fa-cart-shopping"></i> <b>LINE 自動導購模組</b></li>
                     <li><i class="fa-solid fa-clock-rotate-left"></i> <b>商品定時更新模組</b></li>
@@ -307,20 +330,21 @@
                 </ul>
 
                 <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
-                    <a href="#" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid var(--line-green); color: var(--line-green); padding: 10px;">月繳訂閱</a>
-                    <a href="#" class="btn" style="border-radius: 50px; padding: 10px; font-size:0.9rem; background: rgba(6, 199, 85, 0.2); color:white;">年繳優惠 $30,000 (含優先支援)</a>
+                    <a href="#" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid var(--line-green); color: var(--line-green); padding: 8px;">月繳訂閱</a>
+                    <a href="#" class="btn" style="border-radius: 50px; padding: 8px; font-size:0.85rem; background: rgba(6, 199, 85, 0.2); color:white;">年繳優惠 $30,000 (含優先支援)</a>
                 </div>
             </div>
 
         </div>
     </section>
 
+    <!-- 精選作品 -->
     <section id="portfolio" class="section" style="background: #0f0f0f;">
         <div class="section-title"><span>實戰案例展示</span></div>
         <div class="portfolio-grid">
             <div class="video-card">
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/1FVlNQG60Qs" title="Demo Video 1" frameborder="0" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/LXb3EKWsInQ" title="Demo Video 1" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
                     <p>AI Application</p>
@@ -329,7 +353,7 @@
             </div>
             <div class="video-card">
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/zv4eaGMdVck" title="Demo Video 2" frameborder="0" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk" title="Demo Video 2" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
                     <p>Brand Commercial</p>
@@ -339,13 +363,14 @@
         </div>
     </section>
 
+    <!-- 關於我們 (RWD 修復版) -->
     <section class="section">
         <div class="about-studio">
-            <div style="flex: 2; min-width: 300px;">
+            <div class="about-content">
                 <h3 style="font-size: 2rem; margin-bottom: 20px; color:#fff;">品牌解碼室：K.C. Peter</h3>
                 <p style="color:#ccc;">在 AI 浪潮中，我們不只是工具的操作者，更是您商業策略的戰略夥伴。目前頻道已達成 **1.7 萬次觀看** 與 **920 小時觀看時數**，這就是影像賦能與 AI 策略的實證。</p>
             </div>
-            <div style="flex: 1; text-align: center;">
+            <div class="about-qr">
                 <p style="color:var(--accent); font-weight:bold; margin-bottom:15px;">掃碼諮詢您的 AI 轉型方案</p>
                 <img src="https://qr-official.line.me/gs/M_178maxda_BW.png?oat_content=qr" style="width: 150px; border:1px solid #333; border-radius:10px; padding:5px;">
             </div>
