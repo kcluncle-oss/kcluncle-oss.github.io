@@ -96,25 +96,16 @@
         .section-title span { border-bottom: 3px solid var(--accent); padding-bottom: 10px; display: inline-block; }
 
         /* --- 業務與功能 --- */
-        .services-grid, .saas-features, .clients-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .service-card, .feature-box, .client-card {
+        .services-grid, .saas-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card, .feature-box {
             background: var(--card-bg); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); 
             padding: 30px; transition: 0.3s;
         }
-        .service-card:hover, .feature-box:hover, .client-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .service-card:hover, .feature-box:hover { transform: translateY(-10px); border-color: var(--accent); }
         .service-img { width: 100%; height: 200px; object-fit: cover; margin-bottom: 20px; border-bottom: 3px solid var(--accent); }
-        
         .feature-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 15px; text-align: center; }
         .feature-box h4 { text-align: center; color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
         .feature-box p { text-align: center; color: var(--text-sub); font-size: 0.9rem; }
-
-        /* --- 合作客戶 (Clients) --- */
-        .client-card { text-align: center; position: relative; overflow: hidden; }
-        .client-card h3 { color: #fff; margin-bottom: 10px; font-size: 1.5rem; }
-        .client-tag { 
-            display: inline-block; padding: 5px 15px; border-radius: 20px; 
-            font-size: 0.8rem; background: rgba(212, 175, 55, 0.2); color: var(--accent); margin-top: 10px;
-        }
 
         /* --- 價格方案 Pricing --- */
         .pricing-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 0 auto; max-width: 1100px; }
@@ -157,7 +148,7 @@
         .video-info h4 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
         .video-info p { color: var(--accent); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- 關於我們 --- */
+        /* --- 關於我們 (RWD 修復) --- */
         .about-studio {
             background: linear-gradient(145deg, #111, #1a1a1a);
             padding: 60px;
@@ -178,14 +169,17 @@
         footer { text-align: center; padding: 50px 20px; background: #050505; border-top: 1px solid #222; color: #555; font-size: 0.9rem; }
         .footer-qr img { width: 140px; margin-top: 20px; border: 1px solid var(--accent); padding: 5px; border-radius: 5px; }
 
-        /* --- RWD 手機版 --- */
+        /* --- RWD 手機版強制修正 (關鍵修改) --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.8rem; }
             .section { padding: 60px 5%; }
             nav { display: none; }
+            
+            /* 價格卡片手機版設定 */
             .pricing-container { flex-direction: column; align-items: center; }
             .price-card, .price-card.featured, .price-card.premium-green { width: 100%; max-width: 100%; margin-bottom: 20px; transform: none; }
             
+            /* 關於我們手機版設定 */
             .about-studio {
                 flex-direction: column; /* 垂直排列 */
                 text-align: center;
@@ -196,7 +190,8 @@
             }
             .about-content { min-width: 100%; }
             
-            .video-bg { display: block; }
+            /* 影片 */
+            .video-bg { display: block; } /* 保持影片顯示，若太卡可改 none */
         }
     </style>
 </head>
@@ -210,7 +205,6 @@
         <nav>
             <ul>
                 <li><a href="#services">核心業務</a></li>
-                <li><a href="#clients">合作客戶</a></li>
                 <li><a href="#ai-system">AI 系統</a></li>
                 <li><a href="#pricing">方案連結</a></li>
                 <li><a href="#portfolio">精選案例</a></li>
@@ -250,26 +244,7 @@
         </div>
     </section>
 
-    <!-- 🔥 NEW: 合作客戶展示區 -->
-    <section id="clients" class="section" style="background: #0f0f0f;">
-        <div class="section-title"><span>SaaS 導入案例</span></div>
-        <div class="clients-grid">
-            <div class="client-card">
-                <h3 style="color:var(--line-green);"><i class="fa-solid fa-leaf"></i> 定迎茶葉</h3>
-                <p style="color:#bbb;">台灣頂級高山茶品牌</p>
-                <div class="client-tag">鷹眼視覺聯想</div>
-                <div class="client-tag">官網自動同步</div>
-            </div>
-            <div class="client-card">
-                <h3 style="color:#ff9f43;"><i class="fa-solid fa-spa"></i> Chia Yoga</h3>
-                <p style="color:#bbb;">專業瑜珈與身心靈空間</p>
-                <div class="client-tag">課程預約引導</div>
-                <div class="client-tag">CRM 會員分級</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="ai-system" class="section">
+    <section id="ai-system" class="section" style="background: #0f0f0f;">
         <div class="section-title"><span>AI 系統核心優勢</span></div>
         <p style="text-align: center; color: #999; margin-bottom: 40px;">不只是聊天機器人，而是能聽懂需求、看懂圖片、主動成交的頂尖業務。</p>
         <div class="saas-features">
@@ -292,7 +267,7 @@
     </section>
 
     <!-- 價格方案區 -->
-    <section id="pricing" class="section" style="background: #0f0f0f;">
+    <section id="pricing" class="section">
         <div class="section-title"><span>SaaS 合作方案</span></div>
         <p style="text-align: center; color: #999; margin-bottom: 50px;">
             <span style="color:var(--accent); font-weight:bold;">Step 1.</span> 選擇建置方案 (首次必選) &nbsp; ➔ &nbsp; 
@@ -328,7 +303,7 @@
                 <ul class="features-list">
                     <li><i class="fa-solid fa-check"></i> Gemini 2.0 AI 核心</li>
                     <li><i class="fa-solid fa-check"></i> RAG 專業知識庫</li>
-                    <li><i class="fa-solid fa-check"></i> LINE 自動化接單</li>
+                    <!-- 已移除 LINE 自動化接單 -->
                     <li><i class="fa-solid fa-users"></i> CRM 會員分級管理</li>
                     <li><i class="fa-solid fa-map-location-dot"></i> Google Maps 導航</li>
                 </ul>
@@ -355,8 +330,8 @@
                 </ul>
 
                 <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
-                    <a href="https://www.ecpay.com.tw/" target="_blank" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid var(--line-green); color: var(--line-green); padding: 8px;">月繳訂閱</a>
-                    <a href="https://www.ecpay.com.tw/" target="_blank" class="btn" style="border-radius: 50px; padding: 8px; font-size:0.85rem; background: rgba(6, 199, 85, 0.2); color:white;">年繳優惠 $30,000 (含優先支援)</a>
+                    <a href="https://p.ecpay.com.tw/6E54605" target="_blank" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid var(--line-green); color: var(--line-green); padding: 8px;">月繳訂閱</a>
+                    <a href="https://p.ecpay.com.tw/C109162" target="_blank" class="btn" style="border-radius: 50px; padding: 8px; font-size:0.85rem; background: rgba(6, 199, 85, 0.2); color:white;">年繳優惠 $30,000 (含優先支援)</a>
                 </div>
             </div>
 
@@ -364,12 +339,12 @@
     </section>
 
     <!-- 精選作品 -->
-    <section id="portfolio" class="section">
+    <section id="portfolio" class="section" style="background: #0f0f0f;">
         <div class="section-title"><span>實戰案例展示</span></div>
         <div class="portfolio-grid">
             <div class="video-card">
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/zv4eaGMdVck" title="Demo Video 1" frameborder="0" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/zv4eaGMdVck" title="AI Application Demo" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
                     <p>AI Application</p>
@@ -378,7 +353,7 @@
             </div>
             <div class="video-card">
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/3NR9cll28bM" title="Demo Video 2" frameborder="0" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/3NR9cll28bM" title="Brand Commercial" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
                     <p>Brand Commercial</p>
@@ -388,12 +363,12 @@
         </div>
     </section>
 
-    <!-- 關於我們 (RWD 修復版) -->
-    <section class="section" style="background: #0f0f0f;">
+    <!-- 關於我們 -->
+    <section class="section">
         <div class="about-studio">
             <div class="about-content">
                 <h3 style="font-size: 2rem; margin-bottom: 20px; color:#fff;">品牌解碼室：K.C. Peter</h3>
-                <p style="color:#ccc;">在 AI 浪潮中，我們不只是工具的操作者，更是您商業策略的戰略夥伴。目前頻道已達成 **1.7 萬次觀看** 與 **920 小時觀看時數**，這就是影像賦能與 AI 策略的實證。</p>
+                <p style="color:#ccc;">在 AI 浪潮中，我們不只是工具的操作者，更是您商業策略的戰略夥伴。品牌解碼室YT頻道於2025年12月開台，僅不到一個月時間，達成1000小時觀看時數，這就是影像賦能與 AI 策略的實證。</p>
             </div>
             <div class="about-qr">
                 <p style="color:var(--accent); font-weight:bold; margin-bottom:15px;">掃碼諮詢您的 AI 轉型方案</p>
