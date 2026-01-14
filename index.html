@@ -1,28 +1,47 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
-<head>
+<html lang="zh-Hant"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>品牌解碼室 | Brand Decoder - AI 賦能與商業策略專家</title>
     
-    <link rel="icon" href="icon_01.png" type="image/png">
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="品牌解碼室 (Brand Decoder) 由 K.C. (Peter) 創立，整合 Gemini 2.0 AI 影像賦能、智能客服與商業策略。提供從視覺製作到營收變現的一站式解決方案。">
-    <meta name="keywords" content="品牌解碼室, Brand Decoder, AI行銷, 智能客服, K.C., Peter, 商業策略, 品牌顧問, 數位轉型, LINE機器人, SaaS系統">
+    <title>品牌解碼室 | Brand Decoder - AI 影像賦能與 LINE 智能客服專家</title>
+    <meta name="description" content="品牌解碼室提供 4A 等級 AI 影像賦能、LINE 智能客服系統開發及商業策略顧問。協助企業解決視覺貧窮，打造自動化獲利閉環，引領 AI 轉型商機。">
+    <meta name="keywords" content="品牌解碼室, Brand Decoder, AI 影像賦能, LINE 智能客服, Gemini 2.0, 商業策略顧問, 品牌解碼, AI 轉型, K.C. Peter">
     <meta name="author" content="Brand Decoder Studio">
 
-    <!-- Open Graph for Social Media -->
+    <link rel="canonical" href="https://branddecoder-studio.github.io/" />
+    <link rel="icon" href="icon_01.png" type="image/png">
+    
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://branddecoder-studio.github.io/">
-    <meta property="og:title" content="品牌解碼室 | AI 賦能與商業策略專家">
-    <meta property="og:description" content="拒絕視覺貧窮，打造獲利閉環。我們提供 AI 影像製作、24/7 智能客服與全方位行銷諮詢。立即體驗未來的商業模式。">
-    <meta property="og:image" content="AIOptimization_AIO_01.jpg"> 
+    <meta property="og:title" content="品牌解碼室 | 拒絕視覺貧窮，解碼 AI 獲利閉環">
+    <meta property="og:description" content="一站式 AI 解決方案，整合 Gemini 2.0 視覺技術與導購大腦。讓 AI 成為您的超級業務員。">
+    <meta property="og:image" content="https://branddecoder-studio.github.io/AIOptimization_AIO_01.jpg"> 
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "品牌解碼室 AI 解決方案",
+      "serviceType": "AI 影像賦能與商業策略顧問",
+      "provider": {
+        "@type": "LocalBusiness",
+        "name": "Brand Decoder Studio 品牌解碼室",
+        "url": "https://branddecoder-studio.github.io/",
+        "image": "https://branddecoder-studio.github.io/AIOptimization_AIO_01.jpg"
+      },
+      "offers": {
+        "@type": "AggregateOffer",
+        "lowPrice": "1999",
+        "highPrice": "9999",
+        "priceCurrency": "TWD"
+      }
+    }
+    </script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* --- 全域設定：黑金極簡奢華風 --- */
+        /* --- 全域設定：黑金極簡奢華風 (保持原樣，僅優化字體渲染) --- */
         :root {
             --bg-color: #0a0a0a;
             --card-bg: rgba(20, 20, 20, 0.9);
@@ -33,7 +52,7 @@
             --line-green: #06c755;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, 'Microsoft JhengHei', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, 'Noto Sans TC', 'Microsoft JhengHei', sans-serif; -webkit-font-smoothing: antialiased; }
         html { scroll-behavior: smooth; }
         body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
@@ -95,7 +114,7 @@
         .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 60px; }
         .section-title span { border-bottom: 3px solid var(--accent); padding-bottom: 10px; display: inline-block; }
 
-        /* --- 業務與功能 --- */
+        /* --- 業務與功能 (優化圖片邊框渲染) --- */
         .services-grid, .saas-features, .cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
         .service-card, .feature-box, .case-card {
             background: var(--card-bg); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); 
@@ -107,7 +126,7 @@
         .feature-box h4 { text-align: center; color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
         .feature-box p { text-align: center; color: var(--text-sub); font-size: 0.9rem; }
 
-        /* --- 成功案例 Cases (NEW) --- */
+        /* --- 成功案例 Cases --- */
         .case-card { text-align: left; position: relative; overflow: hidden; }
         .case-tag { 
             display: inline-block; background: rgba(212, 175, 55, 0.2); color: var(--accent); 
@@ -183,8 +202,7 @@
 
     <header>
         <a href="https://branddecoder-studio.github.io/" class="logo-container">
-            <h2 class="logo-icon">BD</h2>
-            <h2 class="logo-text">BRAND <span>DECODER</span></h2>
+            <div class="logo-icon">BD</div> <h2 class="logo-text">BRAND <span>DECODER</span></h2>
         </a>
         <nav>
             <ul>
@@ -211,19 +229,19 @@
         <h2 class="section-title"><span>三大核心業務</span></h2>
         <div class="services-grid">
             <div class="service-card">
-                <img src="AIOptimization_AIO_01.jpg" class="service-img" alt="AI Image">
+                <img src="AIOptimization_AIO_01.jpg" class="service-img" alt="品牌解碼室-AI影像賦能-4A廣告級視覺資產">
                 <h3><i class="fa-solid fa-wand-magic-sparkles"></i> AI 影像賦能</h3>
                 <p>運用 Gemini 2.0 與先進視覺技術，產出 4A 廣告級高品質資產，解決視覺貧窮。</p>
             </div>
             <div class="service-card">
-                <img src="AILINEBanner_01.jpg" class="service-img" alt="AI CS">
+                <img src="AILINEBanner_01.jpg" class="service-img" alt="LINE智能客服系統-Gemini-AI導購大腦">
                 <h3><i class="fa-solid fa-headset"></i> 智能客服系統</h3>
                 <p>具備導購大腦的 24/7 超級業務員，自動化處理訂單與高階客戶諮詢。</p>
             </div>
             <div class="service-card">
-                <img src="Digital_Marketing_Consultant_01.jpg" class="service-img" alt="Consultant">
+                <img src="Digital_Marketing_Consultant_01.jpg" class="service-img" alt="品牌解碼商業策略顧問-KCPeter實戰經驗">
                 <h3><i class="fa-solid fa-chess-knight"></i> 商業策略顧問</h3>
-                <p>20 年實戰經驗，從營收增長到品牌解碼，為企業打造專屬變現閉環。</p>
+                <p>20 年實戰經驗，從營收增長到 brand 品牌解碼，為企業打造專屬變現閉環。</p>
             </div>
         </div>
     </section>
@@ -250,12 +268,9 @@
         </div>
     </section>
 
-    <!-- 🔥 NEW: 合作案例區 (Client Cases) -->
     <section id="cases" class="section">
         <h2 class="section-title"><span>成功導入案例</span></h2>
         <div class="cases-grid">
-            
-            <!-- 案例 1: 定迎茶葉 -->
             <div class="case-card">
                 <div class="case-tag">零售電商</div>
                 <h3>定迎有限公司</h3>
@@ -265,8 +280,6 @@
                     AI 導購模組讓我們的茶葉不再只是商品，而是有溫度的推薦。
                 </div>
             </div>
-
-            <!-- 案例 2: Chia Yoga -->
             <div class="case-card">
                 <div class="case-tag">運動休閒</div>
                 <h3>Chia Yoga Studio</h3>
@@ -276,8 +289,6 @@
                     24小時自動回覆學員問題，大幅降低了櫃檯人員的工作負擔。
                 </div>
             </div>
-
-            <!-- 案例 3: 品牌解碼 -->
             <div class="case-card">
                 <div class="case-tag">專業顧問</div>
                 <h3>品牌解碼室</h3>
@@ -287,11 +298,9 @@
                     商機通報功能讓我們不錯過任何一個潛在的大型合作案。
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- 價格方案區 -->
     <section id="pricing" class="section">
         <h2 class="section-title"><span>SaaS 合作方案</span></h2>
         <p style="text-align: center; color: #999; margin-bottom: 50px;">
@@ -300,14 +309,11 @@
         </p>
         
         <div class="pricing-container">
-            
-            <!-- 卡片 1: 建置方案 -->
             <div class="price-card featured">
-                <div class="badge" style="background:#d4af37; color:#000;">新手必選</div>
+                <div class="badge">新手必選</div>
                 <h3 style="color:var(--accent);">專業建置方案</h3>
                 <p style="color:#888; font-size:0.9rem;">新客戶首次導入專用</p>
                 <div class="price-tag">NT$ 9,999<span style="font-size: 0.8rem; display:block; margin-top:5px;">(一次性費用)</span></div>
-                
                 <ul class="features-list">
                     <li style="color: var(--text-main); font-weight: bold; border-bottom: 1px dashed #555; padding-bottom:10px; margin-bottom:15px;">
                         <i class="fa-solid fa-gift" style="color:#ff4757;"></i> 贈送標準版首月訂閱 (值$1,999)
@@ -319,34 +325,28 @@
                 <a href="https://p.ecpay.com.tw/D1FF015" target="_blank" class="btn" style="border-radius: 50px;">立即下單建置</a>
             </div>
 
-            <!-- 卡片 2: 標準版 -->
             <div class="price-card">
                 <h3 style="color:#fff;">智能客服 - 標準版</h3>
                 <p style="color:#888; font-size:0.9rem;">建置後次月開始繳費</p>
                 <div class="price-tag">NT$ 1,999<span> / 月</span></div>
-                
                 <ul class="features-list">
                     <li><i class="fa-solid fa-check"></i> Gemini 2.0 AI 核心</li>
                     <li><i class="fa-solid fa-check"></i> RAG 專業知識庫</li>
-                    <!-- 強調「即時」與「通知」 -->
-<li style="color: #fff; font-weight:bold;"><i class="fa-solid fa-bell" style="color:var(--accent);"></i> LINE商機即時推播通知</li>
+                    <li style="color: #fff; font-weight:bold;"><i class="fa-solid fa-bell" style="color:var(--accent);"></i> LINE商機即時推播通知</li>
                     <li><i class="fa-solid fa-users"></i> CRM 會員分級管理</li>
                     <li><i class="fa-solid fa-map-location-dot"></i> Google Maps 導航</li>
                 </ul>
-
                 <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
                     <a href="https://p.ecpay.com.tw/36EB9E9" target="_blank" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid #555; color: #fff; padding: 8px;">月繳訂閱</a>
                     <a href="https://p.ecpay.com.tw/6B32233" target="_blank" class="btn" style="border-radius: 50px; padding: 8px; font-size:0.85rem; background: rgba(255,255,255,0.1);">年繳優惠 $20,000 (省$3,988)</a>
                 </div>
             </div>
 
-            <!-- 卡片 3: 進階版 -->
             <div class="price-card premium-green">
                 <div class="badge" style="background:var(--line-green); color:#fff; width:150px; right:-40px;">功能最強</div>
                 <h3 style="color:var(--line-green);">智能客服 - 進階版</h3>
                 <p style="color:#888; font-size:0.9rem;">全自動化與數據賦能</p>
                 <div class="price-tag">NT$ 2,999<span> / 月</span></div>
-                
                 <ul class="features-list">
                     <li style="color: #fff; font-weight: bold; margin-bottom:15px; border-bottom: 1px solid #333; padding-bottom:5px;">包含標準版功能，再加上：</li>
                     <li><i class="fa-solid fa-chart-line"></i> <b>報表分析模組</b></li>
@@ -354,23 +354,20 @@
                     <li><i class="fa-solid fa-clock-rotate-left"></i> <b>商品定時更新模組</b></li>
                     <li><i class="fa-solid fa-eye"></i> <b>鷹眼視覺系統</b></li>
                 </ul>
-
                 <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
                     <a href="https://p.ecpay.com.tw/6E54605" target="_blank" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid var(--line-green); color: var(--line-green); padding: 8px;">月繳訂閱</a>
                     <a href="https://p.ecpay.com.tw/C109162" target="_blank" class="btn" style="border-radius: 50px; padding: 8px; font-size:0.85rem; background: rgba(6, 199, 85, 0.2); color:white;">年繳優惠 $30,000 (含優先支援)</a>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- 精選作品 -->
     <section id="portfolio" class="section" style="background: #0f0f0f;">
         <h2 class="section-title"><span>實戰案例展示</span></h2>
         <div class="portfolio-grid">
             <div class="video-card">
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/zv4eaGMdVck" title="AI Application Demo" frameborder="0" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/zv4eaGMdVck" title="AI 影像賦能應用展示 - 品牌解碼室" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
                     <p>AI Application</p>
@@ -379,7 +376,7 @@
             </div>
             <div class="video-card">
                 <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/3NR9cll28bM" title="Brand Commercial" frameborder="0" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/3NR9cll28bM" title="品牌形象專案解碼 - 品牌解碼室" frameborder="0" allowfullscreen></iframe>
                 </div>
                 <div class="video-info">
                     <p>Brand Commercial</p>
@@ -389,7 +386,6 @@
         </div>
     </section>
 
-    <!-- 關於我們 -->
     <section class="section">
         <div class="about-studio">
             <div class="about-content">
@@ -398,7 +394,7 @@
             </div>
             <div class="about-qr">
                 <p style="color:var(--accent); font-weight:bold; margin-bottom:15px;">掃碼諮詢您的 AI 轉型方案</p>
-                <img src="https://qr-official.line.me/gs/M_178maxda_BW.png?oat_content=qr" style="width: 150px; border:1px solid #333; border-radius:10px; padding:5px;">
+                <img src="https://qr-official.line.me/gs/M_178maxda_BW.png?oat_content=qr" alt="品牌解碼室官方LINE QR Code">
             </div>
         </div>
     </section>
