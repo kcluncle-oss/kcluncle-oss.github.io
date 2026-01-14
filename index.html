@@ -96,16 +96,26 @@
         .section-title span { border-bottom: 3px solid var(--accent); padding-bottom: 10px; display: inline-block; }
 
         /* --- 業務與功能 --- */
-        .services-grid, .saas-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        .service-card, .feature-box {
+        .services-grid, .saas-features, .cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .service-card, .feature-box, .case-card {
             background: var(--card-bg); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); 
             padding: 30px; transition: 0.3s;
         }
-        .service-card:hover, .feature-box:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .service-card:hover, .feature-box:hover, .case-card:hover { transform: translateY(-10px); border-color: var(--accent); }
         .service-img { width: 100%; height: 200px; object-fit: cover; margin-bottom: 20px; border-bottom: 3px solid var(--accent); }
         .feature-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 15px; text-align: center; }
         .feature-box h4 { text-align: center; color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
         .feature-box p { text-align: center; color: var(--text-sub); font-size: 0.9rem; }
+
+        /* --- 成功案例 Cases (NEW) --- */
+        .case-card { text-align: left; position: relative; overflow: hidden; }
+        .case-tag { 
+            display: inline-block; background: rgba(212, 175, 55, 0.2); color: var(--accent); 
+            padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 15px; font-weight: bold;
+        }
+        .case-card h3 { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+        .case-card p { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 15px; }
+        .case-highlight { border-left: 3px solid var(--accent); padding-left: 15px; margin-top: 15px; font-style: italic; color: #ddd; }
 
         /* --- 價格方案 Pricing --- */
         .pricing-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 0 auto; max-width: 1100px; }
@@ -148,50 +158,24 @@
         .video-info h4 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
         .video-info p { color: var(--accent); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- 關於我們 (RWD 修復) --- */
-        .about-studio {
-            background: linear-gradient(145deg, #111, #1a1a1a);
-            padding: 60px;
-            border-radius: 10px;
-            border-left: 5px solid var(--accent);
-            display: flex;
-            gap: 40px;
-            flex-wrap: wrap; /* 允許換行 */
-            align-items: center;
-        }
-        .about-content { flex: 2; min-width: 300px; }
-        .about-qr { flex: 1; text-align: center; }
+        /* --- 關於我們 --- */
+        .about-studio { background: linear-gradient(145deg, #111, #1a1a1a); padding: 60px; border-radius: 10px; border-left: 5px solid var(--accent); display: flex; gap: 40px; flex-wrap: wrap; align-items: center; }
+        .studio-story h3 { font-size: 2rem; margin-bottom: 20px; color: #fff; }
         
-        .about-studio h3 { font-size: 2rem; margin-bottom: 20px; color: #fff; }
-        .about-studio p { color: #ccc; font-size: 1rem; line-height: 1.6; }
-
         /* --- 頁尾 --- */
         footer { text-align: center; padding: 50px 20px; background: #050505; border-top: 1px solid #222; color: #555; font-size: 0.9rem; }
         .footer-qr img { width: 140px; margin-top: 20px; border: 1px solid var(--accent); padding: 5px; border-radius: 5px; }
 
-        /* --- RWD 手機版強制修正 (關鍵修改) --- */
+        /* --- RWD 手機版 --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.8rem; }
             .section { padding: 60px 5%; }
             nav { display: none; }
-            
-            /* 價格卡片手機版設定 */
             .pricing-container { flex-direction: column; align-items: center; }
             .price-card, .price-card.featured, .price-card.premium-green { width: 100%; max-width: 100%; margin-bottom: 20px; transform: none; }
-            
-            /* 關於我們手機版設定 */
-            .about-studio {
-                flex-direction: column; /* 垂直排列 */
-                text-align: center;
-                padding: 40px 20px;
-                border-left: none; /* 移除左邊框 */
-                border-top: 5px solid var(--accent); /* 改為上方邊框 */
-                gap: 30px;
-            }
-            .about-content { min-width: 100%; }
-            
-            /* 影片 */
-            .video-bg { display: block; } /* 保持影片顯示，若太卡可改 none */
+            .video-bg { display: none; } 
+            .hero { background: #111; }
+            .about-studio { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -206,8 +190,8 @@
             <ul>
                 <li><a href="#services">核心業務</a></li>
                 <li><a href="#ai-system">AI 系統</a></li>
+                <li><a href="#cases">合作案例</a></li>
                 <li><a href="#pricing">方案連結</a></li>
-                <li><a href="#portfolio">精選案例</a></li>
             </ul>
         </nav>
     </header>
@@ -266,6 +250,47 @@
         </div>
     </section>
 
+    <!-- 🔥 NEW: 合作案例區 (Client Cases) -->
+    <section id="cases" class="section">
+        <div class="section-title"><span>成功導入案例</span></div>
+        <div class="cases-grid">
+            
+            <!-- 案例 1: 定迎茶葉 -->
+            <div class="case-card">
+                <div class="case-tag">零售電商</div>
+                <h3>定迎有限公司</h3>
+                <p>台灣頂級茶葉品牌，運用 AI 鷹眼視覺技術，讓客戶「拍茶葉、找好茶」，實現線上品茗體驗。</p>
+                <div class="case-highlight">
+                    <i class="fa-solid fa-quote-left"></i> 
+                    AI 導購模組讓我們的茶葉不再只是商品，而是有溫度的推薦。
+                </div>
+            </div>
+
+            <!-- 案例 2: Chia Yoga -->
+            <div class="case-card">
+                <div class="case-tag">運動休閒</div>
+                <h3>Chia Yoga Studio</h3>
+                <p>專業瑜珈教室，導入 CRM 會員分級制度，自動識別學員等級，提供專屬課程諮詢與預約服務。</p>
+                <div class="case-highlight">
+                    <i class="fa-solid fa-quote-left"></i> 
+                    24小時自動回覆學員問題，大幅降低了櫃檯人員的工作負擔。
+                </div>
+            </div>
+
+            <!-- 案例 3: 品牌解碼 -->
+            <div class="case-card">
+                <div class="case-tag">專業顧問</div>
+                <h3>品牌解碼室</h3>
+                <p>將知識庫轉化為 AI 顧問，24小時協助客戶進行初步品牌診斷與商務對接，精準捕獲潛在商機。</p>
+                <div class="case-highlight">
+                    <i class="fa-solid fa-quote-left"></i> 
+                    商機通報功能讓我們不錯過任何一個潛在的大型合作案。
+                </div>
+            </div>
+
+        </div>
+    </section>
+
     <!-- 價格方案區 -->
     <section id="pricing" class="section">
         <div class="section-title"><span>SaaS 合作方案</span></div>
@@ -303,7 +328,7 @@
                 <ul class="features-list">
                     <li><i class="fa-solid fa-check"></i> Gemini 2.0 AI 核心</li>
                     <li><i class="fa-solid fa-check"></i> RAG 專業知識庫</li>
-                    <li style="color: #fff; font-weight:bold;"><i class="fa-solid fa-bell" style="color:var(--accent);"></i> LINE 商機即時推播通知</li>
+                    <li><i class="fa-solid fa-check"></i> LINE 自動化接單</li>
                     <li><i class="fa-solid fa-users"></i> CRM 會員分級管理</li>
                     <li><i class="fa-solid fa-map-location-dot"></i> Google Maps 導航</li>
                 </ul>
@@ -368,7 +393,7 @@
         <div class="about-studio">
             <div class="about-content">
                 <h3 style="font-size: 2rem; margin-bottom: 20px; color:#fff;">品牌解碼室：K.C. Peter</h3>
-                <p style="color:#ccc;">在 AI 浪潮中，我們不只是工具的操作者，更是您商業策略的戰略夥伴。品牌解碼室YT頻道於2025年12月開台，僅不到一個月時間，達成1000小時觀看時數，這就是影像賦能與 AI 策略的實證。</p>
+                <p style="color:#ccc;">在 AI 浪潮中，我們不只是工具的操作者，更是您商業策略的戰略夥伴。目前頻道已達成 **1.7 萬次觀看** 與 **920 小時觀看時數**，這就是影像賦能與 AI 策略的實證。</p>
             </div>
             <div class="about-qr">
                 <p style="color:var(--accent); font-weight:bold; margin-bottom:15px;">掃碼諮詢您的 AI 轉型方案</p>
