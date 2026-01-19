@@ -149,8 +149,13 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        /* --- 作品集 --- */
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+        /* --- 作品集 (手機版寬度修復) --- */
+        .portfolio-grid { 
+            display: grid; 
+            /* 👇 關鍵修改：將 minmax(350px) 改為 300px，適應小手機 */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 40px; 
+        }
         .video-card { background: #111; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
@@ -158,15 +163,15 @@
         .video-info h4 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
         .video-info p { color: var(--accent); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- 關於我們 (RWD 修復重點) --- */
+        /* --- 關於我們 --- */
         .about-studio {
             background: linear-gradient(145deg, #111, #1a1a1a);
             padding: 60px;
             border-radius: 10px;
-            border-left: 5px solid var(--accent); /* 電腦版左邊框 */
+            border-left: 5px solid var(--accent);
             display: flex;
             gap: 40px;
-            flex-wrap: wrap; 
+            flex-wrap: wrap; /* 允許換行 */
             align-items: center;
         }
         .about-content { flex: 2; min-width: 300px; }
@@ -179,19 +184,22 @@
         footer { text-align: center; padding: 50px 20px; background: #050505; border-top: 1px solid #222; color: #555; font-size: 0.9rem; }
         .footer-qr img { width: 140px; margin-top: 20px; border: 1px solid var(--accent); padding: 5px; border-radius: 5px; }
 
-        /* --- RWD 手機版強制修正 (關鍵 CSS) --- */
+        /* --- RWD 手機版強制修正 (關鍵修改) --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.8rem; }
             .section { padding: 60px 5%; }
             nav { display: none; }
             
-            /* 價格卡片 */
+            /* 作品集強制一欄，避免被撐開 */
+            .portfolio-grid { grid-template-columns: 1fr; }
+
+            /* 價格卡片手機版設定 */
             .pricing-container { flex-direction: column; align-items: center; }
             .price-card, .price-card.featured, .price-card.premium-green { width: 100%; max-width: 100%; margin-bottom: 20px; transform: none; }
             
-            /* 關於我們手機版：垂直排列 */
+            /* 關於我們手機版設定 */
             .about-studio {
-                flex-direction: column; 
+                flex-direction: column; /* 垂直排列 */
                 text-align: center;
                 padding: 40px 20px;
                 border-left: none !important; /* 移除左邊框 */
@@ -200,8 +208,8 @@
             }
             .about-content { min-width: 100%; }
             
-            /* 影片背景 */
-            .video-bg { display: block; }
+            /* 影片 */
+            .video-bg { display: block; } /* 保持影片顯示 */
         }
     </style>
 </head>
@@ -347,7 +355,7 @@
                 <ul class="features-list">
                     <li><i class="fa-solid fa-check"></i> Gemini 2.0 AI 核心</li>
                     <li><i class="fa-solid fa-check"></i> RAG 專業知識庫</li>
-                    <!-- 標準版不含自動導購 -->
+                    <!-- 已移除自動接單 -->
                     <li><i class="fa-solid fa-users"></i> CRM 會員分級管理</li>
                     <li><i class="fa-solid fa-map-location-dot"></i> Google Maps 導航</li>
                 </ul>
@@ -382,7 +390,7 @@
         </div>
     </section>
 
-    <!-- 精選作品 -->
+    <!-- 精選作品 (已修復 YouTube) -->
     <section id="portfolio" class="section" style="background: #0f0f0f;">
         <div class="section-title"><span>實戰案例展示</span></div>
         <div class="portfolio-grid">
@@ -412,7 +420,7 @@
         <div class="about-studio">
             <div class="about-content">
                 <h3 style="font-size: 2rem; margin-bottom: 20px; color:#fff;">品牌解碼室：K.C. Peter</h3>
-                <p style="color:#ccc;">在 AI 浪潮中，我們不只是工具的操作者，更是您商業策略的戰略夥伴。目前頻道已達成 **2萬次以上觀看** 與 **1000 小時觀看時數**，這就是影像賦能與 AI 策略的實證。</p>
+                <p style="color:#ccc;">在 AI 浪潮中，我們不只是工具的操作者，更是您商業策略的戰略夥伴。目前頻道已達成 **1.7 萬次觀看** 與 **920 小時觀看時數**，這就是影像賦能與 AI 策略的實證。</p>
             </div>
             <div class="about-qr">
                 <p style="color:var(--accent); font-weight:bold; margin-bottom:15px;">掃碼諮詢您的 AI 轉型方案</p>
