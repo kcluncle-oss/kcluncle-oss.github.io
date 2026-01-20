@@ -1,3 +1,14 @@
+這是一個非常好的整合想法。將 Google Form 嵌入在「價格方案」之後，讓客戶看完價格就能直接填寫委託單，是最順暢的轉換路徑 (Conversion Funnel)。
+
+我已經幫您將 Google Form 嵌入代碼整合進去，並做了以下優化：
+
+1. **RWD 響應式調整**：原本的 `width="640"` 在手機上看會破版，我將其改為 `width: 100%` 並限制 `max-width`，讓它在手機和電腦上都完美顯示。
+2. **視覺整合**：為了配合您的黑金風格，我幫表單外層加了一個「香檳金」的邊框與光暈容器，讓白色的 Google 表單在深色網站中不會顯得突兀，反而像是一份正式文件。
+3. **導覽列更新**：我在上方的導覽列新增了 **「線上委託」** 的按鈕，點擊後會直接滑動到表單區塊。
+
+請直接複製以下完整代碼，覆蓋您原本的 `index.html`：
+
+```html
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -7,12 +18,10 @@
     
     <link rel="icon" href="icon_01.png" type="image/png">
     
-    <!-- SEO Meta Tags -->
     <meta name="description" content="品牌解碼室 (Brand Decoder) 由 K.C. (Peter) 創立，整合 Gemini 2.0 AI 影像賦能、智能客服與商業策略。提供從視覺製作到營收變現的一站式解決方案。">
     <meta name="keywords" content="品牌解碼室, Brand Decoder, AI行銷, 智能客服, K.C., Peter, 商業策略, 品牌顧問, 數位轉型, LINE機器人, SaaS系統">
     <meta name="author" content="Brand Decoder Studio">
 
-    <!-- Open Graph for Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://branddecoder-studio.github.io/">
     <meta property="og:title" content="品牌解碼室 | AI 賦能與商業策略專家">
@@ -149,6 +158,17 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
+        /* --- Google Form 嵌入區塊樣式 (新增) --- */
+        .form-wrapper {
+            background: rgba(255, 255, 255, 0.05); /* 微微的透明背景 */
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+            border-radius: 12px;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
         /* --- 作品集 --- */
         .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
         .video-card { background: #111; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
@@ -218,6 +238,7 @@
                 <li><a href="#ai-system">AI 系統</a></li>
                 <li><a href="#cases">合作案例</a></li>
                 <li><a href="#pricing">方案連結</a></li>
+                <li><a href="#order-form" style="color:var(--accent); border:1px solid var(--accent); padding:5px 10px; border-radius:4px;">線上委託</a></li>
             </ul>
         </nav>
     </header>
@@ -276,7 +297,6 @@
         </div>
     </section>
 
-    <!-- 合作案例區 -->
     <section id="cases" class="section">
         <div class="section-title"><span>成功導入案例</span></div>
         <div class="cases-grid">
@@ -310,7 +330,6 @@
         </div>
     </section>
 
-    <!-- 價格方案區 (修正版：標準版移除接單功能，建置版改為 LINE Login) -->
     <section id="pricing" class="section">
         <div class="section-title"><span>SaaS 合作方案</span></div>
         <p style="text-align: center; color: #999; margin-bottom: 50px;">
@@ -320,7 +339,6 @@
         
         <div class="pricing-container">
             
-            <!-- 卡片 1: 建置方案 -->
             <div class="price-card featured">
                 <div class="badge" style="background:#d4af37; color:#000;">新手必選</div>
                 <h3 style="color:var(--accent);">專業建置方案</h3>
@@ -335,13 +353,12 @@
                     <li><i class="fa-solid fa-gears"></i> 全系統架構建置</li>
                     <li><i class="fa-solid fa-database"></i> 專屬數據庫設計</li>
                 </ul>
-                <!-- 👇 這裡已經整合了您的 LINE Login 連結 -->
+                
                 <a href="https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2008923052&redirect_uri=https://script.google.com/macros/s/AKfycbwzAnBzwj5UHLaH1LCjG8mYr3nulotudKMcImJghulKaBUtfDF_Z_iDgpmEnxkoi2j6RQ/exec&state=12345&scope=profile%20openid" class="btn" style="border-radius: 50px;">
                     <i class="fab fa-line" style="margin-right:5px;"></i> 使用 LINE 帳號一鍵申請
                 </a>
             </div>
 
-            <!-- 卡片 2: 標準版 -->
             <div class="price-card">
                 <h3 style="color:#fff;">智能客服 - 標準版</h3>
                 <p style="color:#888; font-size:0.9rem;">建置後次月開始繳費</p>
@@ -350,7 +367,6 @@
                 <ul class="features-list">
                     <li><i class="fa-solid fa-check"></i> Gemini 2.0 AI 核心</li>
                     <li><i class="fa-solid fa-check"></i> RAG 專業知識庫</li>
-                    <!-- 自動接單已移除 -->
                     <li><i class="fa-solid fa-users"></i> CRM 會員分級管理</li>
                     <li><i class="fa-solid fa-map-location-dot"></i> Google Maps 導航</li>
                 </ul>
@@ -361,7 +377,6 @@
                 </div>
             </div>
 
-            <!-- 卡片 3: 進階版 -->
             <div class="price-card premium-green">
                 <div class="badge" style="background:var(--line-green); color:#fff; width:150px; right:-40px;">功能最強</div>
                 <h3 style="color:var(--line-green);">智能客服 - 進階版</h3>
@@ -377,7 +392,6 @@
                 </ul>
 
                 <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
-                    <!-- 👇 進階版連結已更新 -->
                     <a href="https://p.ecpay.com.tw/6E54605" target="_blank" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid var(--line-green); color: var(--line-green); padding: 8px;">月繳訂閱</a>
                     <a href="https://p.ecpay.com.tw/C109162" target="_blank" class="btn" style="border-radius: 50px; padding: 8px; font-size:0.85rem; background: rgba(6, 199, 85, 0.2); color:white;">年繳優惠 $30,000 (含優先支援)</a>
                 </div>
@@ -386,7 +400,25 @@
         </div>
     </section>
 
-    <!-- 精選作品 -->
+    <section id="order-form" class="section">
+        <div class="section-title"><span>線上委託建置</span></div>
+        <p style="text-align: center; color: #999; margin-bottom: 30px;">
+            請填寫以下表單，我們的系統將自動寄發合約確認信至您的信箱。
+        </p>
+        <div class="form-wrapper">
+            <iframe 
+                src="https://docs.google.com/forms/d/e/1FAIpQLSd2RBYNDjhHvS6UKaCJWUyFb2ZOGmxdRWc2GHyHBdnHt3Nlcg/viewform?embedded=true" 
+                width="100%" 
+                height="1292" 
+                frameborder="0" 
+                marginheight="0" 
+                marginwidth="0"
+                style="display: block; width: 100%; min-height: 1292px;"
+            >
+                載入中…
+            </iframe>
+        </div>
+    </section>
     <section id="portfolio" class="section" style="background: #0f0f0f;">
         <div class="section-title"><span>實戰案例展示</span></div>
         <div class="portfolio-grid">
@@ -411,7 +443,6 @@
         </div>
     </section>
 
-    <!-- 關於我們 -->
     <section class="section">
         <div class="about-studio">
             <div class="about-content">
@@ -432,3 +463,5 @@
 
 </body>
 </html>
+
+```
