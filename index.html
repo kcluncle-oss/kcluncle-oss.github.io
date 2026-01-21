@@ -18,6 +18,103 @@
     <meta property="og:image" content="AIOptimization_AIO_01.jpg"> 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+    /* --- 客製化表單樣式 (黑金風格) --- */
+    .custom-form-container {
+        max-width: 700px;
+        margin: 0 auto;
+        background: rgba(20, 20, 20, 0.8); /* 半透明黑底 */
+        border: 1px solid var(--accent);     /* 金色邊框 */
+        border-radius: 12px;
+        padding: 40px;
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+        backdrop-filter: blur(10px);
+    }
+
+    .form-group { margin-bottom: 25px; position: relative; }
+    
+    .form-label {
+        display: block;
+        color: var(--accent);
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .form-input, .form-select, .form-textarea {
+        width: 100%;
+        padding: 12px 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid #444;
+        border-radius: 6px;
+        color: #fff;
+        font-size: 1rem;
+        transition: 0.3s;
+        outline: none;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* 鎖定欄位樣式 */
+    .form-input[readonly] {
+        background: rgba(0, 0, 0, 0.5);
+        color: #888;
+        border-color: #333;
+        cursor: not-allowed;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(145deg, #d4af37, #b8860b);
+        color: #000;
+        font-weight: 900;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+    }
+    
+    .submit-btn:disabled {
+        background: #444;
+        color: #888;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    /* 載入中動畫 */
+    .loading-spinner {
+        display: none;
+        width: 20px; height: 20px;
+        border: 3px solid rgba(0,0,0,0.3);
+        border-radius: 50%;
+        border-top-color: #000;
+        animation: spin 1s ease-in-out infinite;
+        margin-left: 10px;
+        vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+
+
     
     <style>
         /* --- 全域設定：黑金極簡奢華風 --- */
@@ -392,20 +489,53 @@
     <section id="order-form" class="section">
         <div class="section-title"><span>線上委託建置</span></div>
         <p style="text-align: center; color: #999; margin-bottom: 30px;">
-            請填寫以下表單，我們的系統將自動寄發合約確認信至您的信箱。
+            填寫需求，系統將自動識別您的 LINE ID 並建立專屬合約檔案。
         </p>
-        <div class="form-wrapper">
-            <iframe 
-                src="https://docs.google.com/forms/d/e/1FAIpQLSd2RBYNDjhHvS6UKaCJWUyFb2ZOGmxdRWc2GHyHBdnHt3Nlcg/viewform?embedded=true" 
-                width="100%" 
-                height="1292" 
-                frameborder="0" 
-                marginheight="0" 
-                marginwidth="0"
-                style="display: block; width: 100%; min-height: 1292px;"
-            >
-                載入中…
-            </iframe>
+
+        <div class="custom-form-container">
+            <form id="bdOrderForm">
+                <input type="hidden" name="userId" id="userIdInput">
+    
+                <div class="form-group">
+                    <label class="form-label">LINE User ID (系統自動抓取)</label>
+                    <input type="text" class="form-input" id="userIdDisplay" value="讀取中..." readonly>
+                </div>
+    
+                <div class="form-group">
+                    <label class="form-label">申請人姓名 / 公司名稱 *</label>
+                    <input type="text" name="name" id="nameInput" class="form-input" placeholder="請輸入您的大名" required>
+                </div>
+    
+                <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <label class="form-label">聯絡電話 *</label>
+                        <input type="tel" name="phone" class="form-input" placeholder="0912-345-678" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Email 信箱</label>
+                        <input type="email" name="email" class="form-input" placeholder="合約將寄送至此">
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label class="form-label">諮詢方案 *</label>
+                    <select name="serviceType" class="form-select">
+                        <option value="新手建置方案 ($9,999)">新手建置方案 ($9,999)</option>
+                        <option value="標準版月租 ($1,999)">標準版月租 ($1,999)</option>
+                        <option value="進階版月租 ($2,999)">進階版月租 ($2,999)</option>
+                        <option value="企業客製化諮詢">企業客製化諮詢</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <label class="form-label">備註需求</label>
+                    <textarea name="memo" class="form-textarea" rows="4" placeholder="請簡述您的產業類型或特殊需求..."></textarea>
+                </div>
+    
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    立即送出申請 <div class="loading-spinner"></div>
+                </button>
+            </form>
         </div>
     </section>
     <section id="portfolio" class="section" style="background: #0f0f0f;">
@@ -450,7 +580,171 @@
         <p>&copy; 2026 Brand Decoder Studio. All Rights Reserved.</p>
     </footer>
 
-</body>
-</html>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+<script>
+    // --- 設定區 ---
+    const LIFF_ID = "2008923052-LoAGl5hv"; 
+    // 👇 請將下面這行換成您剛剛部署好的 GAS 網址 👇
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwdGggRPAiE81urMKh7yfFVQ2SOAhmwnLAR8RZ3UbJQKHa8OS9eHfSuDJ85LVu_0VcaFg/exec"; 
 
-```
+    // 初始化 LIFF
+    document.addEventListener("DOMContentLoaded", function() {
+        initializeLiff(LIFF_ID);
+    });
+
+    function initializeLiff(liffId) {
+        liff.init({ liffId: liffId })
+            .then(() => {
+                if (!liff.isLoggedIn()) {
+                    liff.login(); // 若未登入，強制跳轉
+                } else {
+                    getProfileData();
+                }
+            })
+            .catch((err) => {
+                console.error('LIFF Init Error:', err);
+                // 容錯：如果 LIFF 失敗，允許使用者手動填寫 ID 或保持空白
+                document.getElementById('userIdDisplay').removeAttribute('readonly');
+                document.getElementById('userIdDisplay').value = "";
+                document.getElementById('userIdDisplay').placeholder = "無法自動抓取，請手動輸入";
+            });
+    }
+
+    function getProfileData() {
+        liff.getProfile()
+            .then((profile) => {
+                const userId = profile.userId;
+                const displayName = profile.displayName;
+
+                // 填入隱藏欄位 (真正要送出的資料)
+                document.getElementById('userIdInput').value = userId;
+                
+                // 填入顯示欄位 (給使用者看的)
+                const displayField = document.getElementById('userIdDisplay');
+                displayField.value = userId;
+                displayField.style.color = "#06c755"; // LINE 綠色表示成功
+                
+                // 自動填入姓名 (如果欄位是空的)
+                const nameInput = document.getElementById('nameInput');
+                if(!nameInput.value) {
+                    nameInput.value = displayName;
+                }
+            })
+            .catch((err) => {
+                console.error('Profile Error:', err);
+            });
+    }
+
+    // --- 表單送出邏輯 (AJAX 不跳頁) ---
+    const form = document.getElementById('bdOrderForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const spinner = document.querySelector('.loading-spinner');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault(); // 阻止傳統表單跳頁
+
+        // 按鈕鎖定與動畫
+        submitBtn.disabled = true;
+        submitBtn.childNodes[0].nodeValue = "處理中...";
+        spinner.style.display = "inline-block";
+
+        // 收集資料
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => data[key] = value);
+
+        // 使用 fetch 送出 POST 請求
+        // 注意：mode: 'no-cors' 是為了避免跨網域錯誤，但這意味著我們收不到回傳的 JSON 內容
+        // 只要沒有跳出 catch 錯誤，通常就是成功了
+        fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // 關鍵：解決 CORS 問題
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams(data)
+        })
+        .then(() => {
+            // 成功後的動作
+            alert("✅ 申請已送出！\n\n系統已收到您的資料，請留意您的 LINE 或 Email 通知。");
+            form.reset(); // 清空表單
+            // 可以在這裡加一行 liff.closeWindow(); 如果想送出後直接關閉
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert("❌ 系統忙碌中，請稍後再試，或截圖私訊小編。");
+        })
+        .finally(() => {
+            // 恢復按鈕狀態
+            submitBtn.disabled = false;
+            submitBtn.childNodes[0].nodeValue = "立即送出申請";
+            spinner.style.display = "none";
+        });
+    });
+</script>
+
+
+    
+</body>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+<script>
+  // 等待頁面載入
+  document.addEventListener("DOMContentLoaded", function() {
+    initializeLiff("2008923052-LoAGl5hv"); // 填入剛剛申請的 LIFF ID
+  });
+
+  function initializeLiff(myLiffId) {
+    liff
+      .init({
+        liffId: myLiffId
+      })
+      .then(() => {
+        // 檢查使用者是否已登入 LINE
+        if (!liff.isLoggedIn()) {
+          // 如果沒登入，強制跳轉去 LINE 登入畫面
+          liff.login();
+        } else {
+          // 已登入，開始抓取資料
+          getUserProfile();
+        }
+      })
+      .catch((err) => {
+        console.log('LIFF Initialization failed ', err);
+      });
+  }
+
+  function getUserProfile() {
+    liff.getProfile()
+      .then((profile) => {
+        const userId = profile.userId;
+        const displayName = profile.displayName;
+
+        console.log("抓到了！", userId);
+
+        // --- 這裡是最關鍵的步驟 ---
+        // 假設您的 User ID 輸入框 ID 是 "userIdInput" (需依您實際 HTML 修改)
+        // 假設您的 姓名 輸入框 ID 是 "nameInput"
+        
+        // 自動填入 User ID
+        const userIdField = document.querySelector('input[name="您的欄位name"]'); // 建議給輸入框一個 id 以便選取
+        if (userIdField) {
+            userIdField.value = userId;
+            userIdField.readOnly = true; // 鎖定不讓使用者修改，確保正確
+            userIdField.style.backgroundColor = "#e0e0e0"; // 變灰提示已鎖定
+        }
+
+        // 也可以順便自動填入暱稱
+        const nameField = document.querySelector('input[name="您的姓名欄位name"]');
+        if (nameField && !nameField.value) {
+            nameField.value = displayName;
+        }
+        
+        alert("已自動識別您的 LINE 身分：" + displayName);
+      })
+      .catch((err) => {
+        console.error('個資抓取失敗', err);
+      });
+      }
+   </script>
+</html>
