@@ -514,9 +514,36 @@
                         <input type="tel" name="phone" class="form-input" placeholder="0912-345-678" required>
                     </div>
                     <div>
-                        <label class="form-label">Email 信箱</label>
-                        <input type="email" name="email" class="form-input" placeholder="合約將寄送至此">
+                        <label class="form-label">Email 信箱 (接收合約用) *</label>
+                        <input type="email" name="email" class="form-input" placeholder="合約將寄送至此" required>
                     </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">所屬產業類別 *</label>
+                    <select name="industry" class="form-select" required>
+                        <option value="" disabled selected>請選擇您的產業...</option>
+                        <option value="零售/電商">零售 / 電商 (Retail/E-commerce)</option>
+                        <option value="餐飲/食品">餐飲 / 食品 (F&B)</option>
+                        <option value="美容/美髮/美業">美容 / 美髮 / 美業</option>
+                        <option value="教育/培訓/補教">教育 / 培訓 / 補教</option>
+                        <option value="醫療/診所/保健">醫療 / 診所 / 保健</option>
+                        <option value="房地產/仲介">房地產 / 仲介</option>
+                        <option value="旅遊/旅宿/觀光">旅遊 / 旅宿 / 觀光</option>
+                        <option value="金融/保險/投資">金融 / 保險 / 投資</option>
+                        <option value="製造/傳產/工廠">製造 / 傳產 / 工廠</option>
+                        <option value="科技/軟體/SaaS">科技 / 軟體 / SaaS</option>
+                        <option value="行銷/廣告/設計">行銷 / 廣告 / 設計</option>
+                        <option value="媒體/KOL/創作者">媒體 / KOL / 創作者</option>
+                        <option value="專業服務(律師/會計)">專業服務 (律師/會計/顧問)</option>
+                        <option value="健身/運動/休閒">健身 / 運動 / 休閒</option>
+                        <option value="汽車/交通/物流">汽車 / 交通 / 物流</option>
+                        <option value="室內設計/裝修">室內設計 / 裝修</option>
+                        <option value="批發/貿易">批發 / 貿易</option>
+                        <option value="非營利組織/協會">非營利組織 / 協會</option>
+                        <option value="政府機關">政府機關</option>
+                        <option value="其他">其他</option>
+                    </select>
                 </div>
     
                 <div class="form-group">
@@ -531,7 +558,7 @@
     
                 <div class="form-group">
                     <label class="form-label">備註需求</label>
-                    <textarea name="memo" class="form-textarea" rows="4" placeholder="請簡述您的產業類型或特殊需求..."></textarea>
+                    <textarea name="memo" class="form-textarea" rows="4" placeholder="請簡述您的特殊需求..."></textarea>
                 </div>
     
                 <button type="submit" class="submit-btn" id="submitBtn">
