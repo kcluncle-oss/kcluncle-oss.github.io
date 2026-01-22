@@ -57,8 +57,28 @@
     .logo-text { font-size: 1.2rem; font-weight: bold; color: #fff; letter-spacing: 1px; }
     .logo-text span { color: var(--accent); }
 
-    nav ul { display: flex; gap: 30px; }
+    nav ul { display: flex; gap: 30px; align-items: center; } /* align-items: center 確保按鈕垂直置中 */
     nav a:hover { color: var(--accent); }
+
+    /* 🔥 新增：後台登入按鈕樣式 */
+    .btn-admin-login {
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        padding: 6px 15px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        transition: 0.3s;
+    }
+    .btn-admin-login:hover {
+        background: var(--accent);
+        color: #000 !important; /* 強制變黑字 */
+        border-color: var(--accent);
+        box-shadow: 0 0 10px var(--accent-glow);
+    }
 
     /* --- 主視覺 Hero Section --- */
     .hero {
@@ -182,10 +202,10 @@
         outline: none;
     }
 
-    /* 👇 這是新增的關鍵修正 👇 */
+    /* 下拉選單修正 */
     .form-select option {
         background-color: #1a1a1a; /* 下拉出來的清單背景色 (深灰/黑) */
-        color: #fff;               /* 選項文字顏色 */
+        color: #fff;                /* 選項文字顏色 */
     }
 
     .form-input:focus, .form-select:focus, .form-textarea:focus {
@@ -329,6 +349,11 @@
                 <li><a href="#cases">合作案例</a></li>
                 <li><a href="#pricing">方案連結</a></li>
                 <li><a href="#order-form" style="color:var(--accent); border:1px solid var(--accent); padding:5px 10px; border-radius:4px;">線上委託</a></li>
+                <li>
+                    <a href="https://branddecoder-studio.github.io/SaaS-Admin/" target="_blank" class="btn-admin-login">
+                        <i class="fa-solid fa-user-shield"></i> SaaS 後台
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
