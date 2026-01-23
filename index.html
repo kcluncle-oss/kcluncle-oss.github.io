@@ -674,7 +674,7 @@
 
     
 
-    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
         // --- 設定區 ---
         const LIFF_ID = "2008923052-LoAGl5hv"; 
@@ -688,7 +688,7 @@
         function initializeLiff(liffId) {
             liff.init({ liffId: liffId })
                 .then(() => {
-                    // 重要修改：這裡只檢查登入狀態，不強制跳轉
+                    // 檢查登入狀態
                     if (liff.isLoggedIn()) {
                         console.log("使用者已登入，自動抓取資料");
                         getProfileData();
@@ -773,7 +773,6 @@
             // --- 開始發送 ---
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                // mode: 'no-cors',  <-- ❌ 刪除這行！我們要讀取回應，不能用 no-cors
                 // 改用預設的 CORS 模式 (GAS 部署時權限設為 Anyone 即可支援)
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams(data)
@@ -792,17 +791,10 @@
             })
             .catch((error) => {
                 console.error('Error:', error);
-                // 為了相容性，如果 JSON 解析失敗 (例如 GAS 報錯 HTML)，會掉到這裡
-                // 我們可以給一個模糊的提示，或是假設成功 (因為 GAS no-cors 的特性有時候很搞剛)
-                // 但因為我們現在後端有好好回傳 JSON，理論上會走上面的 if/else
                 alert("❌ 連線異常或系統忙碌中，請聯繫管理員。");
             })
             .finally(() => {
-                submitBtn.disabled = false;
-                submitBtn.childNodes[0].nodeValue = "立即送出申請";
-                spinner.style.display = "none";
-            });
-            .finally(() => {
+                // ✅ 這裡只保留一個 finally
                 submitBtn.disabled = false;
                 submitBtn.childNodes[0].nodeValue = "立即送出申請";
                 spinner.style.display = "none";
