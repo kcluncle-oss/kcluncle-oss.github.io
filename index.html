@@ -770,20 +770,38 @@
             const data = {};
             formData.forEach((value, key) => data[key] = value);
 
+            // --- 開始發送 ---
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors',
+                // mode: 'no-cors',  <-- ❌ 刪除這行！我們要讀取回應，不能用 no-cors
+                // 改用預設的 CORS 模式 (GAS 部署時權限設為 Anyone 即可支援)
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams(data)
             })
-            .then(() => {
-                alert("✅ 申請已送出！\n\n系統已收到您的資料，請留意您的 LINE 或 Email 通知。");
-                form.reset(); 
+            .then(response => response.json()) // 1. 解析後端回傳的 JSON
+            .then(result => {
+                // 2. 判斷後端回傳的狀態
+                if (result.status === "success") {
+                    // 成功：顯示綠色勾勾
+                    alert("✅ " + result.message); 
+                    form.reset(); 
+                } else {
+                    // 失敗 (重複下單)：顯示紅色叉叉，並顯示後端傳來的警告文字
+                    alert("⚠️ " + (result.message || "提交失敗"));
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
-                alert("❌ 系統忙碌中，請稍後再試。");
+                // 為了相容性，如果 JSON 解析失敗 (例如 GAS 報錯 HTML)，會掉到這裡
+                // 我們可以給一個模糊的提示，或是假設成功 (因為 GAS no-cors 的特性有時候很搞剛)
+                // 但因為我們現在後端有好好回傳 JSON，理論上會走上面的 if/else
+                alert("❌ 連線異常或系統忙碌中，請聯繫管理員。");
             })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.childNodes[0].nodeValue = "立即送出申請";
+                spinner.style.display = "none";
+            });
             .finally(() => {
                 submitBtn.disabled = false;
                 submitBtn.childNodes[0].nodeValue = "立即送出申請";
