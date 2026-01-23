@@ -640,6 +640,40 @@
         <p>&copy; 2026 Brand Decoder Studio. All Rights Reserved.</p>
     </footer>
 
+
+    <a href="https://branddecoder-studio.github.io/SaaS-Admin/" target="_blank" class="mobile-admin-btn">
+    <i class="fa-solid fa-user-shield"></i>
+</a>
+
+<style>
+/* 手機版懸浮按鈕樣式 */
+.mobile-admin-btn {
+    display: none; /* 電腦版隱藏 */
+}
+@media (max-width: 768px) {
+    .mobile-admin-btn {
+        display: flex;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background: rgba(212, 175, 55, 0.8); /* 金色半透明 */
+        color: #000;
+        border-radius: 50%;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        z-index: 9999;
+        backdrop-filter: blur(5px);
+        border: 1px solid #fff;
+    }
+}
+</style>
+
+    
+
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
         // --- 設定區 ---
