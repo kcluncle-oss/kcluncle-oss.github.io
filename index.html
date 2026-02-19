@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>品牌解碼室 | Brand Decoder - AI 賦能與商業策略專家</title>
+    <title>品牌解碼室 | 品智智能 SaaS 客服平台 - 打造全自動獲利引擎</title>
     
     <link rel="icon" href="icon_01.png" type="image/png">
     
-    <meta name="description" content="品牌解碼室 (Brand Decoder) 由 K.C. (Peter) 創立，整合 Gemini 2.0 AI 影像賦能、智能客服與商業策略。提供從視覺製作到營收變現的一站式解決方案。">
-    <meta name="keywords" content="品牌解碼室, Brand Decoder, AI行銷, 智能客服, K.C., Peter, 商業策略, 品牌顧問, 數位轉型, LINE機器人, SaaS系統">
+    <meta name="description" content="品牌解碼室旗下旗艦產品「品智智能 SaaS 客服平台」，結合 Gemini AI 鷹眼視覺與算力引擎。大幅降低客服人力成本，24/7 全自動導購與商機捕獲。">
+    <meta name="keywords" content="品智智能, SaaS系統, 品牌解碼室, Brand Decoder, AI客服, 算力點數, LINE機器人, 商業策略, 數位轉型, 自動化行銷">
     <meta name="author" content="Brand Decoder Studio">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://branddecoder-studio.github.io/">
-    <meta property="og:title" content="品牌解碼室 | AI 賦能與商業策略專家">
-    <meta property="og:description" content="拒絕視覺貧窮，打造獲利閉環。我們提供 AI 影像製作、24/7 智能客服與全方位行銷諮詢。立即體驗未來的商業模式。">
+    <meta property="og:title" content="品牌解碼室 | 品智智能 SaaS 客服平台">
+    <meta property="og:description" content="讓 AI 成為您的 24/7 金牌數位銷售。全自動商機捕獲、零客訴風險，打造永不打烊的獲利引擎。">
     <meta property="og:image" content="AIOptimization_AIO_01.jpg"> 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -54,30 +54,20 @@
         box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); border: 2px solid #fff;
         flex-shrink: 0; font-family: 'Arial Black', sans-serif;
     }
-    .logo-text { font-size: 1.2rem; font-weight: bold; color: #fff; letter-spacing: 1px; }
-    .logo-text span { color: var(--accent); }
+    .logo-text { font-size: 1.2rem; font-weight: bold; color: #fff; letter-spacing: 1px; line-height: 1.2;}
+    .logo-text span { color: var(--accent); display: block; font-size: 0.8rem; letter-spacing: 2px;}
 
-    nav ul { display: flex; gap: 30px; align-items: center; } /* align-items: center 確保按鈕垂直置中 */
+    nav ul { display: flex; gap: 30px; align-items: center; }
     nav a:hover { color: var(--accent); }
 
-    /* 🔥 新增：後台登入按鈕樣式 */
     .btn-admin-login {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-        padding: 6px 15px;
-        border-radius: 4px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        transition: 0.3s;
+        background: rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 15px;
+        border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.3);
+        font-size: 0.9rem; display: flex; align-items: center; gap: 6px; transition: 0.3s;
     }
     .btn-admin-login:hover {
-        background: var(--accent);
-        color: #000 !important; /* 強制變黑字 */
-        border-color: var(--accent);
-        box-shadow: 0 0 10px var(--accent-glow);
+        background: var(--accent); color: #000 !important;
+        border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow);
     }
 
     /* --- 主視覺 Hero Section --- */
@@ -97,20 +87,20 @@
     .hero h1 { font-size: 4rem; margin-bottom: 10px; line-height: 1.1; font-weight: 800; letter-spacing: 2px; }
     .hero h1 span { color: var(--accent); }
     .hero .subtitle { 
-        font-size: 1.5rem; color: #ddd; margin-bottom: 30px; font-weight: 300; 
-        letter-spacing: 5px; text-transform: uppercase; border-top: 1px solid var(--accent);
+        font-size: 1.3rem; color: #ddd; margin-bottom: 30px; font-weight: bold; 
+        letter-spacing: 3px; border-top: 1px solid var(--accent);
         border-bottom: 1px solid var(--accent); padding: 10px 20px; background: rgba(0,0,0,0.3);
     }
     .btn {
         padding: 15px 40px; border: 1px solid var(--accent); color: var(--accent);
         border-radius: 2px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase;
-        background: rgba(0,0,0,0.8); transition: 0.4s; cursor: pointer;
+        background: rgba(0,0,0,0.8); transition: 0.4s; cursor: pointer; display: inline-block;
     }
     .btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent-glow); }
 
     /* --- 通用區塊樣式 --- */
     .section { padding: 100px 10%; position: relative; z-index: 1; }
-    .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 60px; }
+    .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 60px; font-weight: bold;}
     .section-title span { border-bottom: 3px solid var(--accent); padding-bottom: 10px; display: inline-block; }
 
     /* --- 業務與功能 --- */
@@ -123,235 +113,145 @@
     .service-img { width: 100%; height: 200px; object-fit: cover; margin-bottom: 20px; border-bottom: 3px solid var(--accent); }
     .feature-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 15px; text-align: center; }
     .feature-box h4 { text-align: center; color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
-    .feature-box p { text-align: center; color: var(--text-sub); font-size: 0.9rem; }
-
-    /* --- 成功案例 Cases --- */
-    .case-card { text-align: left; position: relative; overflow: hidden; }
-    .case-tag { 
-        display: inline-block; background: rgba(212, 175, 55, 0.2); color: var(--accent); 
-        padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 15px; font-weight: bold;
-    }
-    .case-card h3 { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
-    .case-card p { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 15px; }
-    .case-highlight { border-left: 3px solid var(--accent); padding-left: 15px; margin-top: 15px; font-style: italic; color: #ddd; }
+    .feature-box p { text-align: center; color: var(--text-sub); font-size: 0.95rem; }
 
     /* --- 價格方案 Pricing --- */
-    .pricing-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 0 auto; max-width: 1100px; }
+    .pricing-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 0 auto; max-width: 1000px; }
     .price-card {
-        flex: 1; min-width: 300px; max-width: 380px; background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
-        border: 1px solid #333; border-radius: 15px; padding: 40px; text-align: center;
+        flex: 1; min-width: 320px; max-width: 400px; background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+        border: 1px solid #333; border-radius: 15px; padding: 40px 30px; text-align: center;
         position: relative; transition: 0.3s; display: flex; flex-direction: column;
     }
     .price-card:hover { transform: translateY(-5px); border-color: #555; }
     
     .price-card.featured {
-        border: 2px solid var(--accent); transform: scale(1.02); z-index: 2;
+        border: 2px solid var(--accent); transform: scale(1.05); z-index: 2;
         background: linear-gradient(145deg, #222, #0f0f0f); box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
     }
-    .price-card.premium-green {
-        border: 2px solid var(--line-green); transform: scale(1.02); z-index: 2;
-        background: linear-gradient(145deg, #1a2e1a, #0a0a0a); box-shadow: 0 0 30px rgba(6, 199, 85, 0.15);
-    }
-    .price-card.featured:hover, .price-card.premium-green:hover { transform: scale(1.02) translateY(-5px); }
+    .price-card.featured:hover { transform: scale(1.05) translateY(-5px); }
 
     .price-tag { font-size: 2.2rem; font-weight: bold; color: #fff; margin: 15px 0; }
     .price-tag span { font-size: 0.9rem; color: #888; font-weight: normal; }
     
     .features-list { text-align: left; margin: 20px 0 30px 0; flex-grow: 1; list-style: none; }
-    .features-list li { margin-bottom: 12px; color: #ccc; font-size: 0.9rem; display: flex; align-items: flex-start; gap: 8px; }
+    .features-list li { margin-bottom: 12px; color: #ccc; font-size: 0.95rem; display: flex; align-items: flex-start; gap: 8px; }
     .features-list i { color: var(--accent); margin-top: 5px; font-size: 0.8rem; }
     
     .badge {
-        position: absolute; top: 20px; right: -35px; background: var(--accent); color: #000;
+        position: absolute; top: 15px; right: -35px; background: var(--accent); color: #000;
         width: 140px; padding: 5px 0; transform: rotate(45deg); font-weight: bold; font-size: 0.8rem;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3); text-align: center;
     }
 
     /* --- 客製化表單樣式 (黑金風格) --- */
     .custom-form-container {
-        max-width: 700px;
-        margin: 0 auto;
-        background: rgba(20, 20, 20, 0.8); /* 半透明黑底 */
-        border: 1px solid var(--accent);     /* 金色邊框 */
-        border-radius: 12px;
-        padding: 40px;
-        box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
-        backdrop-filter: blur(10px);
+        max-width: 700px; margin: 0 auto; background: rgba(20, 20, 20, 0.8);
+        border: 1px solid var(--accent); border-radius: 12px; padding: 40px;
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.1); backdrop-filter: blur(10px);
     }
-
     .form-group { margin-bottom: 25px; position: relative; }
-    
-    .form-label {
-        display: block;
-        color: var(--accent);
-        margin-bottom: 8px;
-        font-size: 0.95rem;
-        font-weight: bold;
-        letter-spacing: 1px;
-    }
-
+    .form-label { display: block; color: var(--accent); margin-bottom: 8px; font-size: 0.95rem; font-weight: bold; letter-spacing: 1px; }
     .form-input, .form-select, .form-textarea {
-        width: 100%;
-        padding: 12px 15px;
-        background: rgba(255, 255, 255, 0.1); /*稍微不透明一點*/
-        border: 1px solid #444;
-        border-radius: 6px;
-        color: #fff;  /* 輸入時的字是白色 */
-        font-size: 1rem;
-        transition: 0.3s;
-        outline: none;
+        width: 100%; padding: 12px 15px; background: rgba(255, 255, 255, 0.1);
+        border: 1px solid #444; border-radius: 6px; color: #fff; font-size: 1rem; transition: 0.3s; outline: none;
     }
-
-    /* 下拉選單修正 */
-    .form-select option {
-        background-color: #1a1a1a; /* 下拉出來的清單背景色 (深灰/黑) */
-        color: #fff;                /* 選項文字顏色 */
-    }
-
+    .form-select option { background-color: #1a1a1a; color: #fff; }
     .form-input:focus, .form-select:focus, .form-textarea:focus {
-        border-color: var(--accent);
-        box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--accent); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); background: rgba(255, 255, 255, 0.1);
     }
-    
-    /* 鎖定欄位樣式 */
-    .form-input[readonly] {
-        background: rgba(0, 0, 0, 0.5);
-        color: #888;
-        border-color: #333;
-        cursor: not-allowed;
-    }
+    .form-input[readonly] { background: rgba(0, 0, 0, 0.5); color: #888; border-color: #333; cursor: not-allowed; }
 
     .submit-btn {
-        width: 100%;
-        padding: 15px;
-        background: linear-gradient(145deg, #d4af37, #b8860b);
-        color: #000;
-        font-weight: 900;
-        font-size: 1.1rem;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: 0.3s;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        position: relative;
-        overflow: hidden;
+        width: 100%; padding: 15px; background: linear-gradient(145deg, #d4af37, #b8860b);
+        color: #000; font-weight: 900; font-size: 1.1rem; border: none; border-radius: 6px;
+        cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px; position: relative;
     }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4); }
+    .submit-btn:disabled { background: #444; color: #888; cursor: not-allowed; box-shadow: none; }
 
-    .submit-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
-    }
-    
-    .submit-btn:disabled {
-        background: #444;
-        color: #888;
-        cursor: not-allowed;
-        transform: none;
-        box-shadow: none;
-    }
-
-    /* LINE 登入小按鈕 */
     .line-login-small-btn {
-        background-color: #06c755;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 5px 10px;
-        font-size: 0.8rem;
-        cursor: pointer;
-        margin-left: 10px;
-        transition: 0.3s;
+        background-color: #06c755; color: white; border: none; border-radius: 4px;
+        padding: 5px 10px; font-size: 0.8rem; cursor: pointer; margin-left: 10px; transition: 0.3s;
     }
     .line-login-small-btn:hover { background-color: #05a546; }
 
-    /* 載入中動畫 */
     .loading-spinner {
-        display: none;
-        width: 20px; height: 20px;
-        border: 3px solid rgba(0,0,0,0.3);
-        border-radius: 50%;
-        border-top-color: #000;
-        animation: spin 1s ease-in-out infinite;
-        margin-left: 10px;
-        vertical-align: middle;
+        display: none; width: 20px; height: 20px; border: 3px solid rgba(0,0,0,0.3);
+        border-radius: 50%; border-top-color: #000; animation: spin 1s ease-in-out infinite;
+        margin-left: 10px; vertical-align: middle;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* --- 作品集 --- */
-    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
-    .video-card { background: #111; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
-    .video-container { position: relative; padding-bottom: 56.25%; height: 0; }
-    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-    .video-info { padding: 20px; background: #1a1a1a; }
-    .video-info h4 { color: #fff; font-size: 1.1rem; margin-bottom: 5px; }
-    .video-info p { color: var(--accent); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
-
     /* --- 關於我們 --- */
     .about-studio {
-        background: linear-gradient(145deg, #111, #1a1a1a);
-        padding: 60px;
-        border-radius: 10px;
-        border-left: 5px solid var(--accent);
-        display: flex;
-        gap: 40px;
-        flex-wrap: wrap; /* 允許換行 */
-        align-items: center;
+        background: linear-gradient(145deg, #111, #1a1a1a); padding: 60px;
+        border-radius: 10px; border-left: 5px solid var(--accent); display: flex; gap: 40px; align-items: center; flex-wrap: wrap;
     }
     .about-content { flex: 2; min-width: 300px; }
     .about-qr { flex: 1; text-align: center; }
-    
     .about-studio h3 { font-size: 2rem; margin-bottom: 20px; color: #fff; }
     .about-studio p { color: #ccc; font-size: 1rem; line-height: 1.6; }
 
-    /* --- 頁尾 --- */
-    footer { text-align: center; padding: 50px 20px; background: #050505; border-top: 1px solid #222; color: #555; font-size: 0.9rem; }
-    .footer-qr img { width: 140px; margin-top: 20px; border: 1px solid var(--accent); padding: 5px; border-radius: 5px; }
+    /* --- 頁尾與法務模態框 (Modal) --- */
+    footer { text-align: center; padding: 40px 20px; background: #050505; border-top: 1px solid #222; color: #666; font-size: 0.85rem; }
+    .legal-links { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
+    .legal-links a { color: #888; text-decoration: none; cursor: pointer; transition: 0.2s;}
+    .legal-links a:hover { color: var(--accent); }
+
+    .modal-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 2000; opacity: 0; visibility: hidden; transition: 0.3s;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-content {
+        background: #111; width: 90%; max-width: 600px; max-height: 80vh;
+        border: 1px solid var(--accent); border-radius: 8px; padding: 30px;
+        position: relative; overflow-y: auto; color: #ddd; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        transform: translateY(20px); transition: 0.3s;
+    }
+    .modal-overlay.active .modal-content { transform: translateY(0); }
+    .modal-close {
+        position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: #888;
+        cursor: pointer; transition: 0.2s; background: none; border: none;
+    }
+    .modal-close:hover { color: #fff; }
+    .modal-content h2 { color: var(--accent); margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
+    .modal-content h4 { color: #fff; margin-top: 20px; margin-bottom: 10px; }
+    .modal-content p, .modal-content li { font-size: 0.95rem; margin-bottom: 10px; color: #bbb; line-height: 1.6;}
 
     /* --- RWD 手機版強制修正 --- */
     @media (max-width: 768px) {
-        .hero h1 { font-size: 2.8rem; }
+        .hero h1 { font-size: 2.5rem; }
         .section { padding: 60px 5%; }
         nav { display: none; }
-        
-        /* 價格卡片手機版設定 */
         .pricing-container { flex-direction: column; align-items: center; }
         .price-card, .price-card.featured, .price-card.premium-green { width: 100%; max-width: 100%; margin-bottom: 20px; transform: none; }
-        
-        /* 關於我們手機版設定 */
-        .about-studio {
-            flex-direction: column; /* 垂直排列 */
-            text-align: center;
-            padding: 40px 20px;
-            border-left: none; /* 移除左邊框 */
-            border-top: 5px solid var(--accent); /* 改為上方邊框 */
-            gap: 30px;
-        }
-        .about-content { min-width: 100%; }
-        
-        /* 影片 */
-        .video-bg { display: block; } /* 保持影片顯示，若太卡可改 none */
+        .about-studio { flex-direction: column; text-align: center; padding: 40px 20px; border-left: none; border-top: 5px solid var(--accent); gap: 30px; }
+        .video-bg { display: block; }
+        .mobile-admin-btn { display: flex; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: rgba(212, 175, 55, 0.9); color: #000; border-radius: 50%; justify-content: center; align-items: center; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 9999; border: 1px solid #fff; }
     }
+    @media (min-width: 769px) { .mobile-admin-btn { display: none; } }
     </style>
 </head>
 <body>
 
     <header>
-        <a href="https://branddecoder-studio.github.io/" class="logo-container">
+        <a href="#" class="logo-container">
             <div class="logo-icon">BD</div>
-            <div class="logo-text">BRAND <span>DECODER</span></div>
+            <div class="logo-text">BRAND DECODER<br><span>品智智能 SaaS</span></div>
         </a>
         <nav>
             <ul>
-                <li><a href="#services">核心業務</a></li>
-                <li><a href="#ai-system">AI 系統</a></li>
-                <li><a href="#cases">合作案例</a></li>
-                <li><a href="#pricing">方案連結</a></li>
-                <li><a href="#order-form" style="color:var(--accent); border:1px solid var(--accent); padding:5px 10px; border-radius:4px;">線上委託</a></li>
+                <li><a href="#services">核心賦能</a></li>
+                <li><a href="#ai-system">SaaS 優勢</a></li>
+                <li><a href="#cases">導入案例</a></li>
+                <li><a href="#pricing">算力方案</a></li>
+                <li><a href="#order-form" style="color:var(--accent); border:1px solid var(--accent); padding:5px 10px; border-radius:4px;">申請開通</a></li>
                 <li>
                     <a href="https://branddecoder-studio.github.io/SaaS-Admin/" target="_blank" class="btn-admin-login">
-                        <i class="fa-solid fa-user-shield"></i> SaaS 後台
+                        <i class="fa-solid fa-user-shield"></i> 戰情室登入
                     </a>
                 </li>
             </ul>
@@ -363,152 +263,116 @@
             <source src="Yt_Start.mp4" type="video/mp4">
         </video>
         <div class="overlay"></div>
-        <h1>BRAND <span>DECODER</span></h1>
-        <div class="subtitle">AI Empowerment x Smart Strategy</div>
-        <p style="margin-bottom: 40px; max-width: 600px; color: #ccc;">拒絕視覺貧窮，打造獲利閉環。<br>一站式 AI 解決方案，為企業解碼未來商機。</p>
-        <a href="#pricing" class="btn">立即啟動 AI 轉型</a>
+        <h1>品智智能 <span>SaaS</span></h1>
+        <div class="subtitle">您的 24/7 專屬金牌數位銷售</div>
+        <p style="margin-bottom: 40px; max-width: 650px; color: #ccc; font-size: 1.1rem;">
+            告別高昂客服成本，打造永不打烊的獲利引擎。<br>透過 Gemini 算力大腦，精準攔截商機、自動推薦導購，<br>大幅降低客訴風險與人事依賴。
+        </p>
+        <a href="#pricing" class="btn">立即啟動 AI 業務員</a>
     </section>
 
     <section id="services" class="section">
-        <div class="section-title"><span>三大核心業務</span></div>
+        <div class="section-title"><span>企業自動化核心賦能</span></div>
+        <p style="text-align: center; color: #999; margin-bottom: 40px;">以 SaaS 系統為核心運轉，搭配視覺與策略升級外掛，實現真正的商業自動化。</p>
         <div class="services-grid">
-            <div class="service-card">
-                <img src="AIOptimization_AIO_01.jpg" class="service-img" alt="AI Image">
-                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> AI 影像賦能</h3>
-                <p>運用 Gemini 2.0 與先進視覺技術，產出 4A 廣告級高品質資產，解決視覺貧窮。</p>
+            <div class="service-card" style="border-color: var(--accent); box-shadow: 0 0 15px rgba(212,175,55,0.1);">
+                <img src="AILINEBanner_01.jpg" class="service-img" alt="PinZhi SaaS">
+                <h3 style="color:var(--accent);"><i class="fa-solid fa-robot"></i> 品智 SaaS 客服平台 (核心引擎)</h3>
+                <p>具備商業邏輯與防幻覺邊界的超級大腦。全自動處理報價與導購，並主動索取客戶聯絡資訊建立 CRM 庫。</p>
             </div>
             <div class="service-card">
-                <img src="AILINEBanner_01.jpg" class="service-img" alt="AI CS">
-                <h3><i class="fa-solid fa-headset"></i> 智能客服系統</h3>
-                <p>具備導購大腦的 24/7 超級業務員，自動化處理訂單與高階客戶諮詢。</p>
+                <img src="AIOptimization_AIO_01.jpg" class="service-img" alt="AI Image">
+                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> AI 影像視覺 (升級外掛)</h3>
+                <p>如果 AI 賣不好，往往是視覺素材不到位。結合 SaaS 鷹眼導購，我們提供專業 AI 影像生成，讓客戶隨手一拍就能精準推銷絕美商品。</p>
             </div>
             <div class="service-card">
                 <img src="Digital_Marketing_Consultant_01.jpg" class="service-img" alt="Consultant">
-                <h3><i class="fa-solid fa-chess-knight"></i> 商業策略顧問</h3>
-                <p>20 年實戰經驗，從營收增長到品牌解碼，為企業打造專屬變現閉環。</p>
+                <h3><i class="fa-solid fa-chess-knight"></i> 品牌策略顧問 (升級外掛)</h3>
+                <p>20 年實戰經驗，協助您將生硬的商品型錄，轉化為 SaaS 系統聽得懂的「高轉化知識庫」，讓 AI 真正掌握銷售痛點。</p>
             </div>
         </div>
     </section>
 
     <section id="ai-system" class="section" style="background: #0f0f0f;">
-        <div class="section-title"><span>AI 系統核心優勢</span></div>
-        <p style="text-align: center; color: #999; margin-bottom: 40px;">不只是聊天機器人，而是能聽懂需求、看懂圖片、主動成交的頂尖業務。</p>
+        <div class="section-title"><span>品智 SaaS 系統優勢</span></div>
         <div class="saas-features">
             <div class="feature-box">
+                <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+                <h4>無摩擦秒速開通</h4>
+                <p>獨家 Auto-Capture 技術，只需貼上專屬 Webhook，用 LINE 講第一句話系統自動尋路綁定，免除繁瑣工程設定。</p>
+            </div>
+            <div class="feature-box">
                 <div class="feature-icon"><i class="fa-solid fa-eye"></i></div>
-                <h4>鷹眼視覺聯想</h4>
-                <p>客戶傳一張照片，AI 自動辨識並推薦相關產品。不懂產品名也能賣！</p>
+                <h4>鷹眼視覺導購 (HawkEye)</h4>
+                <p>客戶傳送商品照片或環境圖，大腦自動辨識意圖並拋出對應的商品卡片，不懂產品專有名詞也能順利推銷。</p>
             </div>
             <div class="feature-box">
-                <div class="feature-icon"><i class="fa-solid fa-sync"></i></div>
-                <h4>數據自動同步</h4>
-                <p>官網上架新品，LINE 機器人 1 小時內自動學習，報價無時差。</p>
+                <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h4>嚴格防幻覺與拒絕議價</h4>
+                <p>內建商務防護網，不亂掰商品、不提供醫療診斷、自動委婉拒絕客戶殺價，確保企業公關與利潤絕對安全。</p>
             </div>
             <div class="feature-box">
-                <div class="feature-icon"><i class="fa-solid fa-bell"></i></div>
-                <h4>商機自動捕獲</h4>
-                <p>自動偵測客戶需求，關鍵字觸發立即通知管理員，絕不漏單。</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="cases" class="section">
-        <div class="section-title"><span>成功導入案例</span></div>
-        <div class="cases-grid">
-            <div class="case-card">
-                <div class="case-tag">零售電商</div>
-                <h3>定迎有限公司</h3>
-                <p>台灣頂級茶葉品牌，運用 AI 鷹眼視覺技術，讓客戶「拍茶葉、找好茶」，實現線上品茗體驗。</p>
-                <div class="case-highlight">
-                    <i class="fa-solid fa-quote-left"></i> 
-                    AI 導購模組讓我們的茶葉不再只是商品，而是有溫度的推薦。
-                </div>
-            </div>
-            <div class="case-card">
-                <div class="case-tag">運動休閒</div>
-                <h3>Chia Yoga Studio</h3>
-                <p>專業瑜珈教室，導入 CRM 會員分級制度，自動識別學員等級，提供專屬課程諮詢與預約服務。</p>
-                <div class="case-highlight">
-                    <i class="fa-solid fa-quote-left"></i> 
-                    24小時自動回覆學員問題，大幅降低了櫃檯人員的工作負擔。
-                </div>
-            </div>
-            <div class="case-card">
-                <div class="case-tag">專業顧問</div>
-                <h3>品牌解碼室</h3>
-                <p>將知識庫轉化為 AI 顧問，24小時協助客戶進行初步品牌診斷與商務對接，精準捕獲潛在商機。</p>
-                <div class="case-highlight">
-                    <i class="fa-solid fa-quote-left"></i> 
-                    商機通報功能讓我們不錯過任何一個潛在的大型合作案。
-                </div>
+                <div class="feature-icon"><i class="fa-solid fa-magnet"></i></div>
+                <h4>高價值商機捕獲 (Lead Trap)</h4>
+                <p>一旦偵測到客戶留下電話、Email 或大單採購意圖，AI 立即停止推銷，轉入專人接手模式並通知管理員。</p>
             </div>
         </div>
     </section>
 
     <section id="pricing" class="section">
-        <div class="section-title"><span>SaaS 合作方案</span></div>
+        <div class="section-title"><span>SaaS 算力方案</span></div>
         <p style="text-align: center; color: #999; margin-bottom: 50px;">
-            <span style="color:var(--accent); font-weight:bold;">Step 1.</span> 選擇建置方案 (首次必選) &nbsp; ➔ &nbsp; 
-            <span style="color:var(--line-green); font-weight:bold;">Step 2.</span> 選擇續約等級
+            最公平的 Pay-as-you-go 模式。免綁高額月費，系統只在為您創造價值時才消耗算力點數。
         </p>
         
         <div class="pricing-container">
             
-            <div class="price-card featured">
-                <div class="badge" style="background:#d4af37; color:#000;">新手必選</div>
-                <h3 style="color:var(--accent);">專業建置方案</h3>
-                <p style="color:#888; font-size:0.9rem;">新客戶首次導入專用</p>
-                <div class="price-tag">NT$ 9,999<span style="font-size: 0.8rem; display:block; margin-top:5px;">(一次性費用)</span></div>
+            <div class="price-card featured" style="border-color: #06c755;">
+                <div class="badge" style="background:#06c755; color:#fff; right:-35px;">首購必備</div>
+                <h3 style="color:#06c755;">白手套建置專案</h3>
+                <p style="color:#888; font-size:0.9rem;">為您的品牌打造專屬 AI 靈魂</p>
+                <div class="price-tag">NT$ 9,999<span style="font-size: 0.8rem; display:block; margin-top:5px;">(一次性設定費)</span></div>
                 
                 <ul class="features-list">
-                    <li style="color: var(--text-main); font-weight: bold; border-bottom: 1px dashed #555; padding-bottom:10px; margin-bottom:15px;">
-                        <i class="fa-solid fa-gift" style="color:#ff4757;"></i> 贈送標準版首月訂閱 (值$1,999)
-                    </li>
-                    <li><i class="fa-solid fa-wand-magic-sparkles"></i> 專業 Prompt 建置/調教</li>
-                    <li><i class="fa-solid fa-gears"></i> 全系統架構建置</li>
-                    <li><i class="fa-solid fa-database"></i> 專屬數據庫設計</li>
+                    <li><i class="fa-solid fa-brain"></i> AI 品牌人設與 Prompt 精調</li>
+                    <li><i class="fa-solid fa-database"></i> 專屬 SaaS 獨立資料庫開通</li>
+                    <li><i class="fa-solid fa-plug"></i> LINE 通道 API 無縫串接</li>
+                    <li><i class="fa-solid fa-chalkboard-user"></i> 戰情室後台使用教學</li>
                 </ul>
                 
-                <button onclick="triggerLineLogin()" class="btn" style="border-radius: 50px;">
-                    <i class="fab fa-line" style="margin-right:5px;"></i> 申請並使用 LINE 登入
+                <button onclick="triggerLineLogin()" class="btn" style="border-radius: 50px; border-color: #06c755; color: #06c755; margin-top: auto;">
+                    <i class="fab fa-line" style="margin-right:5px;"></i> 登入申請開通
                 </button>
             </div>
 
             <div class="price-card">
-                <h3 style="color:#fff;">智能客服 - 標準版</h3>
-                <p style="color:#888; font-size:0.9rem;">建置後次月開始繳費</p>
-                <div class="price-tag">NT$ 1,999<span> / 月</span></div>
+                <h3 style="color:#fff;">算力點數儲值包</h3>
+                <p style="color:#888; font-size:0.9rem;">1 元 = 1000 點，用多少扣多少</p>
                 
-                <ul class="features-list">
-                    <li><i class="fa-solid fa-check"></i> Gemini 2.0 AI 核心</li>
-                    <li><i class="fa-solid fa-check"></i> RAG 專業知識庫</li>
-                    <li><i class="fa-solid fa-users"></i> CRM 會員分級管理</li>
-                    <li><i class="fa-solid fa-map-location-dot"></i> Google Maps 導航</li>
+                <ul class="features-list" style="margin-top: 15px;">
+                    <li style="color:#ccc; font-size:0.85rem; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;">
+                        <i class="fa-solid fa-circle-info"></i> 預估消耗：一般對答約 100~300 點 / 鷹眼視覺導購約 1,500 點
+                    </li>
                 </ul>
 
-                <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
-                    <a href="https://p.ecpay.com.tw/36EB9E9" target="_blank" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid #555; color: #fff; padding: 8px;">月繳訂閱</a>
-                    <a href="https://p.ecpay.com.tw/6B32233" target="_blank" class="btn" style="border-radius: 50px; padding: 8px; font-size:0.85rem; background: rgba(255,255,255,0.1);">年繳優惠 $20,000 (省$3,988)</a>
-                </div>
-            </div>
+                <div style="display:flex; flex-direction:column; gap:12px; width: 100%;">
+                    <a href="https://p.ecpay.com.tw/31B4CCB" target="_blank" class="btn" style="border-radius: 6px; background: rgba(255,255,255,0.05); border: 1px solid #555; color: #fff; padding: 12px; font-size: 0.9rem; text-align: left; position: relative;">
+                        <div style="font-weight: bold; font-size: 1.1rem;">基礎包 $1,000</div>
+                        <div style="color: var(--accent); font-size: 0.85rem;">獲得 1,000,000 算力點</div>
+                        <i class="fa-solid fa-chevron-right" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #666;"></i>
+                    </a>
+                    
+                    <a href="https://p.ecpay.com.tw/55A297B" target="_blank" class="btn" style="border-radius: 6px; background: rgba(212,175,55,0.1); border: 1px solid var(--accent); color: #fff; padding: 12px; font-size: 0.9rem; text-align: left; position: relative;">
+                        <div style="font-weight: bold; font-size: 1.1rem; color: var(--accent);">標準包 $2,000</div>
+                        <div style="color: #ccc; font-size: 0.85rem;">200 萬點 <span style="color:var(--accent); font-weight:bold;">+ 贈 10 萬點</span></div>
+                        <i class="fa-solid fa-chevron-right" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--accent);"></i>
+                    </a>
 
-            <div class="price-card premium-green">
-                <div class="badge" style="background:var(--line-green); color:#fff; width:150px; right:-40px;">功能最強</div>
-                <h3 style="color:var(--line-green);">智能客服 - 進階版</h3>
-                <p style="color:#888; font-size:0.9rem;">全自動化與數據賦能</p>
-                <div class="price-tag">NT$ 2,999<span> / 月</span></div>
-                
-                <ul class="features-list">
-                    <li style="color: #fff; font-weight: bold; margin-bottom:15px; border-bottom: 1px solid #333; padding-bottom:5px;">包含標準版功能，再加上：</li>
-                    <li><i class="fa-solid fa-chart-line"></i> <b>報表分析模組</b></li>
-                    <li><i class="fa-solid fa-cart-shopping"></i> <b>LINE 自動導購模組</b></li>
-                    <li><i class="fa-solid fa-clock-rotate-left"></i> <b>商品定時更新模組</b></li>
-                    <li><i class="fa-solid fa-eye"></i> <b>鷹眼視覺系統</b></li>
-                </ul>
-
-                <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
-                    <a href="https://p.ecpay.com.tw/6E54605" target="_blank" class="btn" style="border-radius: 50px; background: transparent; border: 1px solid var(--line-green); color: var(--line-green); padding: 8px;">月繳訂閱</a>
-                    <a href="https://p.ecpay.com.tw/C109162" target="_blank" class="btn" style="border-radius: 50px; padding: 8px; font-size:0.85rem; background: rgba(6, 199, 85, 0.2); color:white;">年繳優惠 $30,000 (含優先支援)</a>
+                    <a href="https://p.ecpay.com.tw/9342FA0" target="_blank" class="btn" style="border-radius: 6px; background: linear-gradient(145deg, rgba(6,199,85,0.15), rgba(0,0,0,0)); border: 1px solid var(--line-green); color: #fff; padding: 12px; font-size: 0.9rem; text-align: left; position: relative;">
+                        <div style="font-weight: bold; font-size: 1.1rem; color: var(--line-green);">超值包 $3,000</div>
+                        <div style="color: #ccc; font-size: 0.85rem;">300 萬點 <span style="color:var(--line-green); font-weight:bold;">+ 贈 20 萬點</span></div>
+                        <i class="fa-solid fa-chevron-right" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--line-green);"></i>
+                    </a>
                 </div>
             </div>
 
@@ -516,9 +380,9 @@
     </section>
 
     <section id="order-form" class="section">
-        <div class="section-title"><span>線上委託建置</span></div>
+        <div class="section-title"><span>系統開通委託</span></div>
         <p style="text-align: center; color: #999; margin-bottom: 30px;">
-            填寫需求，系統將自動識別您的 LINE ID 並建立專屬合約檔案。
+            請填寫建置需求，系統將綁定您的 LINE ID 建立專屬管理權限。
         </p>
 
         <div class="custom-form-container">
@@ -526,17 +390,17 @@
                 <input type="hidden" name="userId" id="userIdInput">
     
                 <div class="form-group">
-                    <label class="form-label">LINE User ID (系統自動抓取)
+                    <label class="form-label">LINE User ID (管理員帳號綁定)
                         <button type="button" class="line-login-small-btn" onclick="triggerLineLogin()">
-                            <i class="fab fa-line"></i> 點此登入帶入資料
+                            <i class="fab fa-line"></i> 點此授權帶入
                         </button>
                     </label>
-                    <input type="text" class="form-input" id="userIdDisplay" value="" placeholder="請點擊上方按鈕登入" readonly>
+                    <input type="text" class="form-input" id="userIdDisplay" value="" placeholder="請點擊上方按鈕授權" readonly>
                 </div>
     
                 <div class="form-group">
-                    <label class="form-label">申請人姓名 / 公司名稱 *</label>
-                    <input type="text" name="name" id="nameInput" class="form-input" placeholder="請輸入您的大名" required>
+                    <label class="form-label">品牌名稱 / 申請人姓名 *</label>
+                    <input type="text" name="name" id="nameInput" class="form-input" placeholder="例如：奇亞瑜珈 / 王小明" required>
                 </div>
     
                 <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
@@ -545,91 +409,53 @@
                         <input type="tel" name="phone" class="form-input" placeholder="0912-345-678" required>
                     </div>
                     <div>
-                        <label class="form-label">Email 信箱 (接收合約用) *</label>
-                        <input type="email" name="email" class="form-input" placeholder="合約將寄送至此" required>
+                        <label class="form-label">Email 信箱 (登入戰情室用) *</label>
+                        <input type="email" name="email" class="form-input" placeholder="將作為 SaaS 系統登入帳號" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">所屬產業類別 *</label>
+                    <label class="form-label">AI 人設 / 產業別 *</label>
                     <select name="industry" class="form-select" required>
                         <option value="" disabled selected>請選擇您的產業...</option>
-                        <option value="零售/電商">零售 / 電商 (Retail/E-commerce)</option>
-                        <option value="餐飲/食品">餐飲 / 食品 (F&B)</option>
-                        <option value="美容/美髮/美業">美容 / 美髮 / 美業</option>
-                        <option value="教育/培訓/補教">教育 / 培訓 / 補教</option>
-                        <option value="醫療/診所/保健">醫療 / 診所 / 保健</option>
-                        <option value="房地產/仲介">房地產 / 仲介</option>
-                        <option value="旅遊/旅宿/觀光">旅遊 / 旅宿 / 觀光</option>
-                        <option value="金融/保險/投資">金融 / 保險 / 投資</option>
-                        <option value="製造/傳產/工廠">製造 / 傳產 / 工廠</option>
-                        <option value="科技/軟體/SaaS">科技 / 軟體 / SaaS</option>
-                        <option value="行銷/廣告/設計">行銷 / 廣告 / 設計</option>
-                        <option value="媒體/KOL/創作者">媒體 / KOL / 創作者</option>
-                        <option value="專業服務(律師/會計)">專業服務 (律師/會計/顧問)</option>
-                        <option value="健身/運動/休閒">健身 / 運動 / 休閒</option>
-                        <option value="汽車/交通/物流">汽車 / 交通 / 物流</option>
-                        <option value="室內設計/裝修">室內設計 / 裝修</option>
-                        <option value="批發/貿易">批發 / 貿易</option>
-                        <option value="非營利組織/協會">非營利組織 / 協會</option>
-                        <option value="政府機關">政府機關</option>
-                        <option value="其他">其他</option>
+                        <option value="零售/電商">批發零售 / 電商購物</option>
+                        <option value="專業顧問/B2B">專業顧問 / B2B 企業</option>
+                        <option value="美容/醫療保健">美容美業 / 醫療保健</option>
+                        <option value="教育/培訓/休閒">教育培訓 / 瑜珈休閒</option>
+                        <option value="餐飲/旅宿/O2O">餐飲旅宿 / O2O實體店</option>
+                        <option value="房地產/裝修">房地產 / 營建裝修</option>
+                        <option value="其他">其他綜合服務業</option>
                     </select>
                 </div>
     
                 <div class="form-group">
-                    <label class="form-label">諮詢方案 *</label>
+                    <label class="form-label">申辦項目 *</label>
                     <select name="serviceType" class="form-select">
-                        <option value="新手建置方案 ($9,999)">新手建置方案 ($9,999)</option>
-                        <option value="標準版月租 ($1,999)">標準版月租 ($1,999)</option>
-                        <option value="進階版月租 ($2,999)">進階版月租 ($2,999)</option>
-                        <option value="企業客製化諮詢">企業客製化諮詢</option>
+                        <option value="白手套建置專案 ($9,999)">白手套建置專案 ($9,999)</option>
+                        <option value="企業大量算力採購">企業大量算力與顧問採購</option>
                     </select>
                 </div>
     
                 <div class="form-group">
-                    <label class="form-label">備註需求</label>
-                    <textarea name="memo" class="form-textarea" rows="4" placeholder="請簡述您的特殊需求..."></textarea>
+                    <label class="form-label">特殊大腦調教需求</label>
+                    <textarea name="memo" class="form-textarea" rows="3" placeholder="例如：我們品牌絕不接受殺價、必須使用活潑語氣..."></textarea>
                 </div>
     
                 <button type="submit" class="submit-btn" id="submitBtn">
-                    立即送出申請 <div class="loading-spinner"></div>
+                    送出開通申請 <div class="loading-spinner"></div>
                 </button>
             </form>
-        </div>
-    </section>
-    <section id="portfolio" class="section" style="background: #0f0f0f;">
-        <div class="section-title"><span>實戰案例展示</span></div>
-        <div class="portfolio-grid">
-            <div class="video-card">
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/zv4eaGMdVck" title="AI Application Demo" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <div class="video-info">
-                    <p>AI Application</p>
-                    <h4>動態影像生成與 AI 應用</h4>
-                </div>
-            </div>
-            <div class="video-card">
-                <div class="video-container">
-                    <iframe src="https://www.youtube.com/embed/3NR9cll28bM" title="Brand Commercial" frameborder="0" allowfullscreen></iframe>
-                </div>
-                <div class="video-info">
-                    <p>Brand Commercial</p>
-                    <h4>品牌形象專案</h4>
-                </div>
-            </div>
         </div>
     </section>
 
     <section class="section">
         <div class="about-studio">
             <div class="about-content">
-                <h3 style="font-size: 2rem; margin-bottom: 20px; color:#fff;">品牌解碼室：K.C. Peter</h3>
-                <p style="color:#ccc;">在 AI 浪潮中，我們不只是工具的操作者，更是您商業策略的戰略夥伴。目前頻道已達成 **1.7 萬次觀看** 與 **920 小時觀看時數**，這就是影像賦能與 AI 策略的實證。</p>
+                <h3 style="font-size: 2rem; margin-bottom: 20px; color:#fff;">Brand Decoder 品牌解碼室</h3>
+                <p style="color:#ccc;">由 K.C. Peter 創立。我們深知企業在數位轉型中面臨的「人事成本」與「流量變現」痛點。透過導入品智智能 SaaS，我們不只給您工具，更給您一套 24 小時運轉的商業引擎。</p>
             </div>
             <div class="about-qr">
-                <p style="color:var(--accent); font-weight:bold; margin-bottom:15px;">掃碼諮詢您的 AI 轉型方案</p>
+                <p style="color:var(--accent); font-weight:bold; margin-bottom:15px;">掃碼預約系統 Demo</p>
                 <img src="https://qr-official.line.me/gs/M_178maxda_BW.png?oat_content=qr" style="width: 150px; border:1px solid #333; border-radius:10px; padding:5px;">
             </div>
         </div>
@@ -637,169 +463,160 @@
 
     <footer>
         <p>Contact: brand.decoderai@gmail.com</p>
-        <p>&copy; 2026 Brand Decoder Studio. All Rights Reserved.</p>
+        <p>&copy; 2026 Brand Decoder & 品智智能 SaaS. All Rights Reserved.</p>
+        
+        <div class="legal-links">
+            <a onclick="openModal('modal-tos')">服務條款</a> | 
+            <a onclick="openModal('modal-privacy')">隱私政策</a> | 
+            <a onclick="openModal('modal-refund')">退款與點數政策</a>
+        </div>
     </footer>
 
+    <a href="https://branddecoder-studio.github.io/SaaS-Admin/" target="_blank" class="mobile-admin-btn"><i class="fa-solid fa-user-shield"></i></a>
 
-    <a href="https://branddecoder-studio.github.io/SaaS-Admin/" target="_blank" class="mobile-admin-btn">
-    <i class="fa-solid fa-user-shield"></i>
-</a>
+    <div id="modal-tos" class="modal-overlay" onclick="closeModal(event, 'modal-tos')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('force', 'modal-tos')"><i class="fa-solid fa-times"></i></button>
+            <h2>服務條款 (Terms of Service)</h2>
+            <p>歡迎使用「品智智能 SaaS 客服平台」（以下簡稱本平台）。請詳細閱讀以下條款：</p>
+            <h4>1. 服務提供與點數計算</h4>
+            <ul>
+                <li>本平台採「算力點數扣款制」。系統接收與發送文字、處理圖片或調用外部地圖 API 等行為，皆會依系統當下公告之權重自動扣除帳戶點數。</li>
+                <li>當帳戶餘額歸零或低於單次請求所需點數時，系統將自動暫停 AI 回覆功能，用戶須完成點數儲值方可恢復服務。</li>
+            </ul>
+            <h4>2. AI 產出內容與免責聲明</h4>
+            <ul>
+                <li>本平台使用第三方大型語言模型（如 Google Gemini）。受限於目前 AI 技術之本質，AI 可能會產生不準確、虛構或偏離事實之內容（即 AI 幻覺）。</li>
+                <li><b>免責聲明：</b>本平台僅提供技術工具，用戶須自行負責審閱與設定 AI 知識庫。因 AI 回覆內容（包含但不限於報價錯誤、錯誤承諾）所產生之任何商業糾紛或損失，本平台概不負責。</li>
+            </ul>
+            <h4>3. 合法使用規範</h4>
+            <ul>
+                <li>嚴禁將本系統用於詐欺、色情、博弈、販賣違禁品等違反中華民國法律之商業行為。一經查證，本平台有權立即終止服務並清空點數，且不予退款。</li>
+            </ul>
+        </div>
+    </div>
 
-<style>
-/* 手機版懸浮按鈕樣式 */
-.mobile-admin-btn {
-    display: none; /* 電腦版隱藏 */
-}
-@media (max-width: 768px) {
-    .mobile-admin-btn {
-        display: flex;
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        background: rgba(212, 175, 55, 0.8); /* 金色半透明 */
-        color: #000;
-        border-radius: 50%;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.2rem;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        z-index: 9999;
-        backdrop-filter: blur(5px);
-        border: 1px solid #fff;
-    }
-}
-</style>
+    <div id="modal-privacy" class="modal-overlay" onclick="closeModal(event, 'modal-privacy')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('force', 'modal-privacy')"><i class="fa-solid fa-times"></i></button>
+            <h2>隱私政策 (Privacy Policy)</h2>
+            <p>本平台高度重視您的商業機密與用戶資料安全：</p>
+            <h4>1. LINE 用戶資料蒐集</h4>
+            <ul>
+                <li>當消費者與您的 LINE 官方帳號互動時，本系統將合法擷取並儲存使用者的 LINE User ID、顯示名稱與大頭貼，僅供「您的專屬 SaaS 戰情室」內部 CRM 功能使用。</li>
+                <li>本平台承諾，絕不將您名下的任何消費者資料出售、轉讓或與其他第三方行銷公司共享。</li>
+            </ul>
+            <h4>2. 金鑰與系統安全</h4>
+            <ul>
+                <li>您於本平台填寫之 LINE Channel Access Token 與 Secret，將以加密形式儲存於 Google Cloud 資料庫中。本平台僅在執行您授權的自動回覆任務時調用上述金鑰。</li>
+            </ul>
+        </div>
+    </div>
 
-    
+    <div id="modal-refund" class="modal-overlay" onclick="closeModal(event, 'modal-refund')">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('force', 'modal-refund')"><i class="fa-solid fa-times"></i></button>
+            <h2>退款與點數政策 (Refund Policy)</h2>
+            <h4>1. 白手套建置專案</h4>
+            <ul>
+                <li>「白手套建置專案」屬客製化勞務與虛擬系統開通服務。依據《通訊交易解除權合理例外情事適用準則》，本服務一經開通並交付後台帳號，即不適用 7 日無條件退款。</li>
+            </ul>
+            <h4>2. 算力點數儲值包</h4>
+            <ul>
+                <li>算力點數屬於無實體之數位內容。點數一旦儲值入帳，即視為消耗性資產。</li>
+                <li>若因個人或企業內部因素終止使用本服務，帳戶內未消耗完畢之剩餘點數，概不接受按比例退費或折現。</li>
+                <li>若因本平台底層重大故障導致超過 72 小時完全無法提供服務，用戶可申請退還「最後一次儲值且尚未消耗完畢」之等比例金額。</li>
+            </ul>
+        </div>
+    </div>
 
-   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
-        // --- 設定區 ---
+        // --- LIFF & Form Submit 邏輯 (保留原樣) ---
         const LIFF_ID = "2008923052-LoAGl5hv"; 
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxK-UD2IMkH5gHNzEBsk5lICKT0Mel7dv2iIBYIvylFf6ynsD-ybOP8RkhuC_pBUrPNzg/exec"; 
 
-        // 初始化
-        document.addEventListener("DOMContentLoaded", function() {
-            initializeLiff(LIFF_ID);
-        });
+        document.addEventListener("DOMContentLoaded", function() { initializeLiff(LIFF_ID); });
 
         function initializeLiff(liffId) {
-            liff.init({ liffId: liffId })
-                .then(() => {
-                    // 檢查登入狀態
-                    if (liff.isLoggedIn()) {
-                        console.log("使用者已登入，自動抓取資料");
-                        getProfileData();
-                        // 改變按鈕文字提示已登入
-                        const loginBtns = document.querySelectorAll('.line-login-small-btn');
-                        loginBtns.forEach(btn => {
-                            btn.innerHTML = '<i class="fa-solid fa-check"></i> 已登入';
-                            btn.style.backgroundColor = '#444';
-                            btn.disabled = true;
-                        });
-                    } else {
-                        console.log("使用者未登入 (訪客模式)");
-                    }
-                })
-                .catch((err) => {
-                    console.error('LIFF Init Error:', err);
-                });
+            liff.init({ liffId: liffId }).then(() => {
+                if (liff.isLoggedIn()) {
+                    getProfileData();
+                    const loginBtns = document.querySelectorAll('.line-login-small-btn');
+                    loginBtns.forEach(btn => {
+                        btn.innerHTML = '<i class="fa-solid fa-check"></i> 已授權';
+                        btn.style.backgroundColor = '#444'; btn.disabled = true;
+                    });
+                }
+            }).catch((err) => { console.error('LIFF Init Error:', err); });
         }
 
-        // 手動觸發登入函式 (綁定在按鈕上)
         function triggerLineLogin() {
-            if (!liff.isLoggedIn()) {
-                // 執行登入，登入後會跳回目前頁面
-                liff.login({ redirectUri: window.location.href });
-            } else {
-                alert("您已經登入囉！資料已自動帶入表單。");
+            if (!liff.isLoggedIn()) { liff.login({ redirectUri: window.location.href }); } 
+            else {
+                alert("您已經授權囉！資料已自動帶入表單。");
                 document.getElementById('order-form').scrollIntoView();
             }
         }
 
         function getProfileData() {
-            liff.getProfile()
-                .then((profile) => {
-                    const userId = profile.userId;
-                    const displayName = profile.displayName;
-
-                    // 填入隱藏欄位
-                    document.getElementById('userIdInput').value = userId;
-                    
-                    // 填入顯示欄位
-                    const displayField = document.getElementById('userIdDisplay');
-                    displayField.value = userId;
-                    displayField.style.color = "#06c755";
-                    displayField.style.fontWeight = "bold";
-                    
-                    // 自動填入姓名
-                    const nameInput = document.getElementById('nameInput');
-                    if(!nameInput.value) {
-                        nameInput.value = displayName;
-                    }
-                })
-                .catch((err) => {
-                    console.error('Profile Error:', err);
-                });
+            liff.getProfile().then((profile) => {
+                document.getElementById('userIdInput').value = profile.userId;
+                const displayField = document.getElementById('userIdDisplay');
+                displayField.value = profile.userId;
+                displayField.style.color = "#06c755"; displayField.style.fontWeight = "bold";
+                const nameInput = document.getElementById('nameInput');
+                if(!nameInput.value) { nameInput.value = profile.displayName; }
+            });
         }
 
-        // --- 表單送出邏輯 ---
         const form = document.getElementById('bdOrderForm');
         const submitBtn = document.getElementById('submitBtn');
         const spinner = document.querySelector('.loading-spinner');
 
         form.addEventListener('submit', function(e) {
             e.preventDefault(); 
-
-            // 簡單檢查是否有 UserID
             const uid = document.getElementById('userIdInput').value;
             if(!uid) {
-                if(confirm("系統偵測到您尚未登入 LINE，這可能會導致我們無法聯絡您。\n是否要先登入？")) {
-                    triggerLineLogin();
-                    return;
-                }
+                if(confirm("系統偵測到您尚未授權 LINE 綁定，無法建立系統大腦。\n是否要先進行授權？")) { triggerLineLogin(); return; }
             }
 
-            submitBtn.disabled = true;
-            submitBtn.childNodes[0].nodeValue = "處理中...";
+            submitBtn.disabled = true; submitBtn.childNodes[0].nodeValue = "處理中...";
             spinner.style.display = "inline-block";
 
             const formData = new FormData(form);
-            const data = {};
-            formData.forEach((value, key) => data[key] = value);
+            const data = {}; formData.forEach((value, key) => data[key] = value);
 
-            // --- 開始發送 ---
             fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                // 改用預設的 CORS 模式 (GAS 部署時權限設為 Anyone 即可支援)
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams(data)
             })
-            .then(response => response.json()) // 1. 解析後端回傳的 JSON
+            .then(response => response.json()) 
             .then(result => {
-                // 2. 判斷後端回傳的狀態
-                if (result.status === "success") {
-                    // 成功：顯示綠色勾勾
-                    alert("✅ " + result.message); 
-                    form.reset(); 
-                } else {
-                    // 失敗 (重複下單)：顯示紅色叉叉，並顯示後端傳來的警告文字
-                    alert("⚠️ " + (result.message || "提交失敗"));
-                }
+                if (result.status === "success") { alert("✅ 申請成功！系統工程師將盡快與您聯繫。"); form.reset(); } 
+                else { alert("⚠️ " + (result.message || "提交失敗")); }
             })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert("❌ 連線異常或系統忙碌中，請聯繫管理員。");
-            })
+            .catch((error) => { alert("❌ 連線異常或系統忙碌中，請聯繫管理員。"); })
             .finally(() => {
-                // ✅ 這裡只保留一個 finally
-                submitBtn.disabled = false;
-                submitBtn.childNodes[0].nodeValue = "立即送出申請";
+                submitBtn.disabled = false; submitBtn.childNodes[0].nodeValue = "送出開通申請";
                 spinner.style.display = "none";
             });
         });
+
+        // --- 彈窗 (Modal) 控制邏輯 ---
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden'; // 防止背景滾動
+        }
+
+        function closeModal(event, modalId) {
+            // 如果是強制關閉 (點 X 按鈕)，或者點擊在 overlay 背景上
+            if (event === 'force' || event.target.id === modalId) {
+                document.getElementById(modalId).classList.remove('active');
+                document.body.style.overflow = 'auto'; // 恢復背景滾動
+            }
+        }
     </script>
 </body>
 </html>
