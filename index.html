@@ -537,7 +537,8 @@
     <script>
         // --- LIFF & Form Submit 邏輯 (保留原樣) ---
         const LIFF_ID = "2008923052-LoAGl5hv"; 
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxK-UD2IMkH5gHNzEBsk5lICKT0Mel7dv2iIBYIvylFf6ynsD-ybOP8RkhuC_pBUrPNzg/exec"; 
+       // 換成你的 Cloud Run 網址，並加上攔截器參數
+        const GOOGLE_SCRIPT_URL = "https://brand-decoder-bot-217800246535.asia-east1.run.app/?action=submitForm";
 
         document.addEventListener("DOMContentLoaded", function() { initializeLiff(LIFF_ID); });
 
