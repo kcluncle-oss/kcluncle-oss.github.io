@@ -282,12 +282,12 @@
             </div>
             <div class="service-card">
                 <img src="AIOptimization_AIO_01.jpg" class="service-img" alt="AI Image">
-                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> AI 影像視覺 (升級外掛)</h3>
+                <h3 style="color:#fff;"><i class="fa-solid fa-wand-magic-sparkles"></i> AI 影像視覺 (升級外掛)</h3>
                 <p>如果 AI 賣不好，往往是視覺素材不到位。結合 SaaS 鷹眼導購，我們提供專業 AI 影像生成，讓客戶隨手一拍就能精準推銷絕美商品。</p>
             </div>
             <div class="service-card">
                 <img src="Digital_Marketing_Consultant_01.jpg" class="service-img" alt="Consultant">
-                <h3><i class="fa-solid fa-chess-knight"></i> 品牌策略顧問 (升級外掛)</h3>
+                <h3 style="color:#fff;"><i class="fa-solid fa-chess-knight"></i> 品牌策略顧問 (升級外掛)</h3>
                 <p>20 年實戰經驗，協助您將生硬的商品型錄，轉化為 SaaS 系統聽得懂的「高轉化知識庫」，讓 AI 真正掌握銷售痛點。</p>
             </div>
         </div>
@@ -409,17 +409,17 @@
                 <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                     <div>
                         <label class="form-label">聯絡電話 *</label>
-                        <input type="tel" name="phone" class="form-input" placeholder="0912-345-678" required>
+                        <input type="tel" name="phone" id="phoneInput" class="form-input" placeholder="0912-345-678" required>
                     </div>
                     <div>
                         <label class="form-label">Email 信箱 (登入戰情室用) *</label>
-                        <input type="email" name="email" class="form-input" placeholder="將作為 SaaS 系統登入帳號" required>
+                        <input type="email" name="email" id="emailInput" class="form-input" placeholder="將作為 SaaS 系統登入帳號" required>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">AI 人設 / 產業別 *</label>
-                    <select name="industry" class="form-select" required>
+                    <select name="industry" id="industrySelect" class="form-select" required>
                         <option value="" disabled selected>請選擇您的產業...</option>
                         <option value="零售/電商">批發零售 / 電商購物</option>
                         <option value="專業顧問/B2B">專業顧問 / B2B 企業</option>
@@ -535,9 +535,8 @@
 
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
-        // --- LIFF & Form Submit 邏輯 (保留原樣) ---
+        // --- LIFF & Form Submit 邏輯 ---
         const LIFF_ID = "2008923052-LoAGl5hv"; 
-       // 換成你的 Cloud Run 網址，並加上攔截器參數
         const GOOGLE_SCRIPT_URL = "https://brand-decoder-bot-217800246535.asia-east1.run.app/?action=submitForm";
 
         document.addEventListener("DOMContentLoaded", function() { initializeLiff(LIFF_ID); });
@@ -578,11 +577,27 @@
         const submitBtn = document.getElementById('submitBtn');
         const spinner = document.querySelector('.loading-spinner');
 
+        // 🌟 [修改重點] 嚴格攔截送出邏輯
         form.addEventListener('submit', function(e) {
             e.preventDefault(); 
+            
+            // 1. 取得欄位值並去除前後空白
             const uid = document.getElementById('userIdInput').value;
-            if(!uid) {
-                if(confirm("系統偵測到您尚未授權 LINE 綁定，無法建立系統大腦。\n是否要先進行授權？")) { triggerLineLogin(); return; }
+            const nameInput = document.getElementById('nameInput').value.trim();
+            const phoneInput = document.getElementById('phoneInput').value.trim();
+            const emailInput = document.getElementById('emailInput').value.trim();
+            const industrySelect = document.getElementById('industrySelect').value;
+
+            // 2. 嚴格的第一層防線 (必填校驗)
+            if (!nameInput || !phoneInput || !emailInput || !industrySelect) {
+                alert("🚨 請完整填寫所有標示 * 的必填項目！");
+                return; // 直接中斷，不執行 fetch
+            }
+
+            // 3. 嚴格的 LINE 授權防線 (防止產生 undefined)
+            if (!uid) {
+                alert("🚨 系統偵測到您尚未授權 LINE 綁定。\n\n請先點擊表單上方的「點此授權帶入」按鈕，完成身分識別後再送出申請喔！");
+                return; // 絕對攔截，直接中斷
             }
 
             submitBtn.disabled = true; submitBtn.childNodes[0].nodeValue = "處理中...";
@@ -615,7 +630,6 @@
         }
 
         function closeModal(event, modalId) {
-            // 如果是強制關閉 (點 X 按鈕)，或者點擊在 overlay 背景上
             if (event === 'force' || event.target.id === modalId) {
                 document.getElementById(modalId).classList.remove('active');
                 document.body.style.overflow = 'auto'; // 恢復背景滾動
