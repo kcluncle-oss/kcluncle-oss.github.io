@@ -433,7 +433,7 @@
     
                 <div class="form-group">
                     <label class="form-label">申辦項目 *</label>
-                    <select name="serviceType" class="form-select">
+                    <select name="serviceType" id="serviceTypeSelect" class="form-select">
                         <option value="白手套建置專案 ($5,000)">白手套建置專案 ($5,000)</option>
                         <option value="企業大量算力採購">企業大量算力與顧問採購</option>
                     </select>
@@ -445,7 +445,7 @@
                 </div>
     
                 <button type="submit" class="submit-btn" id="submitBtn">
-                    送出開通申請 <div class="loading-spinner"></div>
+                    送出申請並前往結帳 (NT$ 5,000) <div class="loading-spinner"></div>
                 </button>
             </form>
         </div>
@@ -535,11 +535,24 @@
 
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
-        // --- LIFF & Form Submit 邏輯 ---
         const LIFF_ID = "2008923052-LoAGl5hv"; 
         const GOOGLE_SCRIPT_URL = "https://brand-decoder-bot-217800246535.asia-east1.run.app/?action=submitForm";
 
-        document.addEventListener("DOMContentLoaded", function() { initializeLiff(LIFF_ID); });
+        document.addEventListener("DOMContentLoaded", function() { 
+            initializeLiff(LIFF_ID); 
+            
+            // 🌟 [動態按鈕切換] 監聽方案選單
+            const serviceSelect = document.getElementById('serviceTypeSelect');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            serviceSelect.addEventListener('change', function() {
+                if(this.value.includes('5,000')) {
+                    submitBtn.childNodes[0].nodeValue = "送出申請並前往結帳 (NT$ 5,000) ";
+                } else {
+                    submitBtn.childNodes[0].nodeValue = "送出開通申請 ";
+                }
+            });
+        });
 
         function initializeLiff(liffId) {
             liff.init({ liffId: liffId }).then(() => {
@@ -577,27 +590,23 @@
         const submitBtn = document.getElementById('submitBtn');
         const spinner = document.querySelector('.loading-spinner');
 
-        // 🌟 [修改重點] 嚴格攔截送出邏輯
         form.addEventListener('submit', function(e) {
             e.preventDefault(); 
             
-            // 1. 取得欄位值並去除前後空白
             const uid = document.getElementById('userIdInput').value;
             const nameInput = document.getElementById('nameInput').value.trim();
             const phoneInput = document.getElementById('phoneInput').value.trim();
             const emailInput = document.getElementById('emailInput').value.trim();
             const industrySelect = document.getElementById('industrySelect').value;
 
-            // 2. 嚴格的第一層防線 (必填校驗)
             if (!nameInput || !phoneInput || !emailInput || !industrySelect) {
                 alert("🚨 請完整填寫所有標示 * 的必填項目！");
-                return; // 直接中斷，不執行 fetch
+                return; 
             }
 
-            // 3. 嚴格的 LINE 授權防線 (防止產生 undefined)
             if (!uid) {
                 alert("🚨 系統偵測到您尚未授權 LINE 綁定。\n\n請先點擊表單上方的「點此授權帶入」按鈕，完成身分識別後再送出申請喔！");
-                return; // 絕對攔截，直接中斷
+                return; 
             }
 
             submitBtn.disabled = true; submitBtn.childNodes[0].nodeValue = "處理中...";
@@ -613,12 +622,25 @@
             })
             .then(response => response.json()) 
             .then(result => {
-                if (result.status === "success") { alert("✅ 申請成功！系統工程師將盡快與您聯繫。"); form.reset(); } 
+                if (result.status === "success") { 
+                    // 🌟 [判斷跳轉] 送出成功後，根據方案決定去向
+                    const selectedService = document.getElementById('serviceTypeSelect').value;
+                    if(selectedService.includes('5,000')) {
+                        alert("✅ 資料已建立！即將導向綠界安全付款頁面...");
+                        window.location.href = 'https://p.ecpay.com.tw/6976249'; // 跳轉結帳
+                    } else {
+                        alert("✅ 申請成功！系統工程師將盡快與您聯繫。");
+                        form.reset();
+                    }
+                } 
                 else { alert("⚠️ " + (result.message || "提交失敗")); }
             })
             .catch((error) => { alert("❌ 連線異常或系統忙碌中，請聯繫管理員。"); })
             .finally(() => {
-                submitBtn.disabled = false; submitBtn.childNodes[0].nodeValue = "送出開通申請";
+                submitBtn.disabled = false; 
+                // 恢復原本的按鈕文字
+                const currentService = document.getElementById('serviceTypeSelect').value;
+                submitBtn.childNodes[0].nodeValue = currentService.includes('5,000') ? "送出申請並前往結帳 (NT$ 5,000) " : "送出開通申請 ";
                 spinner.style.display = "none";
             });
         });
@@ -626,13 +648,13 @@
         // --- 彈窗 (Modal) 控制邏輯 ---
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
-            document.body.style.overflow = 'hidden'; // 防止背景滾動
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeModal(event, modalId) {
             if (event === 'force' || event.target.id === modalId) {
                 document.getElementById(modalId).classList.remove('active');
-                document.body.style.overflow = 'auto'; // 恢復背景滾動
+                document.body.style.overflow = 'auto'; 
             }
         }
     </script>
