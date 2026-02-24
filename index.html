@@ -151,6 +151,21 @@
     .admin-card h4 { color: #fff; font-size: 1.2rem; margin-bottom: 10px; }
     .admin-card p { color: #888; font-size: 0.95rem; }
 
+    /* --- ⚔️ 新增：競品降維打擊區 (Comparison Table) --- */
+    .comparison-section {
+        margin-top: 80px; padding: 40px; background: linear-gradient(to bottom, #141414, #0a0a0a);
+        border-radius: 20px; border: 1px solid #333;
+    }
+    .compare-row { display: flex; align-items: stretch; margin-bottom: 20px; border-radius: 12px; overflow: hidden; background: #000; }
+    .compare-label { flex: 1; min-width: 150px; padding: 25px 20px; background: #111; display: flex; align-items: center; justify-content: center; text-align: center; font-weight: bold; color: var(--accent); border-right: 1px solid #222; font-size: 1.1rem; }
+    .compare-bad { flex: 2; padding: 25px 20px; color: #888; border-right: 1px solid #222; display: flex; flex-direction: column; justify-content: center; }
+    .compare-good { flex: 2; padding: 25px 20px; background: rgba(212, 175, 55, 0.05); border-left: 3px solid var(--accent); display: flex; flex-direction: column; justify-content: center; }
+    .compare-bad h5 { color: #666; margin-bottom: 8px; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+    .compare-bad p { font-size: 0.9rem; margin: 0; line-height: 1.5; }
+    .compare-good h5 { color: #fff; margin-bottom: 8px; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+    .compare-good h5 span { color: var(--accent); font-size: 1rem; margin-left: auto; background: rgba(212, 175, 55, 0.2); padding: 2px 8px; border-radius: 4px; font-weight: normal; }
+    .compare-good p { color: #ccc; font-size: 0.95rem; margin: 0; line-height: 1.6; }
+
     /* --- 價格方案 Pricing --- */
     .pricing-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 0 auto; max-width: 1000px; }
     .price-card {
@@ -232,6 +247,13 @@
         /* 🌟 修復手機版上帝視角擠壓問題 */
         .admin-power { padding: 30px 15px; margin-top: 60px; }
         .admin-power-grid { gap: 20px; margin-top: 30px; }
+
+        /* 🌟 競品對比區 - 手機版自動折疊成堆疊式 (保證不跑版) */
+        .comparison-section { padding: 20px; }
+        .compare-row { flex-direction: column; border: 1px solid #333; margin-bottom: 30px; }
+        .compare-label { border-right: none; border-bottom: 1px solid #333; padding: 15px; }
+        .compare-bad { border-right: none; border-bottom: 1px dashed #333; padding: 15px; }
+        .compare-good { border-left: none; border-top: 3px solid var(--accent); padding: 20px 15px; }
     }
     @media (min-width: 769px) { .mobile-admin-btn { display: none; } }
     </style>
@@ -348,6 +370,83 @@
                 </div>
             </div>
         </div>
+
+        <div class="comparison-section">
+            <h3 style="text-align: center; font-size: 2.2rem; margin-bottom: 40px; color: #fff;">為什麼頂尖品牌都選擇<span style="color:var(--accent);">品智 SaaS</span>？</h3>
+            
+            <div class="compare-row">
+                <div class="compare-label"><i class="fa-solid fa-bolt" style="margin-right:8px;"></i> 開通門檻</div>
+                <div class="compare-bad">
+                    <h5><i class="fa-solid fa-times-circle" style="color:#ff4757;"></i> 一般傳統機器人</h5>
+                    <p>需工程師拉流程圖、寫腳本、繁瑣串接 API，耗時耗力。</p>
+                </div>
+                <div class="compare-good">
+                    <h5><i class="fa-solid fa-check-circle" style="color:var(--accent);"></i> 極簡化開通流程 <span>秒上手</span></h5>
+                    <p>無須寫程式，貼上 Webhook 後在 LINE 講一句話即自動綁定，今天買今天上線接單。</p>
+                </div>
+            </div>
+
+            <div class="compare-row">
+                <div class="compare-label"><i class="fa-solid fa-users" style="margin-right:8px;"></i> 客戶轉換</div>
+                <div class="compare-bad">
+                    <h5><i class="fa-solid fa-times-circle" style="color:#ff4757;"></i> 一般傳統機器人</h5>
+                    <p>毫無感情的死板語氣，沒有記憶，無法引導客人結帳。</p>
+                </div>
+                <div class="compare-good">
+                    <h5><i class="fa-solid fa-check-circle" style="color:var(--accent);"></i> LINE + 漏斗 + Persona <span>超擬真業務</span></h5>
+                    <p>具備老客戶記憶 (CRM)，自動切換專屬品牌人設，一步步把客人吸入結帳漏斗。</p>
+                </div>
+            </div>
+
+            <div class="compare-row">
+                <div class="compare-label"><i class="fa-solid fa-bullseye" style="margin-right:8px;"></i> 主動變現</div>
+                <div class="compare-bad">
+                    <h5><i class="fa-solid fa-times-circle" style="color:#ff4757;"></i> 一般傳統機器人</h5>
+                    <p>像圖書館管理員，客人問什麼才給什麼，被動且容易句點。</p>
+                </div>
+                <div class="compare-good">
+                    <h5><i class="fa-solid fa-check-circle" style="color:var(--accent);"></i> 權重動態逼單引擎 <span>極致變現</span></h5>
+                    <p>內建 Top Sales 邏輯，懂察言觀色，主動彈出專屬優惠，甚至半夜自動要電話。</p>
+                </div>
+            </div>
+
+            <div class="compare-row">
+                <div class="compare-label"><i class="fa-solid fa-magnifying-glass" style="margin-right:8px;"></i> 大腦理解</div>
+                <div class="compare-bad">
+                    <h5><i class="fa-solid fa-times-circle" style="color:#ff4757;"></i> 一般傳統機器人</h5>
+                    <p>死板的「關鍵字」比對，打錯字或傳照片就回「我聽不懂」。</p>
+                </div>
+                <div class="compare-good">
+                    <h5><i class="fa-solid fa-check-circle" style="color:var(--accent);"></i> 智能語意檢索 <span>超強聽寫</span></h5>
+                    <p>用語氣詞、錯別字、甚至隨手拍實體照片，系統都能瞬間從萬筆資料精準找貨。</p>
+                </div>
+            </div>
+
+            <div class="compare-row">
+                <div class="compare-label"><i class="fa-solid fa-server" style="margin-right:8px;"></i> 系統承載</div>
+                <div class="compare-bad">
+                    <h5><i class="fa-solid fa-times-circle" style="color:#ff4757;"></i> 一般傳統機器人</h5>
+                    <p>租用廉價小主機，遇到過年、雙 11 檔期人多就轉圈圈癱瘓。</p>
+                </div>
+                <div class="compare-good">
+                    <h5><i class="fa-solid fa-check-circle" style="color:var(--accent);"></i> Google 企業級雲端 <span>不怕爆量</span></h5>
+                    <p>砸大錢下廣告引來的百萬流量保證穩穩接住，不漏接任何一筆黃金訂單。</p>
+                </div>
+            </div>
+
+            <div class="compare-row">
+                <div class="compare-label"><i class="fa-solid fa-shield-virus" style="margin-right:8px;"></i> 斷線備援</div>
+                <div class="compare-bad">
+                    <h5><i class="fa-solid fa-times-circle" style="color:#ff4757;"></i> 一般傳統機器人</h5>
+                    <p>單一 API 串接，只要上游一當機，客服直接罷工變智障。</p>
+                </div>
+                <div class="compare-good">
+                    <h5><i class="fa-solid fa-check-circle" style="color:var(--accent);"></i> 智能切換 AI 大腦 <span>永不斷線</span></h5>
+                    <p>主系統若遇網路波動，微秒級自動切換備援大腦，防止偶發危機，24H 營業有保障。</p>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <section id="pricing" class="section">
@@ -361,7 +460,7 @@
             <div class="price-card featured" style="border-color: #06c755;">
                 <div class="badge" style="background:#06c755; color:#fff; right:-35px;">首購必備</div>
                 <h3 style="color:#06c755;">白手套建置專案</h3>
-                <p style="color:#888; font-size:0.9rem;">超低門檻，輕鬆啟ٹی AI 獲利引擎</p>
+                <p style="color:#888; font-size:0.9rem;">超低門檻，輕鬆啟動 AI 獲利引擎</p>
                 <div class="price-tag">NT$ 5,000<span style="font-size: 0.8rem; display:block; margin-top:5px;">(一次性設定費)</span></div>
                 
                 <ul class="features-list">
