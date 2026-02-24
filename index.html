@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>品牌解碼室 | 品智智能 SaaS 客服平台 - 打造全自動獲利引擎</title>
+    <title>品牌解碼室 | 品智智能 SaaS - 您的 24/7 AI 超級業務團隊</title>
     
     <link rel="icon" href="icon_01.png" type="image/png">
     
-    <meta name="description" content="品牌解碼室旗下旗艦產品「品智智能 SaaS 客服平台」，結合 Gemini AI 鷹眼視覺與算力引擎。大幅降低客服人力成本，24/7 全自動導購與商機捕獲。">
-    <meta name="keywords" content="品智智能, SaaS系統, 品牌解碼室, Brand Decoder, AI客服, 算力點數, LINE機器人, 商業策略, 數位轉型, 自動化行銷">
+    <meta name="description" content="BrandDecoder SaaS 不是傳統客服機器人，而是一套會判斷客戶意圖、主動推薦商品、並持續推進成交的 AI 超級業務系統。大幅降低獲客成本，打造永不打烊的獲利引擎。">
+    <meta name="keywords" content="品智智能, SaaS系統, 品牌解碼室, Brand Decoder, AI超級業務, AI客服, 算力點數, LINE行銷, 自動化成交, 數位轉型">
     <meta name="author" content="Brand Decoder Studio">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://branddecoder-studio.github.io/">
-    <meta property="og:title" content="品牌解碼室 | 品智智能 SaaS 客服平台">
-    <meta property="og:description" content="讓 AI 成為您的 24/7 金牌數位銷售。全自動商機捕獲、零客訴風險，打造永不打烊的獲利引擎。">
+    <meta property="og:title" content="品牌解碼室 | 品智智能 SaaS 超級業務系統">
+    <meta property="og:description" content="讓每一次 LINE 對話，都更接近一筆成交。24H 主動逼單、多語接待、自動收網，幫老闆把流量變現金。">
     <meta property="og:image" content="AIOptimization_AIO_01.jpg"> 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -37,85 +37,121 @@
     a { text-decoration: none; color: inherit; transition: 0.3s; }
     ul { list-style: none; }
 
-    /* --- 導覽列 --- */
+    /* --- 導覽列 (未更動) --- */
     header {
-        padding: 15px 5%;
-        display: flex; justify-content: space-between; align-items: center;
+        padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
         position: fixed; width: 100%; top: 0; z-index: 1000;
         background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(10px);
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
     .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; }
     .logo-icon {
         width: 45px; height: 45px; background: linear-gradient(145deg, #d4af37, #f9d976);
         color: #000; border-radius: 50%; display: flex; justify-content: center; align-items: center;
         font-weight: 900; font-size: 1.2rem; letter-spacing: -1px;
-        box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); border: 2px solid #fff;
-        flex-shrink: 0; font-family: 'Arial Black', sans-serif;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); border: 2px solid #fff; flex-shrink: 0; font-family: 'Arial Black', sans-serif;
     }
     .logo-text { font-size: 1.2rem; font-weight: bold; color: #fff; letter-spacing: 1px; line-height: 1.2;}
     .logo-text span { color: var(--accent); display: block; font-size: 0.8rem; letter-spacing: 2px;}
-
     nav ul { display: flex; gap: 30px; align-items: center; }
     nav a:hover { color: var(--accent); }
-
     .btn-admin-login {
-        background: rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 15px;
-        border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.1); color: #fff; padding: 6px 15px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.3);
         font-size: 0.9rem; display: flex; align-items: center; gap: 6px; transition: 0.3s;
     }
-    .btn-admin-login:hover {
-        background: var(--accent); color: #000 !important;
-        border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow);
-    }
+    .btn-admin-login:hover { background: var(--accent); color: #000 !important; border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
 
-    /* --- 主視覺 Hero Section --- */
+    /* --- 🔥 新版主視覺 Hero Section (左文右圖高轉換版) --- */
     .hero {
-        position: relative; height: 100vh;
-        display: flex; flex-direction: column; justify-content: center; align-items: center;
-        text-align: center; padding: 0 20px; overflow: hidden;
+        position: relative; min-height: 100vh; padding: 120px 5% 50px;
+        display: flex; align-items: center; justify-content: space-between; gap: 50px;
+        background: radial-gradient(circle at 80% 50%, rgba(212, 175, 55, 0.1) 0%, var(--bg-color) 60%);
     }
-    .video-bg {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        object-fit: cover; z-index: -2; opacity: 0.5; filter: contrast(1.1);
+    .hero-content { flex: 1; max-width: 600px; z-index: 2; }
+    .hero-content .pill { 
+        display: inline-block; padding: 5px 15px; background: rgba(212, 175, 55, 0.15); border: 1px solid var(--accent);
+        color: var(--accent); border-radius: 50px; font-size: 0.9rem; font-weight: bold; margin-bottom: 20px; letter-spacing: 1px;
     }
-    .overlay {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.6); z-index: -1;
-    }
-    .hero h1 { font-size: 4rem; margin-bottom: 10px; line-height: 1.1; font-weight: 800; letter-spacing: 2px; }
+    .hero h1 { font-size: 3.8rem; line-height: 1.1; font-weight: 800; letter-spacing: 1px; margin-bottom: 25px; }
     .hero h1 span { color: var(--accent); }
-    .hero .subtitle { 
-        font-size: 1.3rem; color: #ddd; margin-bottom: 30px; font-weight: bold; 
-        letter-spacing: 3px; border-top: 1px solid var(--accent);
-        border-bottom: 1px solid var(--accent); padding: 10px 20px; background: rgba(0,0,0,0.3);
-    }
+    .hero p { font-size: 1.15rem; color: #ccc; margin-bottom: 40px; line-height: 1.8; }
+    .hero-actions { display: flex; gap: 20px; flex-wrap: wrap; }
+    
     .btn {
-        padding: 15px 40px; border: 1px solid var(--accent); color: var(--accent);
-        border-radius: 2px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase;
-        background: rgba(0,0,0,0.8); transition: 0.4s; cursor: pointer; display: inline-block;
+        padding: 15px 35px; border-radius: 4px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase;
+        transition: 0.4s; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
     }
-    .btn:hover { background: var(--accent); color: #000; box-shadow: 0 0 30px var(--accent-glow); }
+    .btn-primary { background: linear-gradient(145deg, #d4af37, #b8860b); color: #000; border: none; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4); }
+    .btn-outline { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
+    .btn-outline:hover { background: rgba(212, 175, 55, 0.1); }
+
+    .hero-visual { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; z-index: 2; }
+    /* 影片外框裝飾，營造手機或漂浮高級感 */
+    .video-wrapper {
+        position: relative; width: 100%; max-width: 350px; /* 控制影片在電腦版的寬度像手機 */
+        border-radius: 20px; padding: 8px; background: linear-gradient(145deg, #333, #111);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1);
+        transform: perspective(1000px) rotateY(-5deg); transition: 0.5s;
+    }
+    .video-wrapper:hover { transform: perspective(1000px) rotateY(0deg) scale(1.02); }
+    .video-wrapper video { width: 100%; height: auto; border-radius: 12px; display: block; }
+    .floating-badge {
+        position: absolute; bottom: -20px; right: -30px; background: var(--accent); color: #000;
+        padding: 10px 20px; border-radius: 50px; font-weight: bold; font-size: 0.9rem;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.5); border: 2px solid #000; z-index: 10;
+        animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 
     /* --- 通用區塊樣式 --- */
-    .section { padding: 100px 10%; position: relative; z-index: 1; }
-    .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 60px; font-weight: bold;}
-    .section-title span { border-bottom: 3px solid var(--accent); padding-bottom: 10px; display: inline-block; }
+    .section { padding: 100px 5%; position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; }
+    .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 20px; font-weight: bold; }
+    .section-title span { color: var(--accent); }
+    .section-subtitle { text-align: center; color: #999; font-size: 1.1rem; margin-bottom: 60px; max-width: 700px; margin-inline: auto; }
 
-    /* --- 業務與功能 --- */
-    .services-grid, .saas-features, .cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-    .service-card, .feature-box, .case-card {
-        background: var(--card-bg); border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); 
-        padding: 30px; transition: 0.3s;
+    /* --- 💰 核心優勢 (轉化為商業利益) --- */
+    .saas-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+    .feature-box {
+        background: var(--card-bg); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); 
+        padding: 40px 30px; transition: 0.3s; position: relative; overflow: hidden;
     }
-    .service-card:hover, .feature-box:hover, .case-card:hover { transform: translateY(-10px); border-color: var(--accent); }
-    .service-img { width: 100%; height: 200px; object-fit: cover; margin-bottom: 20px; border-bottom: 3px solid var(--accent); }
-    .feature-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 15px; text-align: center; }
-    .feature-box h4 { text-align: center; color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
-    .feature-box p { text-align: center; color: var(--text-sub); font-size: 0.95rem; }
+    .feature-box::before {
+        content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+        background: linear-gradient(90deg, transparent, var(--accent), transparent); transform: scaleX(0); transition: 0.5s;
+    }
+    .feature-box:hover { transform: translateY(-10px); border-color: rgba(212,175,55,0.3); background: rgba(30, 30, 30, 0.9); }
+    .feature-box:hover::before { transform: scaleX(1); }
+    
+    .feature-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 20px; display: inline-block; padding: 15px; background: rgba(212,175,55,0.1); border-radius: 12px; }
+    .feature-box h4 { color: #fff; margin-bottom: 15px; font-size: 1.3rem; letter-spacing: 1px; }
+    .feature-box p { color: var(--text-sub); font-size: 1rem; line-height: 1.6; }
 
-    /* --- 價格方案 Pricing --- */
+    /* --- 🎣 雙拼展示區 (半夜收網影片) --- */
+    .split-showcase {
+        display: flex; align-items: center; justify-content: space-between; gap: 60px;
+        background: linear-gradient(145deg, #111, #050505); border: 1px solid #222; border-radius: 20px; padding: 60px;
+        margin-top: 50px;
+    }
+    .split-text { flex: 1; }
+    .split-text h2 { font-size: 2.2rem; color: #fff; margin-bottom: 20px; line-height: 1.3; }
+    .split-text h2 span { color: var(--line-green); }
+    .split-text p { color: #aaa; font-size: 1.1rem; margin-bottom: 30px; line-height: 1.8; }
+    .split-text ul { margin-bottom: 30px; }
+    .split-text li { color: #ccc; margin-bottom: 15px; display: flex; align-items: flex-start; gap: 10px; font-size: 1.05rem; }
+    .split-text li i { color: var(--accent); margin-top: 5px; }
+    .split-video { flex: 1; display: flex; justify-content: center; }
+    .split-video .video-wrapper { max-width: 320px; transform: rotateY(5deg); }
+    .split-video .video-wrapper:hover { transform: rotateY(0deg) scale(1.05); }
+
+    /* --- 👑 老闆上帝視角 (後台威力) --- */
+    .admin-power { text-align: center; margin-top: 100px; padding: 60px; background: rgba(212, 175, 55, 0.03); border-radius: 20px; border: 1px dashed rgba(212,175,55,0.2); }
+    .admin-power-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 40px; text-align: left; }
+    .admin-card { background: #000; padding: 30px; border-radius: 12px; border-left: 4px solid var(--accent); }
+    .admin-card h4 { color: #fff; font-size: 1.2rem; margin-bottom: 10px; }
+    .admin-card p { color: #888; font-size: 0.95rem; }
+
+    /* --- 價格方案 Pricing (保留原設計，僅微調間距) --- */
     .pricing-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 0 auto; max-width: 1000px; }
     .price-card {
         flex: 1; min-width: 320px; max-width: 400px; background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
@@ -123,113 +159,74 @@
         position: relative; transition: 0.3s; display: flex; flex-direction: column;
     }
     .price-card:hover { transform: translateY(-5px); border-color: #555; }
-    
     .price-card.featured {
         border: 2px solid var(--accent); transform: scale(1.05); z-index: 2;
         background: linear-gradient(145deg, #222, #0f0f0f); box-shadow: 0 0 30px rgba(212, 175, 55, 0.15);
     }
     .price-card.featured:hover { transform: scale(1.05) translateY(-5px); }
-
     .price-tag { font-size: 2.2rem; font-weight: bold; color: #fff; margin: 15px 0; }
     .price-tag span { font-size: 0.9rem; color: #888; font-weight: normal; }
-    
     .features-list { text-align: left; margin: 20px 0 30px 0; flex-grow: 1; list-style: none; }
     .features-list li { margin-bottom: 12px; color: #ccc; font-size: 0.95rem; display: flex; align-items: flex-start; gap: 8px; }
     .features-list i { color: var(--accent); margin-top: 5px; font-size: 0.8rem; }
-    
     .badge {
         position: absolute; top: 15px; right: -35px; background: var(--accent); color: #000;
         width: 140px; padding: 5px 0; transform: rotate(45deg); font-weight: bold; font-size: 0.8rem;
         box-shadow: 0 2px 5px rgba(0,0,0,0.3); text-align: center;
     }
 
-    /* --- 客製化表單樣式 (黑金風格) --- */
-    .custom-form-container {
-        max-width: 700px; margin: 0 auto; background: rgba(20, 20, 20, 0.8);
-        border: 1px solid var(--accent); border-radius: 12px; padding: 40px;
-        box-shadow: 0 0 30px rgba(212, 175, 55, 0.1); backdrop-filter: blur(10px);
-    }
+    /* --- 客製化表單樣式 (保留原設計) --- */
+    .custom-form-container { max-width: 700px; margin: 0 auto; background: rgba(20, 20, 20, 0.8); border: 1px solid var(--accent); border-radius: 12px; padding: 40px; box-shadow: 0 0 30px rgba(212, 175, 55, 0.1); backdrop-filter: blur(10px); }
     .form-group { margin-bottom: 25px; position: relative; }
     .form-label { display: block; color: var(--accent); margin-bottom: 8px; font-size: 0.95rem; font-weight: bold; letter-spacing: 1px; }
-    .form-input, .form-select, .form-textarea {
-        width: 100%; padding: 12px 15px; background: rgba(255, 255, 255, 0.1);
-        border: 1px solid #444; border-radius: 6px; color: #fff; font-size: 1rem; transition: 0.3s; outline: none;
-    }
+    .form-input, .form-select, .form-textarea { width: 100%; padding: 12px 15px; background: rgba(255, 255, 255, 0.1); border: 1px solid #444; border-radius: 6px; color: #fff; font-size: 1rem; transition: 0.3s; outline: none; }
     .form-select option { background-color: #1a1a1a; color: #fff; }
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-        border-color: var(--accent); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); background: rgba(255, 255, 255, 0.1);
-    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(212, 175, 55, 0.3); background: rgba(255, 255, 255, 0.1); }
     .form-input[readonly] { background: rgba(0, 0, 0, 0.5); color: #888; border-color: #333; cursor: not-allowed; }
-
-    .submit-btn {
-        width: 100%; padding: 15px; background: linear-gradient(145deg, #d4af37, #b8860b);
-        color: #000; font-weight: 900; font-size: 1.1rem; border: none; border-radius: 6px;
-        cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px; position: relative;
-    }
+    .submit-btn { width: 100%; padding: 15px; background: linear-gradient(145deg, #d4af37, #b8860b); color: #000; font-weight: 900; font-size: 1.1rem; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px; position: relative; }
     .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4); }
     .submit-btn:disabled { background: #444; color: #888; cursor: not-allowed; box-shadow: none; }
-
-    .line-login-small-btn {
-        background-color: #06c755; color: white; border: none; border-radius: 4px;
-        padding: 5px 10px; font-size: 0.8rem; cursor: pointer; margin-left: 10px; transition: 0.3s;
-    }
+    .line-login-small-btn { background-color: #06c755; color: white; border: none; border-radius: 4px; padding: 5px 10px; font-size: 0.8rem; cursor: pointer; margin-left: 10px; transition: 0.3s; }
     .line-login-small-btn:hover { background-color: #05a546; }
-
-    .loading-spinner {
-        display: none; width: 20px; height: 20px; border: 3px solid rgba(0,0,0,0.3);
-        border-radius: 50%; border-top-color: #000; animation: spin 1s ease-in-out infinite;
-        margin-left: 10px; vertical-align: middle;
-    }
+    .loading-spinner { display: none; width: 20px; height: 20px; border: 3px solid rgba(0,0,0,0.3); border-radius: 50%; border-top-color: #000; animation: spin 1s ease-in-out infinite; margin-left: 10px; vertical-align: middle; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* --- 關於我們 --- */
-    .about-studio {
-        background: linear-gradient(145deg, #111, #1a1a1a); padding: 60px;
-        border-radius: 10px; border-left: 5px solid var(--accent); display: flex; gap: 40px; align-items: center; flex-wrap: wrap;
-    }
+    /* --- 關於我們 (保留原設計) --- */
+    .about-studio { background: linear-gradient(145deg, #111, #1a1a1a); padding: 60px; border-radius: 10px; border-left: 5px solid var(--accent); display: flex; gap: 40px; align-items: center; flex-wrap: wrap; }
     .about-content { flex: 2; min-width: 300px; }
     .about-qr { flex: 1; text-align: center; }
     .about-studio h3 { font-size: 2rem; margin-bottom: 20px; color: #fff; }
     .about-studio p { color: #ccc; font-size: 1rem; line-height: 1.6; }
 
-    /* --- 頁尾與法務模態框 (Modal) --- */
+    /* --- 頁尾與法務模態框 (保留原設計) --- */
     footer { text-align: center; padding: 40px 20px; background: #050505; border-top: 1px solid #222; color: #666; font-size: 0.85rem; }
     .legal-links { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
     .legal-links a { color: #888; text-decoration: none; cursor: pointer; transition: 0.2s;}
     .legal-links a:hover { color: var(--accent); }
-
-    .modal-overlay {
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px);
-        display: flex; justify-content: center; align-items: center;
-        z-index: 2000; opacity: 0; visibility: hidden; transition: 0.3s;
-    }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: 0.3s; }
     .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal-content {
-        background: #111; width: 90%; max-width: 600px; max-height: 80vh;
-        border: 1px solid var(--accent); border-radius: 8px; padding: 30px;
-        position: relative; overflow-y: auto; color: #ddd; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        transform: translateY(20px); transition: 0.3s;
-    }
+    .modal-content { background: #111; width: 90%; max-width: 600px; max-height: 80vh; border: 1px solid var(--accent); border-radius: 8px; padding: 30px; position: relative; overflow-y: auto; color: #ddd; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(20px); transition: 0.3s; }
     .modal-overlay.active .modal-content { transform: translateY(0); }
-    .modal-close {
-        position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: #888;
-        cursor: pointer; transition: 0.2s; background: none; border: none;
-    }
+    .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: #888; cursor: pointer; transition: 0.2s; background: none; border: none; }
     .modal-close:hover { color: #fff; }
     .modal-content h2 { color: var(--accent); margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; }
     .modal-content h4 { color: #fff; margin-top: 20px; margin-bottom: 10px; }
     .modal-content p, .modal-content li { font-size: 0.95rem; margin-bottom: 10px; color: #bbb; line-height: 1.6;}
 
     /* --- RWD 手機版強制修正 --- */
+    @media (max-width: 992px) {
+        .hero { flex-direction: column; text-align: center; padding-top: 100px; }
+        .hero h1 { font-size: 2.8rem; }
+        .hero-actions { justify-content: center; }
+        .split-showcase { flex-direction: column; text-align: center; padding: 40px 20px; }
+        .split-text li { justify-content: center; text-align: left; }
+    }
     @media (max-width: 768px) {
-        .hero h1 { font-size: 2.5rem; }
         .section { padding: 60px 5%; }
         nav { display: none; }
         .pricing-container { flex-direction: column; align-items: center; }
-        .price-card, .price-card.featured, .price-card.premium-green { width: 100%; max-width: 100%; margin-bottom: 20px; transform: none; }
+        .price-card, .price-card.featured { width: 100%; max-width: 100%; margin-bottom: 20px; transform: none; }
         .about-studio { flex-direction: column; text-align: center; padding: 40px 20px; border-left: none; border-top: 5px solid var(--accent); gap: 30px; }
-        .video-bg { display: block; }
         .mobile-admin-btn { display: flex; position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: rgba(212, 175, 55, 0.9); color: #000; border-radius: 50%; justify-content: center; align-items: center; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.5); z-index: 9999; border: 1px solid #fff; }
     }
     @media (min-width: 769px) { .mobile-admin-btn { display: none; } }
@@ -244,9 +241,8 @@
         </a>
         <nav>
             <ul>
-                <li><a href="#services">核心賦能</a></li>
-                <li><a href="#ai-system">SaaS 優勢</a></li>
-                <li><a href="#cases">導入案例</a></li>
+                <li><a href="#features">系統優勢</a></li>
+                <li><a href="#lead-trap">商機收網</a></li>
                 <li><a href="#pricing">算力方案</a></li>
                 <li><a href="#order-form" style="color:var(--accent); border:1px solid var(--accent); padding:5px 10px; border-radius:4px;">申請開通</a></li>
                 <li>
@@ -259,62 +255,93 @@
     </header>
 
     <section class="hero">
-        <video autoplay muted loop playsinline class="video-bg" poster="AIOptimization_AIO_01.jpg">
-            <source src="Yt_Start.mp4" type="video/mp4">
-        </video>
-        <div class="overlay"></div>
-        <h1>品智智能 <span>SaaS</span></h1>
-        <div class="subtitle">您的 24/7 專屬金牌數位銷售</div>
-        <p style="margin-bottom: 40px; max-width: 650px; color: #ccc; font-size: 1.1rem;">
-            建構 24 小時運轉的高轉換銷售漏斗。<br>透過 AI 精準識別訪客意圖，引導客戶跨越猶豫期，<br>大幅降低客訴風險，實現真正的商業獲利閉環。
-        </p>
-        <a href="#pricing" class="btn">立即啟動 AI 業務員</a>
-    </section>
-
-    <section id="services" class="section">
-        <div class="section-title"><span>企業自動化核心賦能</span></div>
-        <p style="text-align: center; color: #999; margin-bottom: 40px;">以 SaaS 系統為核心運轉，搭配視覺與策略升級外掛，實現真正的商業自動化。</p>
-        <div class="services-grid">
-            <div class="service-card" style="border-color: var(--accent); box-shadow: 0 0 15px rgba(212,175,55,0.1);">
-                <img src="AILINEBanner_01.jpg" class="service-img" alt="PinZhi SaaS">
-                <h3 style="color:var(--accent);"><i class="fa-solid fa-robot"></i> 品智 SaaS 客服平台 (核心引擎)</h3>
-                <p>具備商業邏輯與防幻覺邊界的超級大腦。全自動處理報價與導購，並主動索取客戶聯絡資訊建立 CRM 庫。</p>
+        <div class="hero-content">
+            <div class="pill"><i class="fa-solid fa-robot"></i> 告別傳統冰冷客服</div>
+            <h1>讓每一次對話，<br>都更接近<span>一筆成交。</span></h1>
+            <p>
+                BrandDecoder SaaS 是一套會看臉色、懂多國母語、且具備「漏斗記憶」的 AI 超級業務系統。<br>
+                24 小時在線主動逼單，幫您把「線上問問哥」，變成實實在在的「提袋客」。
+            </p>
+            <div class="hero-actions">
+                <a href="#pricing" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> 立即聘用 AI 業務員</a>
+                <a href="#features" class="btn btn-outline">了解賺錢引擎</a>
             </div>
-            <div class="service-card">
-                <img src="AIOptimization_AIO_01.jpg" class="service-img" alt="AI Image">
-                <h3 style="color:#fff;"><i class="fa-solid fa-wand-magic-sparkles"></i> AI 影像視覺 (升級外掛)</h3>
-                <p>如果 AI 賣不好，往往是視覺素材不到位。結合 SaaS 鷹眼導購，我們提供專業 AI 影像生成，讓客戶隨手一拍就能精準推銷絕美商品。</p>
-            </div>
-            <div class="service-card">
-                <img src="Digital_Marketing_Consultant_01.jpg" class="service-img" alt="Consultant">
-                <h3 style="color:#fff;"><i class="fa-solid fa-chess-knight"></i> 品牌策略顧問 (升級外掛)</h3>
-                <p>20 年實戰經驗，協助您將生硬的商品型錄，轉化為 SaaS 系統聽得懂的「高轉化知識庫」，讓 AI 真正掌握銷售痛點。</p>
+        </div>
+        <div class="hero-visual">
+            <div class="video-wrapper">
+                <video autoplay muted loop playsinline>
+                    <source src="https://branddecoderai.com/website_movie_001.mp4" type="video/mp4">
+                </video>
+                <div class="floating-badge"><i class="fa-solid fa-fire"></i> 動態生成逼單按鈕！</div>
             </div>
         </div>
     </section>
 
-    <section id="ai-system" class="section" style="background: #0f0f0f;">
-        <div class="section-title"><span>品智 SaaS 系統優勢</span></div>
+    <section id="features" class="section" style="background: #0d0d0d;">
+        <div class="section-title">這不是客服，這是<span>幫您賺錢的業務</span></div>
+        <div class="section-subtitle">把技術名詞拋在腦後，看看品智智能 SaaS 如何實實在在地降低您的人事成本，並拓寬營收天花板。</div>
+        
         <div class="saas-features">
             <div class="feature-box">
-                <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
-                <h4>無摩擦秒速開通</h4>
-                <p>獨家 Auto-Capture 技術，只需貼上專屬 Webhook，用 LINE 講第一句話系統自動尋路綁定，免除繁瑣工程設定。</p>
+                <div class="feature-icon"><i class="fa-solid fa-filter-circle-dollar"></i></div>
+                <h4>化已讀不回為結帳 (主動逼單)</h4>
+                <p>AI 內建「漏斗記憶」。當客人看過商品卻猶豫時，AI 會自然地將話題拉回，並在底部彈出動態「專屬優惠」按鈕，大幅挽回流失率。</p>
             </div>
             <div class="feature-box">
-                <div class="feature-icon"><i class="fa-solid fa-eye"></i></div>
-                <h4>鷹眼視覺導購 (HawkEye)</h4>
-                <p>客戶傳送商品照片或環境圖，大腦自動辨識意圖並拋出對應的商品卡片，不懂產品專有名詞也能順利推銷。</p>
+                <div class="feature-icon"><i class="fa-solid fa-earth-asia"></i></div>
+                <h4>零成本吃下跨國市場 (多語接待)</h4>
+                <p>後台一鍵打勾，您的 LINE 瞬間精通英、日、韓、越等母語。不需花大錢請外語專員，也能輕鬆接下外籍移工與觀光客的龐大商機。</p>
             </div>
             <div class="feature-box">
-                <div class="feature-icon"><i class="fa-solid fa-shield-alt"></i></div>
-                <h4>嚴格防幻覺與拒絕議價</h4>
-                <p>內建商務防護網，不亂掰商品、不提供醫療診斷、自動委婉拒絕客戶殺價，確保企業公關與利潤絕對安全。</p>
+                <div class="feature-icon"><i class="fa-solid fa-camera-retro"></i></div>
+                <h4>線上截圖變實體提袋 (O2O 導流)</h4>
+                <p>客人傳一張照片，AI 秒認出商品並推銷。更能抓取客人定位，推送「離您 3 公里的門市有現貨」精美導航卡片，完美虛實整合。</p>
             </div>
             <div class="feature-box">
-                <div class="feature-icon"><i class="fa-solid fa-magnet"></i></div>
-                <h4>高價值商機捕獲 (Lead Trap)</h4>
-                <p>一旦偵測到客戶留下電話、Email 或大單採購意圖，AI 立即停止推銷，轉入專人接手模式並通知管理員。</p>
+                <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h4>嚴格防護網，保證不亂報價</h4>
+                <p>內建商務邊界防護，AI 絕不會產生幻覺亂掰商品，更會聰明且委婉地拒絕客人的不合理殺價，死守您的企業公關與產品利潤。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="lead-trap" class="section">
+        <div class="split-showcase">
+            <div class="split-text">
+                <h2>半夜睡覺時，<br>系統依然在幫您<span>精準收網。</span></h2>
+                <p>晚上 11 點客人最有購買慾，但員工下班了？不用擔心，AI 24 小時不打烊。聊到客人心動時，AI 會主動索取並核實聯絡電話。</p>
+                <ul>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>即時商機推播：</strong> 客人一留電話，您的 Telegram 瞬間收到通知。</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>AI 戰情摘要：</strong> 系統自動寫好 15 字對話精華（例如：預算三千，對價格猶豫）。</li>
+                    <li><i class="fa-solid fa-check-circle"></i> <strong>降低獲客成本：</strong> 早上業務一上班，直接看摘要打電話，成交率翻倍。</li>
+                </ul>
+                <a href="#pricing" class="btn btn-outline" style="padding: 10px 25px;">查看算力方案</a>
+            </div>
+            <div class="split-video">
+                <div class="video-wrapper">
+                    <video autoplay muted loop playsinline>
+                        <source src="https://branddecoderai.com/website_movie_003.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-power">
+            <h3 style="font-size: 2rem; color: #fff; margin-bottom: 10px;">老闆專屬的「上帝視角」控制中心</h3>
+            <p style="color: #999;">您買的不只是一個前台對話框，而是一整套企業級的管理後台。</p>
+            <div class="admin-power-grid">
+                <div class="admin-card">
+                    <h4><i class="fa-solid fa-chart-line" style="color:var(--accent); margin-right:8px;"></i> 雙時區營收戰情室</h4>
+                    <p>不用等會計月底做報表！隨時打開後台，這個月哪款商品問的人最多？營收潛力在哪裡？綠色上升箭頭 (MoM) 讓您隨時掌握公司命脈。</p>
+                </div>
+                <div class="admin-card">
+                    <h4><i class="fa-solid fa-crown" style="color:var(--accent); margin-right:8px;"></i> CRM VIP 尊榮記憶</h4>
+                    <p>業務員只需在後台備註「VIP老客戶」，AI 下次接待時，語氣立刻變得尊榮，並自動隱藏低利潤的新手方案，優先推銷高階服務。</p>
+                </div>
+                <div class="admin-card">
+                    <h4><i class="fa-solid fa-coins" style="color:var(--accent); margin-right:8px;"></i> 微秒級 Token 精算</h4>
+                    <p>系統內建多語系倍率引擎 (1.0X)。您開通幾國語言就付多少錢，沒有昂貴的吃到飽月費綁架，讓您的每一分行銷預算都花在刀口上。</p>
+                </div>
             </div>
         </div>
     </section>
