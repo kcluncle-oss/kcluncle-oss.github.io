@@ -600,71 +600,55 @@
         
         <div class="legal-links">
             <a onclick="openModal('modal-tos')">服務條款</a> | 
-            <a onclick="openModal('modal-privacy')">隱私政策</a> | 
-            <a onclick="openModal('modal-refund')">退款與點數政策</a>
+            <a onclick="openModal('modal-refund')">退款與點數政策</a> | 
+            <a onclick="openModal('modal-privacy')">隱私權政策</a> | 
+            <a onclick="openModal('modal-aup')">可接受使用政策</a> | 
+            <a onclick="openModal('modal-security')">資安與資料保護聲明</a>
         </div>
     </footer>
 
     <a href="https://branddecoder-studio.github.io/SaaS-Admin/" target="_blank" class="mobile-admin-btn"><i class="fa-solid fa-user-shield"></i></a>
 
-    <div id="modal-tos" class="modal-overlay" onclick="closeModal(event, 'modal-tos')">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('force', 'modal-tos')"><i class="fa-solid fa-times"></i></button>
-            <h2>服務條款 (Terms of Service)</h2>
-            <p>歡迎使用「品智智能 SaaS 客服平台」（以下簡稱本平台）。請詳細閱讀以下條款：</p>
-            <h4>1. 服務提供與點數計算</h4>
-            <ul>
-                <li>本平台採「算力點數扣款制」。系統接收與發送文字、處理圖片或調用外部地圖 API 等行為，皆會依系統當下公告之權重自動扣除帳戶點數。</li>
-                <li>當帳戶餘額歸零或低於單次請求所需點數時，系統將自動暫停 AI 回覆功能，用戶須完成點數儲值方可恢復服務。</li>
-            </ul>
-            <h4>2. AI 產出內容與免責聲明</h4>
-            <ul>
-                <li>本平台使用第三方大型語言模型（如 Google Gemini）。受限於目前 AI 技術之本質，AI 可能會產生不準確、虛構或偏離事實之內容（即 AI 幻覺）。</li>
-                <li><b>免責聲明：</b>本平台僅提供技術工具，用戶須自行負責審閱與設定 AI 知識庫。因 AI 回覆內容（包含但不限於報價錯誤、錯誤承諾）所產生之任何商業糾紛或損失，本平台概不負責。</li>
-            </ul>
-            <h4>3. 合法使用規範</h4>
-            <ul>
-                <li>嚴禁將本系統用於詐欺、色情、博弈、販賣違禁品等違反中華民國法律之商業行為。一經查證，本平台有權立即終止服務並清空點數，且不予退款。</li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="modal-privacy" class="modal-overlay" onclick="closeModal(event, 'modal-privacy')">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('force', 'modal-privacy')"><i class="fa-solid fa-times"></i></button>
-            <h2>隱私政策 (Privacy Policy)</h2>
-            <p>本平台高度重視您的商業機密與用戶資料安全：</p>
-            <h4>1. LINE 用戶資料蒐集</h4>
-            <ul>
-                <li>當消費者與您的 LINE 官方帳號互動時，本系統將合法擷取並儲存使用者的 LINE User ID、顯示名稱與大頭貼，僅供「您的專屬 SaaS 戰情室」內部 CRM 功能使用。</li>
-                <li>本平台承諾，絕不將您名下的任何消費者資料出售、轉讓或與其他第三方行銷公司共享。</li>
-            </ul>
-            <h4>2. 金鑰與系統安全</h4>
-            <ul>
-                <li>您於本平台填寫之 LINE Channel Access Token 與 Secret，將以加密形式儲存於 Google Cloud 資料庫中。本平台僅在執行您授權的自動回覆任務時調用上述金鑰。</li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="modal-refund" class="modal-overlay" onclick="closeModal(event, 'modal-refund')">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeModal('force', 'modal-refund')"><i class="fa-solid fa-times"></i></button>
-            <h2>退款與點數政策 (Refund Policy)</h2>
-            <h4>1. 白手套建置專案</h4>
-            <ul>
-                <li>「白手套建置專案」屬客製化勞務與虛擬系統開通服務。依據《通訊交易解除權合理例外情事適用準則》，本服務一經開通並交付後台帳號，即不適用 7 日無條件退款。</li>
-            </ul>
-            <h4>2. 算力點數儲值包</h4>
-            <ul>
-                <li>算力點數屬於無實體之數位內容。點數一旦儲值入帳，即視為消耗性資產。</li>
-                <li>若因個人或企業內部因素終止使用本服務，帳戶內未消耗完畢之剩餘點數，概不接受按比例退費或折現。</li>
-                <li>若因本平台底層重大故障導致超過 72 小時完全無法提供服務，用戶可申請退還「最後一次儲值且尚未消耗完畢」之等比例金額。</li>
-            </ul>
-        </div>
-    </div>
+    <div id="legal-modals-container"></div>
 
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
+        // ----------------------------------------------------
+        // 🌟 [架構升級] 自動載入外部共用法務模態框檔案
+        // 這樣官網跟 SaaS 後台都可以呼叫同一個檔案，一改全改！
+        // ----------------------------------------------------
+        document.addEventListener("DOMContentLoaded", function() { 
+            fetch('legal-modals.html')
+                .then(response => {
+                    if (!response.ok) throw new Error("法務文件載入失敗");
+                    return response.text();
+                })
+                .then(htmlData => {
+                    document.getElementById('legal-modals-container').innerHTML = htmlData;
+                })
+                .catch(err => console.error(err));
+        });
+
+        // 打開 Modal (這個函數可以放在這裡，因為外面的 a 標籤按鈕寫死了 onclick)
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if(modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; 
+            }
+        }
+
+        // 關閉 Modal (注意這裡的寫法，因為裡面的 X 按鈕是後來載入的，需要委派或直接綁定)
+        function closeModal(event, modalId) {
+            if (event === 'force' || event.target.id === modalId) {
+                document.getElementById(modalId).classList.remove('active');
+                document.body.style.overflow = 'auto'; 
+            }
+        }
+
+        // ----------------------------------------------------
+        // 原本的表單與 LIFF 邏輯 (完全保留，無需變動)
+        // ----------------------------------------------------
         const LIFF_ID = "2008923052-LoAGl5hv"; 
         const GOOGLE_SCRIPT_URL = "https://brand-decoder-bot-217800246535.asia-east1.run.app/?action=submitForm";
 
@@ -771,18 +755,6 @@
                 spinner.style.display = "none";
             });
         });
-
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-            document.body.style.overflow = 'hidden'; 
-        }
-
-        function closeModal(event, modalId) {
-            if (event === 'force' || event.target.id === modalId) {
-                document.getElementById(modalId).classList.remove('active');
-                document.body.style.overflow = 'auto'; 
-            }
-        }
     </script>
 </body>
 </html>
