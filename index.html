@@ -18,6 +18,7 @@
     <meta property="og:image" content="AIOptimization_AIO_01.jpg"> 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
     <style>
     /* --- 全域設定：黑金極簡奢華風 --- */
@@ -178,9 +179,7 @@
     .roi-list { list-style: none; margin-bottom: 0; }
     .roi-list li { color: #ccc; margin-bottom: 12px; font-size: 1rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #333; padding-bottom: 10px; }
     .roi-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .roi-summary { width: 100%; max-width: 1030px; background: rgba(212, 175, 55, 0.08); border: 1px dashed rgba(212, 175, 55, 0.5); border-radius: 12px; padding: 30px; text-align: center; margin-top: 20px; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.05);}
-    .roi-summary h4 { color: var(--accent); font-size: 1.4rem; margin-bottom: 10px; letter-spacing: 1px;}
-    .roi-summary p { color: #ddd; font-size: 1.05rem; margin: 0; line-height: 1.6;}
+    .roi-summary { width: 100%; max-width: 1030px; border-radius: 12px; padding: 30px; text-align: center; margin-top: 20px; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.05);}
 
     /* --- 價格方案 Pricing --- */
     .pricing-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 0 auto; max-width: 1000px; }
@@ -230,13 +229,13 @@
     .about-studio p { color: #ccc; font-size: 1rem; line-height: 1.6; }
 
     /* --- 頁尾與法務模態框 --- */
-    <footer> { text-align: center; padding: 40px 20px; background: #050505; border-top: 1px solid #222; color: #666; font-size: 0.85rem; }
+    footer { text-align: center; padding: 40px 20px; background: #050505; border-top: 1px solid #222; color: #666; font-size: 0.85rem; }
     .legal-links { margin-top: 15px; display: flex; justify-content: center; gap: 20px; }
     .legal-links a { color: #888; text-decoration: none; cursor: pointer; transition: 0.2s;}
     .legal-links a:hover { color: var(--accent); }
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: 0.3s; }
     .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal-content { background: #111; width: 90%; max-width: 600px; max-height: 80vh; border: 1px solid var(--accent); border-radius: 8px; padding: 30px; position: relative; overflow-y: auto; color: #ddd; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(20px); transition: 0.3s; }
+    .modal-content { background: #111; width: 90%; max-width: 600px; max-height: 80vh; border: 1px solid var(--accent); border-radius: 8px; padding: 30px; position: relative; overflow: auto; color: #ddd; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(20px); transition: 0.3s; }
     .modal-overlay.active .modal-content { transform: translateY(0); }
     .modal-close { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: #888; cursor: pointer; transition: 0.2s; background: none; border: none; }
     .modal-close:hover { color: #fff; }
@@ -297,7 +296,13 @@
 
     <section class="hero">
         <div class="hero-content">
+            <div class="mb-3">
+                <span class="pill" style="border-color: #06c755; color: #06c755; background: rgba(6,199,85,0.1); margin-bottom: 10px;">
+                    <i class="bi bi-cart-check-fill me-1"></i> 業界首創・電商與實體零售特化型 AI
+                </span>
+            </div>
             <div class="pill"><i class="fa-solid fa-robot"></i> 告別傳統冰冷客服</div>
+            
             <h1>讓每一次對話，<br>都更接近<span>一筆成交。</span></h1>
             <p>
                 BrandDecoder SaaS 是一套會看臉色、懂多國母語、且具備「漏斗記憶」的 AI 超級業務系統。<br>
@@ -386,6 +391,96 @@
             </div>
         </div>
 
+        <div style="margin-top: 80px; padding: 60px 40px; background: linear-gradient(145deg, #111, #050505); border-radius: 20px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+            <div class="text-center mb-5">
+                <span style="display:inline-block; padding: 8px 20px; background: rgba(212, 175, 55, 0.1); border: 1px solid var(--accent); color: var(--accent); border-radius: 50px; font-size: 0.9rem; font-weight: bold; margin-bottom: 20px; letter-spacing: 1px;">
+                    <i class="bi bi-crosshair me-1"></i> 電商與實體店特化型 AI
+                </span>
+                <h2 style="font-size: 2.2rem; color: #fff; margin-bottom: 15px; font-weight: bold;">為什麼我們不作「全能客服」？</h2>
+                <p style="color: #aaa; font-size: 1.1rem;">因為您真正需要的是「王牌銷售」，而不是只會背稿的「總機小姐」。</p>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: stretch;">
+                <div style="flex: 1; min-width: 300px; background: #1a1a1a; border-top: 4px solid #555; border-radius: 12px; padding: 40px 30px;">
+                    <div class="text-center mb-4">
+                        <h4 style="color: #ccc; font-weight: bold; margin-bottom: 8px;">一般通用型智能系統</h4>
+                        <p style="color: #888; font-size: 0.9rem; margin-bottom: 0;">就像「瑞士刀」：功能多但笨重</p>
+                    </div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="bi bi-x-circle-fill text-danger" style="font-size: 1.5rem; margin-top: 2px;"></i>
+                            <div>
+                                <h6 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px; font-weight: bold;">昂貴的硬性月租</h6>
+                                <p style="color: #999; font-size: 0.95rem; line-height: 1.5; margin: 0;">綁定複雜的客服與發票系統，每月收取數萬元高昂月費，80% 功能您根本用不到。</p>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="bi bi-x-circle-fill text-danger" style="font-size: 1.5rem; margin-top: 2px;"></i>
+                            <div>
+                                <h6 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px; font-weight: bold;">浪費算力的「單腦運作」</h6>
+                                <p style="color: #999; font-size: 0.95rem; line-height: 1.5; margin: 0;">不管客人問商品還是隨便閒聊，都啟動最貴的大模型回答，錢都在廢話中燒光。</p>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="bi bi-x-circle-fill text-danger" style="font-size: 1.5rem; margin-top: 2px;"></i>
+                            <div>
+                                <h6 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px; font-weight: bold;">被動防守的「問答機」</h6>
+                                <p style="color: #999; font-size: 0.95rem; line-height: 1.5; margin: 0;">客人問一句答一句。問完商品報完價，就句號等待客人自己決定，毫無銷售技巧。</p>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="bi bi-x-circle-fill text-danger" style="font-size: 1.5rem; margin-top: 2px;"></i>
+                            <div>
+                                <h6 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px; font-weight: bold;">遲鈍的商機處理</h6>
+                                <p style="color: #999; font-size: 0.95rem; line-height: 1.5; margin: 0;">客人留下資料後，名單靜靜躺在系統後台，等您下班打開電腦才發現，早被對手搶單。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="flex: 1; min-width: 300px; background: linear-gradient(145deg, #1a1d20 0%, #0d0d0d 100%); border-top: 4px solid var(--accent); border-radius: 12px; padding: 40px 30px; position: relative; box-shadow: 0 0 30px rgba(212, 175, 55, 0.1);">
+                    <div style="position: absolute; top: 0; right: 20px; background: var(--accent); color: #000; padding: 5px 15px; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; font-size: 0.85rem; font-weight: bold; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);">
+                        <i class="bi bi-star-fill"></i> 專注變現
+                    </div>
+                    
+                    <div class="text-center mb-4">
+                        <h4 style="color: var(--accent); font-weight: bold; margin-bottom: 8px;">品智 AI 銷售引擎</h4>
+                        <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 0;">這是一把為變現而生的「手術刀」</p>
+                    </div>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="bi bi-check-circle-fill text-success" style="font-size: 1.5rem; margin-top: 2px;"></i>
+                            <div>
+                                <h6 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px; font-weight: bold;">拒絕綁架：5,000 元買斷建置</h6>
+                                <p style="color: #ccc; font-size: 0.95rem; line-height: 1.5; margin: 0;">免綁沉重月租！僅收建置費與極微薄的雲端算力點數，把每一分錢都花在「產生業績」的刀口上。</p>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="bi bi-check-circle-fill text-success" style="font-size: 1.5rem; margin-top: 2px;"></i>
+                            <div>
+                                <h6 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px; font-weight: bold;">極致控本：「大小腦」雙軌防護網</h6>
+                                <p style="color: #ccc; font-size: 0.95rem; line-height: 1.5; margin: 0;">小腦負責攔截閒聊與找店面（0 點數消耗）；大腦只在偵測到「購買意圖」時才啟動促單，省下 80% 冤枉錢。</p>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="bi bi-check-circle-fill text-success" style="font-size: 1.5rem; margin-top: 2px;"></i>
+                            <div>
+                                <h6 style="color: #fff; font-size: 1.1rem; margin-bottom: 5px; font-weight: bold;">主動進攻的「漏斗施壓引擎」</h6>
+                                <p style="color: #ccc; font-size: 0.95rem; line-height: 1.5; margin: 0;">獨家記憶系統。客人看過卻猶豫的商品，AI 會在對話中主動追擊、比較優勢、拋出商品卡逼單成交！</p>
+                            </div>
+                        </li>
+                        <li style="display: flex; align-items: flex-start; gap: 15px;">
+                            <i class="bi bi-check-circle-fill" style="color: var(--line-green); font-size: 1.5rem; margin-top: 2px;"></i>
+                            <div>
+                                <h6 style="color: var(--line-green); font-size: 1.1rem; margin-bottom: 5px; font-weight: bold;">VIP 級：商機秒推播 Telegram</h6>
+                                <p style="color: #ccc; font-size: 0.95rem; line-height: 1.5; margin: 0;">客人留下電話的 0.1 秒內，AI 自動生成 15 字客戶需求總結，並「叮咚」推播至您的手機，秒接大單。</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <div class="comparison-section">
             <h3 style="text-align: center; font-size: 2.2rem; margin-bottom: 40px; color: #fff;">為什麼選擇<span style="color:var(--accent);">品智 SaaS</span>？</h3>
             
@@ -468,7 +563,7 @@
         <div class="section-title">AI 導入效益評估 <span>(ROI 試算)</span></div>
         <div class="section-subtitle">以單日 50 筆有效互動 (每月 1,500 筆) 為基準，看看您的投資回報率有多驚人。</div>
         <div class="text-center mt-2 mb-4">
-            <span class="badge bg-dark border border-secondary text-muted px-3 py-2 fw-normal" style="letter-spacing: 1px;">
+            <span class="badge bg-dark border border-secondary text-muted px-3 py-2 fw-normal" style="letter-spacing: 1px; position:relative; top:0; right:0; transform:none; width:auto;">
                 <i class="bi bi-shield-check text-success me-1"></i> 以下為保守情境試算，實際成效依產業與客單價而異
             </span>
         </div>
@@ -483,7 +578,7 @@
                 <div class="roi-number" style="color:var(--accent);">+$27,727 <span>/ 每月淨省現金</span></div>
                 
                 <div class="mt-3">
-                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger rounded-pill px-3 py-2" style="font-size:0.9rem;">
+                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger rounded-pill px-3 py-2" style="font-size:0.9rem; position:relative; top:0; right:0; transform:none; width:auto;">
                         <i class="bi bi-lightning-charge-fill"></i> 業界平均：最快 1~3 天回本
                     </span>
                 </div>
@@ -500,16 +595,21 @@
                 <div class="roi-number" style="color:var(--line-green);">+30 筆 <span>/ 每月全自動新增訂單</span></div>
                 
                 <div class="mt-3">
-                    <span class="badge bg-success bg-opacity-10 text-success border border-success rounded-pill px-3 py-2" style="font-size:0.9rem;">
+                    <span class="badge bg-success bg-opacity-10 text-success border border-success rounded-pill px-3 py-2" style="font-size:0.9rem; position:relative; top:0; right:0; transform:none; width:auto;">
                         <i class="bi bi-cash-coin"></i> 創造零人力介入的「睡後收入」
                     </span>
                 </div>
                 <p style="color:#888; font-size:0.85rem; margin-top:15px; line-height: 1.5;">*依據真實系統跑分 (2%轉換率)。一拿到名單即刻推播至店長手機，無縫接軌促成大單。</p>
             </div>
             
-            <div class="roi-summary">
-                <h4>第一天就回本的企業級投資</h4>
-                <p>每個月僅需支付 <b>2,000 多元</b> 的微薄算力費，就能立即省下近 <b>2.8 萬</b> 的現金支出，並自動為您增加營收訂單。</p>
+            <div class="roi-summary mt-4 p-4 rounded text-center" style="background: linear-gradient(135deg, #1a1d20 0%, #343a40 100%); color: white; border: 1px solid #d4af37;">
+                <h4 style="color: #d4af37; font-weight: bold; margin-bottom: 15px; font-size: 1.4rem;">
+                    <i class="bi bi-rocket-takeoff-fill me-2"></i> 這不是通用型客服，這是「電商特化型」印鈔機
+                </h4>
+                <p style="font-size: 1.05rem; margin-bottom: 0; color: #ddd; line-height: 1.6;">
+                    每個月僅需支付 <b>2,000 多元</b> 的微薄算力費，就能立即省下近 <b>2.8 萬</b> 的現金支出。<br>
+                    將您的 LINE 官方帳號，升級為具備「主動導購、戰情分析、自動推播」的 24H 智能銷售總部！
+                </p>
             </div>
         </div>
     </section>
@@ -677,6 +777,7 @@
     <div id="legal-modals-container"></div>
 
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() { 
             fetch('legal-modals.html')
@@ -764,7 +865,6 @@
             
             const uid = document.getElementById('userIdInput').value;
 
-
         // 2. 🚨 加強這一段防呆 (這是防止 400 的關鍵)
             if (!uid || uid === "" || uid === "undefined") {
                 Swal.fire({
@@ -778,9 +878,6 @@
                 return; 
             }
 
-
-
-            
             const nameInput = document.getElementById('nameInput').value.trim();
             const phoneInput = document.getElementById('phoneInput').value.trim();
             const emailInput = document.getElementById('emailInput').value.trim();
