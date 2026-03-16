@@ -45,7 +45,17 @@
         <button style="padding:10px 30px" onclick="copyAndClose()">複製並關閉</button>
     </div>
 
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 <script>
+    // 🌟 1. LIFF 初始化 (一進網頁立刻握手)
+    liff.init({ liffId: "2008923052-LoAGI5hv" })
+        .then(() => {
+            console.log("✅ 靈魂空間連線成功");
+        })
+        .catch((err) => {
+            console.error("❌ LIFF 初始化失敗", err);
+        });
+
     const deckFan = document.getElementById('deckFan');
     const slots = [document.getElementById('slot-0'), document.getElementById('slot-1'), document.getElementById('slot-2')];
     let selectedCards = [];
@@ -68,7 +78,7 @@
     shuffled.forEach((data, i) => {
         const card = document.createElement('div');
         card.className = 'card';
-        const angle = (i - 38.5) * 1.8; // 讓 78 張牌均勻扇開
+        const angle = (i - 38.5) * 1.8; 
         card.style.setProperty('--angle', `${angle}deg`);
         card.style.transform = `rotate(${angle}deg)`;
         card.style.zIndex = i;
@@ -110,15 +120,37 @@
             text += `📍 位置：${c.position}\n   牌名：${c.name}\n   屬性：${c.type} (${c.logic})\n\n`;
         });
         text += "---------------------------------\n";
+        // 🌟 這裡保持您原本的隱藏訊息給 AI 看
         text += "核心規則檢核：已套用 $PTS = Cost \\times 4$ 獲利權重\n";
         text += "目標導向：引導客人留資料、導向官網\n";
         output.textContent = text;
     }
 
-    function copyAndClose() {
-        navigator.clipboard.writeText(document.getElementById('outputText').textContent);
-        alert("資料已複製！請貼回對話框。");
-        document.getElementById('overlay').style.display = 'none';
+    // 🌟 2. 修改後的關鍵發送函數
+    async function copyAndClose() {
+        const resultText = document.getElementById('outputText').textContent;
+
+        // 🛡️ 檢查是否在 LINE App 內
+        if (liff.isInClient()) {
+            try {
+                // 🪄 幫客人把結果「說」出去
+                await liff.sendMessages([{
+                    type: 'text',
+                    text: resultText
+                }]);
+                
+                // 傳完自動關閉視窗，回到對話框看 AI 解析
+                liff.closeWindow(); 
+            } catch (error) {
+                console.error("發送失敗", error);
+                alert("發送失敗，請手動複製並貼回對話框。");
+            }
+        } else {
+            // 一般瀏覽器環境 (PC 測試用)
+            navigator.clipboard.writeText(resultText);
+            alert("資料已複製！請貼回對話框。");
+            document.getElementById('overlay').style.display = 'none';
+        }
     }
 </script>
 </body>
