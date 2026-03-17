@@ -27,8 +27,10 @@
         #lobby {
             position: fixed; inset: 0; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; z-index: 50; 
-            background: rgba(5,5,8,0.6); transition: opacity 0.8s ease, transform 0.8s ease;
-            backdrop-filter: blur(8px);
+            /* 降低透明度與模糊度，讓底層銀河完全透視 */
+            background: rgba(5, 5, 8, 0.2); 
+            backdrop-filter: blur(2px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
         #lobby.hidden { opacity: 0; pointer-events: none; transform: scale(1.1); }
         .lobby-title { color: var(--gold); font-size: 32px; font-weight: 900; letter-spacing: 6px; margin-bottom: 40px; text-shadow: 0 0 25px var(--gold); }
@@ -215,21 +217,28 @@
         
         const stars = []; const nebulas = []; const meteors = [];
         for(let i=0; i<150; i++) stars.push({x: Math.random()*width, y: Math.random()*height, r: Math.random()*1.5, a: Math.random()});
-        for(let i=0; i<300; i++) { // 旋轉星雲粒子
-            nebulas.push({ angle: Math.random()*Math.PI*2, radius: Math.random()*width*0.8, speed: (Math.random()*0.002)+0.0005, size: Math.random()*3, color: `rgba(${Math.random()>0.5?'212,175,55':'138,43,226'},${Math.random()*0.3})` });
+        
+        // 稍微提亮星雲粒子的透明度 (從 0.3 提升到 0.45)
+        for(let i=0; i<300; i++) { 
+            nebulas.push({ angle: Math.random()*Math.PI*2, radius: Math.random()*width*0.8, speed: (Math.random()*0.002)+0.0005, size: Math.random()*3, color: `rgba(${Math.random()>0.5?'212,175,55':'138,43,226'},${Math.random()*0.45})` });
         }
         
+        // 💫 迎賓流星：強制在載入瞬間從右上角劃過一顆流星，建立第一眼衝擊
+        meteors.push({x: width * 0.8, y: -50, vx: -4, vy: 5, life: 1.2});
+
         function animateSpace() {
             ctx.clearRect(0,0,width,height);
             // 畫星星
             ctx.fillStyle='#fff';
             stars.forEach(s => { s.a += (Math.random()-0.5)*0.1; if(s.a<0.1)s.a=0.1; if(s.a>1)s.a=1; ctx.globalAlpha=s.a; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); });
+            
             // 畫星雲 (旋轉)
             ctx.globalAlpha=1;
             const cx = width/2, cy = height/2;
             nebulas.forEach(n => { n.angle += n.speed; const x = cx + Math.cos(n.angle)*n.radius; const y = cy + Math.sin(n.angle)*n.radius; ctx.fillStyle = n.color; ctx.beginPath(); ctx.arc(x,y,n.size,0,Math.PI*2); ctx.fill(); });
-            // 畫流星
-            if(Math.random()<0.008) meteors.push({x: Math.random()*width, y: -50, vx: Math.random()*2+3, vy: 5, life: 1});
+            
+            // 畫流星 (稍微提高日常出現機率至 0.015)
+            if(Math.random()<0.015) meteors.push({x: Math.random()*width, y: -50, vx: Math.random()*2+3, vy: 5, life: 1});
             for(let i=meteors.length-1; i>=0; i--) {
                 let m = meteors[i]; m.x+=m.vx; m.y+=m.vy; m.life-=0.015;
                 const grad = ctx.createLinearGradient(m.x, m.y, m.x-m.vx*15, m.y-m.vy*15);
