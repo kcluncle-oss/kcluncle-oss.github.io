@@ -3,290 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>命運解碼室 - 靈魂契約</title>
+    <title>BrandDecoder - 命運拱橋</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
         :root {
-            --bg-deep: #050508;
             --gold: #D4AF37;
             --gold-light: #F9E498;
-            --gold-glow: rgba(212, 175, 55, 0.6);
-            --text-main: #FFFFFF;
-            --text-sub: #a0a0a0;
+            --bg-deep: #050508;
+            --card-w: 80px;
+            --card-h: 128px;
         }
 
         body {
-            margin: 0; padding: 0; background-color: var(--bg-deep); color: var(--text-main);
-            font-family: 'PingFang TC', 'Heiti TC', sans-serif; overflow: hidden; /* 防止滾動 */
-            display: flex; flex-direction: column; align-items: center; height: 100vh;
+            margin: 0; padding: 0; background-color: var(--bg-deep);
+            color: #fff; font-family: 'PingFang TC', 'Noto Serif TC', serif; 
+            overflow: hidden; height: 100vh; display: flex; flex-direction: column;
+            user-select: none; -webkit-user-select: none;
         }
 
-        #space-canvas {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -2; pointer-events: none;
-            background: radial-gradient(circle at center, #0a0e29 0%, #020205 100%);
-        }
+        /* 🌠 6. 保留原本的背景特效 (銀河及流星) */
+        #space-canvas { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
 
-        /* 大廳 */
+        /* 大廳介面 (選題) */
         #lobby {
             position: fixed; inset: 0; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; z-index: 50; 
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            background: rgba(5,5,8,0.9); transition: 0.5s;
         }
-        #lobby.hidden { opacity: 0; transform: scale(1.1); pointer-events: none; }
-
-        .lobby-title { 
-            color: var(--gold); font-size: 32px; font-weight: 900; letter-spacing: 6px; 
-            margin-bottom: 40px; text-shadow: 0 0 20px var(--gold-glow); 
-        }
-        
+        #lobby.hidden { opacity: 0; pointer-events: none; transform: scale(1.05); }
+        .lobby-title { color: var(--gold); font-size: 32px; font-weight: 900; letter-spacing: 6px; margin-bottom: 40px; text-shadow: 0 0 20px var(--gold); }
         .topic-btn {
-            background: rgba(255, 255, 255, 0.05); border: 1.5px solid var(--gold); 
-            color: var(--gold-light); width: 85%; max-width: 320px; padding: 22px; 
-            margin: 12px 0; border-radius: 50px; font-size: 18px; font-weight: bold; 
-            letter-spacing: 3px; cursor: pointer; transition: all 0.4s;
-            backdrop-filter: blur(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.05); border: 1.5px solid var(--gold); color: var(--gold-light); 
+            width: 85%; max-width: 320px; padding: 20px; margin: 10px 0; border-radius: 50px; 
+            font-size: 18px; font-weight: bold; letter-spacing: 3px; cursor: pointer; transition: 0.3s;
         }
-        .topic-btn:active { background: var(--gold); color: #000; transform: scale(0.95); }
 
-        /* 塔羅牌陣空間 */
-        #tarot-room {
-            width: 100%; display: flex; flex-direction: column; align-items: center;
-            opacity: 0; transform: translateY(30px); transition: 0.8s ease 0.3s;
-            pointer-events: none; position: absolute; top: 0; padding-top: 30px;
+        /* 塔羅房 */
+        #tarot-room { display: flex; flex-direction: column; height: 100%; opacity: 0; transition: 0.5s; }
+        #tarot-room.active { opacity: 1; }
+
+        /* 🏛️ 2. 固定頂部 UI (穩如泰山) */
+        .top-section {
+            padding-top: 5vh; text-align: center; flex: 0 0 auto; z-index: 20;
+            background: linear-gradient(to bottom, rgba(5,5,8,1) 40%, transparent);
         }
-        #tarot-room.active { opacity: 1; transform: translateY(0); pointer-events: auto; position: relative; }
-
-        .slots-container { display: flex; gap: 15px; margin-bottom: 20px; z-index: 10; }
+        .slots { display: flex; justify-content: center; gap: 15px; margin: 15px 0; }
         .slot {
-            width: 85px; height: 130px; border: 1.5px dashed #444; border-radius: 10px;
-            position: relative; transition: 0.4s; z-index: 10;
+            width: 75px; height: 120px; border: 1.5px dashed #555; border-radius: 8px;
+            position: relative; transition: 0.4s; background-color: rgba(0,0,0,0.5);
+            /* 當牌放入時，會切換為正面圖 PK_BG2.jpg */
+            background-size: cover; background-position: center;
         }
+        .slot-label { position: absolute; bottom: -25px; width: 100%; text-align: center; font-size: 12px; color: #888; letter-spacing: 2px;}
 
-        /* 🌠 圓形星象輪盤設計 */
-        .wheel-wrapper {
-            position: relative; width: 100vw; height: 350px;
-            overflow-x: hidden; overflow-y: visible;
-            display: flex; justify-content: center; margin-top: 10px;
-            touch-action: pan-y; /* 允許垂直防呆，但擷取水平滑動 */
+        /* 🌉 1. 拱橋型排列 (核心旋轉區) */
+        .wheel-area {
+            position: relative; flex: 1; width: 100%;
+            overflow: hidden; touch-action: pan-y; /* 鎖死垂直滑動，允許水平捕捉 */
         }
-        
-        .circle-deck {
-            position: absolute; top: 180px; /* 輪盤軸心向下偏移 */
-            width: 0; height: 0;
-            display: flex; justify-content: center;
+        .bridge-container {
+            position: absolute; left: 50%; bottom: -600px; /* 圓心下移，形成拱橋 */
+            width: 0; height: 0; transform-style: preserve-3d;
             transition: transform 0.1s linear; cursor: grab;
         }
-        .circle-deck:active { cursor: grabbing; }
+        .bridge-container:active { cursor: grabbing; }
 
-        .card-container {
-            position: absolute; width: 90px; height: 145px;
-            left: -45px; top: -450px; /* 半徑 450px */
-            transform-origin: 50% 450px; /* 以圓心為軸旋轉 */
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s;
-        }
-        
-        .card-inner { position: relative; width: 100%; height: 100%; }
-        
-        /* 號碼極大化 + 輝光 */
-        .card-back {
-            position: absolute; width: 100%; height: 100%; 
-            border-radius: 10px; border: 1px solid rgba(212, 175, 55, 0.4);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            background: #111;
-            background-image: radial-gradient(var(--gold) 1px, transparent 1px);
-            background-size: 15px 15px;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--gold); /* 強烈金色 */
-            font-size: 55px; /* 數字超級放大 */
-            font-weight: 900; 
-            font-family: 'Times New Roman', serif;
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.9), 0 0 40px rgba(212, 175, 55, 0.4);
+        /* ✂️ 4. 裁切 JPG 白邊 (呈現精緻圓角) */
+        .card {
+            position: absolute; width: var(--card-w); height: var(--card-h);
+            left: calc(var(--card-w) / -2); bottom: 650px; /* 旋轉半徑 */
+            transform-origin: center 650px; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            border-radius: 8px; /* 圓角裁切掉 JPG 白邊 */
+            overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+            background-image: url('https://branddecoderai.com/images/PK_BG.jpg');
+            background-size: cover; background-position: center; border: 1px solid rgba(212,175,55,0.4);
         }
 
-        .deck-helper-text {
-            color: var(--text-sub); font-size: 13px; text-align: center; 
-            margin-top: -10px; letter-spacing: 2px;
-            animation: pulse-text 2s infinite; z-index: 10; position: relative;
-        }
-        @keyframes pulse-text { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
-
-        /* 動畫特效 */
-        @keyframes impact-flash {
-            0% { box-shadow: 0 0 0px #fff; background: transparent; }
-            40% { box-shadow: 0 0 50px #fff; background: rgba(255, 255, 255, 0.9); }
-            100% { box-shadow: 0 0 20px var(--gold); background: rgba(212, 175, 55, 0.1); }
-        }
-        @keyframes energy-shimmer {
-            0%, 100% { box-shadow: 0 0 10px var(--gold-glow); }
-            50% { box-shadow: 0 0 30px var(--gold); }
-        }
-        @keyframes card-drop-in {
-            0% { transform: translateY(-40px) scale(1.2); opacity: 0; }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
+        /* 🔢 3. 大號碼顯示 (發光超級大字) */
+        .card-num {
+            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+            font-size: 50px; font-weight: 900; font-family: 'Times New Roman', serif;
+            color: #F9E498; text-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 25px var(--gold);
+            pointer-events: none;
         }
 
-        .slot.impact { animation: impact-flash 0.4s ease-out forwards; border: 2px solid var(--gold); }
-        .slot.shimmering { animation: energy-shimmer 2.5s ease-in-out infinite; border: 2px solid var(--gold); background: rgba(212, 175, 55, 0.1); }
-        .drop-in-anim { animation: card-drop-in 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        /* 點擊聚焦效果 */
+        .card.focused { transform: translateY(-40px) scale(1.15); border-color: #fff; box-shadow: 0 0 30px var(--gold); filter: brightness(1.2); z-index: 10; }
 
+        /* 底部固定按鈕 */
+        .bottom-bar { position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; z-index: 30; pointer-events: none; }
         #submitBtn {
-            margin-top: 10px; background: var(--gold); color: #000; border: none; 
-            padding: 15px 50px; border-radius: 50px; font-weight: bold; font-size: 18px; 
-            opacity: 0; pointer-events: none; transition: 0.5s; z-index: 20; position: relative;
-            box-shadow: 0 0 20px var(--gold-glow);
+            background: var(--gold); color: #000; border: none; padding: 15px 45px; border-radius: 50px; font-weight: bold; font-size: 18px;
+            opacity: 0; transform: translateY(20px); transition: 0.5s; box-shadow: 0 0 20px rgba(212,175,55,0.5); pointer-events: auto; display: none;
         }
-        #submitBtn.active { opacity: 1; pointer-events: auto; animation: btn-pulse 2s infinite; }
-        @keyframes btn-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        #submitBtn.active { opacity: 1; transform: translateY(0); display: block; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 15px rgba(212,175,55,0.5); } 50% { box-shadow: 0 0 30px var(--gold); } }
 
-        .overlay {
-            position: fixed; inset: 0; background: rgba(5,5,8,0.95); display: none; 
-            flex-direction: column; align-items: center; justify-content: center; 
-            z-index: 999; backdrop-filter: blur(5px);
+        /* 開牌後的正面文字樣式 */
+        .front-text {
+            color: #5C4033; /* 古銅色，契合正面模板 */
+            font-size: 16px; font-weight: bold; text-align: center; width: 100%;
+            position: absolute; top: 50%; transform: translateY(-50%); text-shadow: 0 0 5px rgba(255,255,255,0.8);
         }
-        @keyframes spin { 100% { transform: rotate(360deg); } } 
-        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     </style>
 </head>
 <body>
-
     <canvas id="space-canvas"></canvas>
 
     <div id="lobby">
         <div class="lobby-title">命運解碼室</div>
-        <p style="color: var(--text-sub); font-size: 14px; margin-bottom: 30px; letter-spacing: 2px;">請凝神選擇欲指引的領域</p>
+        <p style="color: #a0a0a0; margin-bottom: 30px; letter-spacing: 2px;">請凝神選擇欲指引的領域</p>
         <button class="topic-btn" data-topic="感情">💖 感情與糾葛</button>
         <button class="topic-btn" data-topic="事業">💼 事業與財富</button>
         <button class="topic-btn" data-topic="綜合">🌟 綜合與指引</button>
     </div>
 
     <div id="tarot-room">
-        <div class="header" style="margin-bottom: 10px; text-align: center; z-index: 10;">
-            <div id="room-title" style="color: var(--gold); font-size: 22px; font-weight: bold; letter-spacing: 3px;">專屬測算</div>
-            <div id="instruction" style="font-size: 14px; margin-top: 8px; color: #fff; height: 20px; transition: 0.3s;">滑動星盤，憑直覺感應您的牌</div>
+        <div class="top-section">
+            <div id="room-title" style="color:var(--gold); font-size: 1.2rem; font-weight: bold; letter-spacing: 3px;">專屬測算</div>
+            <div id="instruction" style="font-size: 13px; color: #fff; margin-top: 8px;">左右滑動星盤，憑直覺感應您的牌</div>
+            <div class="slots">
+                <div class="slot" id="slot-0"><div class="slot-label">過去</div></div>
+                <div class="slot" id="slot-1"><div class="slot-label">現在</div></div>
+                <div class="slot" id="slot-2"><div class="slot-label">未來</div></div>
+            </div>
         </div>
 
-        <div class="slots-container">
-            <div class="slot" id="slot-0"><div style="position:absolute; bottom:-25px; width:100%; text-align:center; font-size:12px; color:#666;">過去</div></div>
-            <div class="slot" id="slot-1"><div style="position:absolute; bottom:-25px; width:100%; text-align:center; font-size:12px; color:#666;">現在</div></div>
-            <div class="slot" id="slot-2"><div style="position:absolute; bottom:-25px; width:100%; text-align:center; font-size:12px; color:#666;">未來</div></div>
+        <div class="wheel-area" id="wheel-wrapper">
+            <div class="bridge-container" id="bridge"></div>
         </div>
 
-        <div class="wheel-wrapper" id="wheel-wrapper">
-            <div class="circle-deck" id="circle-deck"></div>
+        <div class="bottom-bar">
+            <button id="submitBtn">解開命運結界</button>
         </div>
-        
-        <div class="deck-helper-text" id="deck-helper">👆 左右滑動旋轉星盤</div>
-
-        <button id="submitBtn">解開命運結界</button>
-    </div>
-
-    <div class="overlay" id="loadingOverlay">
-        <div style="width: 120px; height: 120px; animation: spin 4s linear infinite;">
-            <svg viewBox="0 0 100 100" style="stroke: var(--gold); fill: none; stroke-width: 2; filter: drop-shadow(0 0 10px var(--gold));">
-                <polygon points="50,5 90,75 10,75" /><polygon points="50,95 90,25 10,25" />
-            </svg>
-        </div>
-        <p style="color: var(--gold); margin-top: 30px; letter-spacing: 2px; text-align: center; line-height: 1.8; animation: blink 1.5s infinite;">正在調頻宇宙訊息...<br>請保持呼吸平穩</p>
     </div>
 
     <script>
-        // ==========================================
-        // 🌌 1. Canvas 宇宙粒子引擎 (保留原設定)
-        // ==========================================
+        // --- 6. 宇宙粒子引擎 (維持原樣) ---
         const canvas = document.getElementById('space-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
-
-        function resizeCanvas() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const INTENSITY = 35; 
-        const FREQUENCY = 0.005; 
-        const GALAXY_COLORS = ['rgba(138, 43, 226, OP)', 'rgba(212, 175, 55, OP)', 'rgba(65, 105, 225, OP)', 'rgba(255, 182, 193, OP)'];
-        
-        const stars = []; const galaxyParticles = []; const meteors = [];
-
-        for(let i = 0; i < 150; i++) { stars.push({ x: Math.random() * width, y: Math.random() * height, r: Math.random() * 1.5, a: Math.random() }); }
-
-        const numGalaxy = Math.floor((INTENSITY / 100) * 1000); 
-        for(let i = 0; i < numGalaxy; i++) {
-            const progress = Math.random();
-            const baseX = progress * width; const baseY = progress * height;
-            const spread = (Math.random() - 0.5) * (Math.random() * 300); 
-            galaxyParticles.push({
-                x: baseX - spread, y: baseY + spread, r: Math.random() * 3 + 1,
-                color: GALAXY_COLORS[Math.floor(Math.random() * GALAXY_COLORS.length)].replace('OP', Math.random() * 0.5 + 0.1),
-                vx: (Math.random() - 0.5) * 0.1, vy: (Math.random() - 0.5) * 0.1
-            });
-        }
-
-        class Meteor {
-            constructor() {
-                this.x = Math.random() * (width / 2) - 100; this.y = -50;
-                this.vx = Math.random() * 3 + 4; 
-                this.vy = this.vx * (height/width) * (0.8 + Math.random()*0.4); 
-                this.life = 1; this.decay = Math.random() * 0.015 + 0.01;
-            }
-            update() { this.x += this.vx; this.y += this.vy; this.life -= this.decay; }
-            draw() {
-                ctx.beginPath();
-                const tailX = this.x - this.vx * 15; const tailY = this.y - this.vy * 15;
-                const grad = ctx.createLinearGradient(this.x, this.y, tailX, tailY);
-                grad.addColorStop(0, `rgba(255, 255, 255, ${this.life})`);
-                grad.addColorStop(1, `rgba(212, 175, 55, 0)`);
-                ctx.strokeStyle = grad; ctx.lineWidth = 2;
-                ctx.moveTo(this.x, this.y); ctx.lineTo(tailX, tailY); ctx.stroke();
-                ctx.beginPath(); ctx.arc(this.x, this.y, 1.5, 0, Math.PI*2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${this.life})`; ctx.fill();
-            }
-        }
-
+        function resizeCanvas() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
+        const stars = []; const meteors = [];
+        for(let i=0; i<150; i++) stars.push({x: Math.random()*width, y: Math.random()*height, r: Math.random()*1.5, a: Math.random()});
         function animateSpace() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = '#fff';
-            stars.forEach(s => {
-                s.a += (Math.random() - 0.5) * 0.1;
-                if(s.a < 0) s.a = 0; if(s.a > 1) s.a = 1;
-                ctx.globalAlpha = s.a;
-                ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
-            });
-            ctx.globalAlpha = 1;
-
-            galaxyParticles.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                ctx.fillStyle = p.color;
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
-            });
-
-            if (Math.random() < FREQUENCY) meteors.push(new Meteor());
-            for (let i = meteors.length - 1; i >= 0; i--) {
-                meteors[i].update(); meteors[i].draw();
-                if (meteors[i].life <= 0 || meteors[i].x > width || meteors[i].y > height) meteors.splice(i, 1);
+            ctx.clearRect(0,0,width,height); ctx.fillStyle='#fff';
+            stars.forEach(s => { s.a += (Math.random()-0.5)*0.1; if(s.a<0)s.a=0; if(s.a>1)s.a=1; ctx.globalAlpha=s.a; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); });
+            ctx.globalAlpha=1;
+            if(Math.random()<0.005) meteors.push({x: Math.random()*(width/2)-100, y: -50, vx: Math.random()*3+4, vy: 5, life: 1});
+            for(let i=meteors.length-1; i>=0; i--) {
+                let m = meteors[i]; m.x+=m.vx; m.y+=m.vy; m.life-=0.015;
+                const grad = ctx.createLinearGradient(m.x, m.y, m.x-m.vx*15, m.y-m.vy*15);
+                grad.addColorStop(0, `rgba(255,255,255,${m.life})`); grad.addColorStop(1, 'rgba(212,175,55,0)');
+                ctx.strokeStyle=grad; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(m.x,m.y); ctx.lineTo(m.x-m.vx*15, m.y-m.vy*15); ctx.stroke();
+                if(m.life<=0) meteors.splice(i,1);
             }
             requestAnimationFrame(animateSpace);
         }
         animateSpace();
 
-        // ==========================================
-        // 🚀 2. LIFF 初始化 
-        // ==========================================
-        const LIFF_ID = "2009490171-yQF5PguK";
-        async function initializeLiff() {
-            try {
-                await liff.init({ liffId: LIFF_ID });
-                if (!liff.isLoggedIn() && !liff.isInClient()) liff.login();
-            } catch (err) { console.error('LIFF Error:', err); }
-        }
-        initializeLiff();
+        // --- LIFF & 流程控制 ---
+        const LIFF_ID = "2009490171-yQF5PguK"; // 請確認你的 LIFF ID
+        liff.init({ liffId: LIFF_ID }).catch(err => console.error(err));
 
-        // ==========================================
-        // 🎭 3. 轉場邏輯
-        // ==========================================
         let currentTopic = "";
         document.querySelectorAll('.topic-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -297,140 +177,88 @@
             });
         });
 
-        // ==========================================
-        // 🎡 4. 輪盤滑動與 78 張抽牌邏輯 (核心魔改)
-        // ==========================================
-        const circleDeck = document.getElementById('circle-deck');
+        // --- 1. 拱橋邏輯與 78 張牌庫 ---
+        const bridge = document.getElementById('bridge');
         const wheelWrapper = document.getElementById('wheel-wrapper');
-        
-        const majorArcana = ["愚者", "魔術師", "女祭司", "女皇", "皇帝", "教皇", "戀人", "戰車", "力量", "隱士", "命運之輪", "正義", "倒吊人", "死神", "節制", "惡魔", "高塔", "星星", "月亮", "太陽", "審判", "世界"];
-        const wands = ["權杖一", "權杖二", "權杖三", "權杖四", "權杖五", "權杖六", "權杖七", "權杖八", "權杖九", "權杖十", "權杖侍者", "權杖騎士", "權杖王后", "權杖國王"];
-        const cups = ["聖杯一", "聖杯二", "聖杯三", "聖杯四", "聖杯五", "聖杯六", "聖杯七", "聖杯八", "聖杯九", "聖杯十", "聖杯侍者", "聖杯騎士", "聖杯王后", "聖杯國王"];
-        const swords = ["寶劍一", "寶劍二", "寶劍三", "寶劍四", "寶劍五", "寶劍六", "寶劍七", "寶劍八", "寶劍九", "寶劍十", "寶劍侍者", "寶劍騎士", "寶劍王后", "寶劍國王"];
-        const pentacles = ["錢幣一", "錢幣二", "錢幣三", "錢幣四", "錢幣五", "錢幣六", "錢幣七", "錢幣八", "錢幣九", "錢幣十", "錢幣侍者", "錢幣騎士", "錢幣王后", "錢幣國王"];
-        
-        const fullTarotDeck = [...majorArcana, ...wands, ...cups, ...swords, ...pentacles];
-        const shuffled = fullTarotDeck.sort(() => 0.5 - Math.random());
-        
+        const fullDeck = ["愚者", "魔術師", "女祭司", "女皇", "皇帝", "教皇", "戀人", "戰車", "力量", "隱士", "命運之輪", "正義", "倒吊人", "死神", "節制", "惡魔", "高塔", "星星", "月亮", "太陽", "審判", "世界", "權杖一", "權杖二", "權杖三", "權杖四", "權杖五", "權杖六", "權杖七", "權杖八", "權杖九", "權杖十", "權杖侍者", "權杖騎士", "權杖王后", "權杖國王", "聖杯一", "聖杯二", "聖杯三", "聖杯四", "聖杯五", "聖杯六", "聖杯七", "聖杯八", "聖杯九", "聖杯十", "聖杯侍者", "聖杯騎士", "聖杯王后", "聖杯國王", "寶劍一", "寶劍二", "寶劍三", "寶劍四", "寶劍五", "寶劍六", "寶劍七", "寶劍八", "寶劍九", "寶劍十", "寶劍侍者", "寶劍騎士", "寶劍王后", "寶劍國王", "錢幣一", "錢幣二", "錢幣三", "錢幣四", "錢幣五", "錢幣六", "錢幣七", "錢幣八", "錢幣九", "錢幣十", "錢幣侍者", "錢幣騎士", "錢幣王后", "錢幣國王"];
+        const shuffled = fullDeck.sort(() => 0.5 - Math.random());
+
         let drawnCount = 0;
         let selectedCards = [];
-        let focusedContainer = null;
-
-        // 輪盤互動變數
+        let focusedCard = null;
         let currentRotation = 0;
-        let startX = 0;
-        let isDragging = false;
-        let hasDragged = false; // 用來區分是「滑動」還是「點擊」
+        let startX = 0; let isDragging = false; let hasDragged = false;
 
-        // 綁定觸控與滑鼠事件
-        const startDrag = (x) => { isDragging = true; hasDragged = false; startX = x; circleDeck.style.transition = 'none'; };
-        const onDrag = (x) => {
-            if (!isDragging) return;
-            const dx = x - startX;
-            if (Math.abs(dx) > 5) hasDragged = true; // 判定為滑動
-            currentRotation += dx * 0.2; // 調整滑動靈敏度
-            circleDeck.style.transform = `rotate(${currentRotation}deg)`;
-            startX = x;
-        };
-        const endDrag = () => { isDragging = false; circleDeck.style.transition = 'transform 0.1s linear'; };
-
-        wheelWrapper.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX));
-        wheelWrapper.addEventListener('touchmove', (e) => onDrag(e.touches[0].clientX));
-        wheelWrapper.addEventListener('touchend', endDrag);
-        
-        wheelWrapper.addEventListener('mousedown', (e) => startDrag(e.clientX));
-        window.addEventListener('mousemove', (e) => onDrag(e.clientX));
-        window.addEventListener('mouseup', endDrag);
-
-        // 生成 78 張牌於圓盤上
-        const cardAngle = 360 / 78; // 每張牌的角度間距
+        // 生成 78 張牌
+        const angleStep = 360 / 78; // 每張牌約 4.6 度
         for (let i = 0; i < 78; i++) {
-            const container = document.createElement('div');
-            container.className = 'card-container';
-            
-            const angle = i * cardAngle;
-            container.dataset.angle = angle;
-            // 沿著圓心旋轉排列
-            container.style.transform = `rotate(${angle}deg)`;
+            const card = document.createElement('div');
+            card.className = 'card';
+            const angle = i * angleStep;
+            card.style.transform = `rotate(${angle}deg)`;
+            card.dataset.angle = angle;
+            card.innerHTML = `<div class="card-num">${i + 1}</div>`;
 
-            container.innerHTML = `
-                <div class="card-inner">
-                    <div class="card-back">${i + 1}</div> 
-                </div>
-            `;
+            card.addEventListener('click', () => {
+                if (hasDragged || drawnCount >= 3 || card.classList.contains('used')) return;
 
-            container.addEventListener('click', (e) => {
-                // 如果剛剛是在滑動，或是已抽滿、已使用，則略過點擊
-                if (hasDragged || drawnCount >= 3 || container.classList.contains('used')) return;
-
-                if (focusedContainer !== container) {
-                    // 1. 還原上一張牌
-                    if (focusedContainer) {
-                        focusedContainer.style.transform = `rotate(${focusedContainer.dataset.angle}deg)`;
-                    }
+                if (focusedCard !== card) {
+                    // 第一下點擊：聚焦彈出
+                    if (focusedCard) focusedCard.style.transform = `rotate(${focusedCard.dataset.angle}deg)`;
+                    focusedCard = card;
+                    card.style.transform = `rotate(${angle}deg) translateY(-40px) scale(1.15)`;
                     
-                    // 2. 聚焦這張牌 (往上推移 -60px，並放大)
-                    focusedContainer = container;
-                    container.style.transform = `rotate(${angle}deg) translateY(-60px) scale(1.15)`;
-                    
-                    // 3. 自動旋轉輪盤，讓這張牌對齊正中央 (正上方)
-                    currentRotation = -angle; 
-                    circleDeck.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
-                    circleDeck.style.transform = `rotate(${currentRotation}deg)`;
-                    
-                    document.getElementById('instruction').innerHTML = `✨ <b style='color:var(--gold)'>鎖定第 ${i + 1} 號命運，再次點擊抽取</b>`;
-                } 
-                else {
-                    // 確定抽取
-                    container.classList.add('used');
-                    container.style.opacity = '0'; 
-                    container.style.pointerEvents = 'none';
-                    
+                    // 自動轉正
+                    currentRotation = -angle;
+                    bridge.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+                    bridge.style.transform = `rotate(${currentRotation}deg)`;
+                    document.getElementById('instruction').innerHTML = `✨ 鎖定第 <b style='color:var(--gold)'>${i+1}</b> 號命運，再次點擊抽取`;
+                } else {
+                    // 第二下點擊：確認抽取
+                    card.classList.add('used'); card.style.opacity = '0'; card.style.pointerEvents = 'none';
                     selectedCards.push(shuffled[i]);
-                    const slot = document.getElementById(`slot-${drawnCount}`);
                     
-                    slot.innerHTML = `
-                        <div class="card-front drop-in-anim" style="width:100%; height:100%; border-radius:8px; background:#000; border: 1px solid var(--gold); color:var(--gold); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:bold; box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.2);">
-                            ${shuffled[i]}
-                        </div>
-                        <div style="position:absolute; bottom:-25px; width:100%; text-align:center; font-size:12px; color:var(--gold); font-weight:bold;">
-                            ${["過去", "現在", "未來"][drawnCount]}
-                        </div>
-                    `;
-
-                    slot.classList.add('impact');
-                    setTimeout(() => {
-                        slot.classList.remove('impact');
-                        slot.classList.add('shimmering');
-                    }, 400); 
+                    const slot = document.getElementById(`slot-${drawnCount}`);
+                    // 填入正面模板圖與文字
+                    slot.style.backgroundImage = "url('https://branddecoderai.com/images/PK_BG2.jpg')";
+                    slot.style.border = "none";
+                    slot.innerHTML += `<div class="front-text">${shuffled[i]}</div>`;
                     
                     drawnCount++;
-                    focusedContainer = null;
+                    focusedCard = null;
                     
                     if (drawnCount < 3) {
                         document.getElementById('instruction').innerText = `請滑動尋找第 ${drawnCount+1} 枚印記...`;
                     } else {
                         document.getElementById('instruction').innerHTML = "🔮 契合完成，請啟動解碼";
                         document.getElementById('submitBtn').classList.add('active');
-                        wheelWrapper.style.opacity = '0.3';
-                        wheelWrapper.style.pointerEvents = 'none';
-                        document.getElementById('deck-helper').style.display = 'none'; 
+                        wheelWrapper.style.opacity = '0.3'; wheelWrapper.style.pointerEvents = 'none';
                     }
                 }
             });
-            circleDeck.appendChild(container);
+            bridge.appendChild(card);
         }
 
+        // 滑動控制
+        const startDrag = (x) => { isDragging = true; hasDragged = false; startX = x; bridge.style.transition = 'none'; };
+        const onDrag = (x) => {
+            if (!isDragging) return;
+            const dx = x - startX; if (Math.abs(dx) > 3) hasDragged = true;
+            currentRotation += dx * 0.15; bridge.style.transform = `rotate(${currentRotation}deg)`; startX = x;
+        };
+        const endDrag = () => { isDragging = false; };
+        wheelWrapper.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX));
+        wheelWrapper.addEventListener('touchmove', (e) => onDrag(e.touches[0].clientX));
+        wheelWrapper.addEventListener('touchend', endDrag);
+
+        // 送出指令
         document.getElementById('submitBtn').addEventListener('click', () => {
-            document.getElementById('loadingOverlay').style.display = 'flex';
             const cmd = `[系統指令] 塔羅結算: [${currentTopic}] ${selectedCards.join(', ')}`;
-            setTimeout(() => {
-                if (liff.isInClient()) {
-                    liff.sendMessages([{ type: 'text', text: cmd }]).then(() => liff.closeWindow());
-                } else {
-                    console.log(cmd); alert("【測試】成功送出"); document.getElementById('loadingOverlay').style.display = 'none';
-                }
-            }, 2500);
+            if (liff.isInClient()) {
+                liff.sendMessages([{ type: 'text', text: cmd }]).then(() => liff.closeWindow());
+            } else {
+                alert("【測試】成功送出指令：" + cmd);
+            }
         });
     </script>
 </body>
