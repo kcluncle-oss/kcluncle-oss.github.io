@@ -78,6 +78,7 @@
 
         /* 🔮 中央能量核心區 */
         .core-area { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; }
+        
         #energy-core {
             width: var(--core-w); height: var(--core-h); border-radius: 12px;
             background-image: url('https://branddecoderai.com/images/PK_BG.jpg');
@@ -86,10 +87,45 @@
             position: relative; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
             display: flex; justify-content: center; align-items: center; z-index: 10;
         }
+
+        /* 🃏 洗牌疊影特效 (核心) */
+        #energy-core::before, #energy-core::after {
+            content: ''; position: absolute; inset: 0;
+            background-image: url('https://branddecoderai.com/images/PK_BG.jpg');
+            background-size: cover; background-position: center;
+            border-radius: 12px; border: 1.5px solid rgba(212,175,55,0.3);
+            z-index: -1; transition: 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
+            opacity: 0; transform: scale(0.95);
+        }
+
+        /* 滑動時的洗牌狀態：疊影彈出與高頻震動 */
+        #energy-core.shuffling {
+            animation: card-jitter 0.08s infinite alternate;
+            filter: brightness(1.2) contrast(1.1);
+            box-shadow: 0 0 40px rgba(212,175,55,0.8), 0 0 80px rgba(255,255,255,0.3);
+        }
+        #energy-core.shuffling::before {
+            opacity: 0.7; transform: translateX(-20px) scale(0.92) rotate(-5deg);
+        }
+        #energy-core.shuffling::after {
+            opacity: 0.7; transform: translateX(20px) scale(0.92) rotate(5deg);
+        }
+
+        @keyframes card-jitter {
+            0% { transform: translateY(-3px); }
+            100% { transform: translateY(3px); }
+        }
+
         /* 待命脈動 */
         @keyframes core-pulse { 0%, 100% { box-shadow: 0 0 30px rgba(212,175,55,0.3); border-color: rgba(212,175,55,0.5); } 50% { box-shadow: 0 0 50px rgba(212,175,55,0.7); border-color: var(--gold-light); } }
         #energy-core.pulse { animation: core-pulse 3s infinite; }
         #energy-core:active { transform: scale(0.95); }
+        
+        #core-number {
+            font-size: 80px; font-family: 'Times New Roman', serif; font-weight: bold;
+            color: var(--gold-light); text-shadow: 0 0 15px rgba(0,0,0,1), 0 0 30px var(--gold);
+            pointer-events: none; transition: 0.05s; z-index: 2;
+        }
         
         #core-number {
             font-size: 80px; font-family: 'Times New Roman', serif; font-weight: bold;
@@ -235,13 +271,28 @@
             });
         });
 
-        // 數字調頻感應
+        // 數字調頻感應 (加入高頻洗牌邏輯)
+        let shuffleTimeout; // 用來偵測滑動是否停止
+        
         slider.addEventListener('input', (e) => {
             coreNum.innerText = e.target.value;
-            // 輕微閃爍特效
-            coreNum.style.transform = `scale(${1 + Math.random()*0.1})`;
-            coreNum.style.textShadow = `0 0 ${10+Math.random()*20}px #fff, 0 0 40px var(--gold)`;
-            setTimeout(() => { coreNum.style.transform = 'scale(1)'; }, 50);
+            
+            // 1. 啟動洗牌狀態 (彈出疊影、震動卡片)
+            coreCard.classList.remove('pulse'); // 暫停緩慢脈動
+            coreCard.classList.add('shuffling');
+
+            // 2. 數字高頻閃爍特效
+            coreNum.style.transform = `scale(${1 + Math.random()*0.15})`;
+            coreNum.style.textShadow = `0 0 ${15+Math.random()*30}px #fff, 0 0 60px var(--gold)`;
+
+            // 3. 停止滑動後的恢復機制 (0.15秒沒滑動，視為停止)
+            clearTimeout(shuffleTimeout);
+            shuffleTimeout = setTimeout(() => {
+                coreCard.classList.remove('shuffling');
+                coreCard.classList.add('pulse'); // 恢復緩慢脈動
+                coreNum.style.transform = 'scale(1)';
+                coreNum.style.textShadow = `0 0 15px rgba(0,0,0,1), 0 0 30px var(--gold)`;
+            }, 150);
         });
 
         // 💥 靈力具現化 (點擊卡片爆炸)
