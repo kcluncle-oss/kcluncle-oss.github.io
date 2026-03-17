@@ -3,127 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BrandDecoder - 命運拱橋</title>
+    <title>BrandDecoder - 靈能調頻</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
         :root {
-            --gold: #D4AF37;
-            --gold-light: #F9E498;
-            --bg-deep: #050508;
-            --card-w: 80px;
-            --card-h: 128px;
-            --radius: 500px; /* 完美扇形的半徑 */
+            --gold: #D4AF37; --gold-light: #F9E498; --bg-deep: #050508;
+            --slot-w: 80px; --slot-h: 128px;
+            --core-w: 160px; --core-h: 256px;
         }
 
         body {
-            margin: 0; padding: 0; background-color: var(--bg-deep);
-            color: #fff; font-family: 'PingFang TC', 'Noto Serif TC', serif; 
+            margin: 0; padding: 0; background-color: var(--bg-deep); color: #fff; 
+            font-family: 'PingFang TC', 'Noto Serif TC', serif; 
             overflow: hidden; height: 100vh; display: flex; flex-direction: column;
             user-select: none; -webkit-user-select: none;
         }
 
-        /* 🌌 4. 恢復銀河與流星畫布 */
-        #space-canvas { position: fixed; inset: 0; z-index: -2; pointer-events: none; background: radial-gradient(circle at center, #0a0e29 0%, #020205 100%); }
+        /* 🌌 永恆銀河背景 (從頭到尾不間斷) */
+        #space-canvas { position: fixed; inset: 0; z-index: -10; pointer-events: none; }
+        .vignette { position: fixed; inset: 0; background: radial-gradient(circle at center, transparent 30%, #000 120%); z-index: -9; pointer-events: none; }
 
-        /* 大廳介面 */
+        /* --- 大廳 (Lobby) --- */
         #lobby {
             position: fixed; inset: 0; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; z-index: 50; 
-            background: rgba(5,5,8,0.9); transition: 0.5s;
+            background: rgba(5,5,8,0.6); transition: opacity 0.8s ease, transform 0.8s ease;
+            backdrop-filter: blur(8px);
         }
-        #lobby.hidden { opacity: 0; pointer-events: none; transform: scale(1.05); }
-        .lobby-title { color: var(--gold); font-size: 32px; font-weight: 900; letter-spacing: 6px; margin-bottom: 40px; text-shadow: 0 0 20px var(--gold); }
+        #lobby.hidden { opacity: 0; pointer-events: none; transform: scale(1.1); }
+        .lobby-title { color: var(--gold); font-size: 32px; font-weight: 900; letter-spacing: 6px; margin-bottom: 40px; text-shadow: 0 0 25px var(--gold); }
         .topic-btn {
-            background: rgba(255, 255, 255, 0.05); border: 1.5px solid var(--gold); color: var(--gold-light); 
-            width: 85%; max-width: 320px; padding: 20px; margin: 10px 0; border-radius: 50px; 
-            font-size: 18px; font-weight: bold; letter-spacing: 3px; cursor: pointer; transition: 0.3s;
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.4); border: 1.5px solid rgba(212,175,55,0.6); color: var(--gold-light); 
+            width: 80%; max-width: 300px; padding: 20px; margin: 12px 0; border-radius: 50px; 
+            font-size: 18px; font-weight: bold; letter-spacing: 4px; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 0 10px rgba(212,175,55,0.1);
         }
+        .topic-btn:active { background: rgba(212,175,55,0.3); transform: scale(0.97); }
 
-        #tarot-room { display: flex; flex-direction: column; height: 100%; opacity: 0; transition: 0.5s; }
-        #tarot-room.active { opacity: 1; }
+        /* --- 塔羅房 (Tarot Room) --- */
+        #tarot-room { display: flex; flex-direction: column; height: 100%; opacity: 0; transition: 0.8s 0.3s; pointer-events: none; }
+        #tarot-room.active { opacity: 1; pointer-events: auto; }
 
-        /* 頂部 UI */
-        .top-section {
-            padding-top: 5vh; text-align: center; flex: 0 0 auto; z-index: 20;
-            background: linear-gradient(to bottom, rgba(5,5,8,1) 40%, transparent);
-        }
-        .slots { display: flex; justify-content: center; gap: 15px; margin: 15px 0; }
+        /* 頂部命運之匣 */
+        .top-section { padding-top: 6vh; text-align: center; z-index: 20; }
+        .slots { display: flex; justify-content: center; gap: 18px; margin: 20px 0; }
         .slot {
-            width: 75px; height: 120px; border: 1.5px dashed #555; border-radius: 8px;
-            position: relative; transition: 0.4s; background-color: rgba(0,0,0,0.5);
+            width: var(--slot-w); height: var(--slot-h); border: 1.5px dashed rgba(255,255,255,0.3); border-radius: 8px;
+            position: relative; background-color: rgba(0,0,0,0.5); transition: 0.4s;
             background-size: cover; background-position: center;
         }
-        .slot-label { position: absolute; bottom: -25px; width: 100%; text-align: center; font-size: 12px; color: #888; letter-spacing: 2px;}
+        .slot-label { position: absolute; bottom: -28px; width: 100%; text-align: center; font-size: 13px; color: #999; letter-spacing: 3px; }
 
-        /* ✨ 3. 恢復特效動畫 */
+        /* 💥 衝擊與餘燼特效 */
         @keyframes impact-flash {
-            0% { box-shadow: 0 0 0px #fff; border-color: #555; }
-            40% { box-shadow: 0 0 40px #fff, 0 0 60px var(--gold); border-color: #fff; background-color: rgba(255,255,255,0.8); }
-            100% { box-shadow: 0 0 15px var(--gold); border-color: var(--gold); }
+            0% { box-shadow: 0 0 0px #fff; border-color: #555; filter: brightness(1); transform: scale(1); }
+            20% { box-shadow: 0 0 60px #fff, 0 0 100px var(--gold); border-color: #fff; filter: brightness(2); transform: scale(1.1); background-color: #fff; }
+            100% { box-shadow: 0 0 15px rgba(212,175,55,0.6); border-color: var(--gold); filter: brightness(1); transform: scale(1); }
         }
-        @keyframes drop-in-anim {
-            0% { transform: translateY(-30px) scale(1.1); opacity: 0; }
-            100% { transform: translateY(-50%) scale(1); opacity: 1; } /* Y軸-50%是為了置中 */
+        @keyframes persistent-simmer {
+            0%, 100% { box-shadow: 0 0 10px rgba(212,175,55,0.3); }
+            50% { box-shadow: 0 0 20px rgba(212,175,55,0.6); }
         }
-        .slot.impact { animation: impact-flash 0.5s ease-out forwards; border-style: solid; }
+        .slot.impact { animation: impact-flash 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; border-style: solid; border-width: 2px; }
+        .slot.simmer { animation: persistent-simmer 3s infinite ease-in-out; border-style: solid; border-width: 2px; border-color: var(--gold);}
 
-        /* 🌉 2. 修正軸心：完美的拱橋幾何學 */
-        .wheel-area {
-            position: relative; flex: 1; width: 100%;
-            overflow: hidden; touch-action: pan-y;
+        /* 卡片正面文字樣式 (Emoji + 名稱 + 關鍵字) */
+        .card-front-content {
+            position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: #5C4033; text-shadow: 0 0 5px rgba(255,255,255,0.9); padding: 5px; text-align: center;
         }
-        .bridge-container {
-            position: absolute; left: 50%; 
-            bottom: calc(var(--radius) * -1 + 40px); /* 將圓心定位在螢幕下方 */
-            width: 0; height: 0; transform-style: preserve-3d;
-            transition: transform 0.1s linear; cursor: grab;
-        }
-        .bridge-container:active { cursor: grabbing; }
+        .front-emoji { font-size: 22px; margin-bottom: 5px; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3)); }
+        .front-name { font-size: 16px; font-weight: 900; letter-spacing: 1px; margin-bottom: 8px; font-family: 'Noto Serif TC', serif; }
+        .front-keyword { font-size: 11px; font-weight: bold; background: rgba(255,255,255,0.6); padding: 2px 6px; border-radius: 10px; border: 1px solid rgba(92,64,51,0.3); }
 
-        .card {
-            position: absolute; width: var(--card-w); height: var(--card-h);
-            left: calc(var(--card-w) / -2); 
-            bottom: var(--radius); /* 卡片距離圓心的距離 */
-            transform-origin: center calc(100% + var(--radius)); /* 旋轉支點精準設定在圓心 */
-            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-            border-radius: 8px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+        /* 🔮 中央能量核心區 */
+        .core-area { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; }
+        #energy-core {
+            width: var(--core-w); height: var(--core-h); border-radius: 12px;
             background-image: url('https://branddecoderai.com/images/PK_BG.jpg');
-            background-size: cover; background-position: center; border: 1px solid rgba(212,175,55,0.4);
+            background-size: cover; background-position: center; border: 1.5px solid var(--gold);
+            box-shadow: 0 0 30px rgba(212,175,55,0.3), 0 15px 40px rgba(0,0,0,0.8);
+            position: relative; transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex; justify-content: center; align-items: center; z-index: 10;
+        }
+        /* 待命脈動 */
+        @keyframes core-pulse { 0%, 100% { box-shadow: 0 0 30px rgba(212,175,55,0.3); border-color: rgba(212,175,55,0.5); } 50% { box-shadow: 0 0 50px rgba(212,175,55,0.7); border-color: var(--gold-light); } }
+        #energy-core.pulse { animation: core-pulse 3s infinite; }
+        #energy-core:active { transform: scale(0.95); }
+        
+        #core-number {
+            font-size: 80px; font-family: 'Times New Roman', serif; font-weight: bold;
+            color: var(--gold-light); text-shadow: 0 0 15px rgba(0,0,0,1), 0 0 30px var(--gold);
+            pointer-events: none; transition: 0.1s;
         }
 
-        /* 🔢 1. 修正數字大小，防止遮擋 */
-        .card-num {
-            position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-            font-size: 36px; /* 縮小至完美比例 */
-            font-weight: 900; font-family: 'Times New Roman', serif;
-            color: #F9E498; text-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 20px var(--gold);
-            pointer-events: none;
+        /* 🎛️ 底部調頻儀 (Slider) */
+        .tuning-area { padding: 0 30px 40px 30px; text-align: center; z-index: 20; }
+        .tuning-label { color: #aaa; font-size: 13px; letter-spacing: 2px; margin-bottom: 15px; }
+        input[type=range] {
+            -webkit-appearance: none; width: 100%; background: transparent; height: 40px;
         }
+        input[type=range]:focus { outline: none; }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%; height: 4px; cursor: pointer;
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.8), transparent); border-radius: 2px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            height: 24px; width: 24px; border-radius: 50%; background: #fff;
+            box-shadow: 0 0 15px var(--gold), inset 0 0 5px #000; cursor: pointer;
+            -webkit-appearance: none; margin-top: -10px; transition: 0.2s;
+        }
+        input[type=range]:active::-webkit-slider-thumb { transform: scale(1.3); box-shadow: 0 0 25px #fff; }
 
-        .card.focused { transform: translateY(-40px) scale(1.15); border-color: #fff; box-shadow: 0 0 30px var(--gold); filter: brightness(1.2); z-index: 10; }
-
-        .bottom-bar { position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; z-index: 30; pointer-events: none; }
+        /* 傳送按鈕 */
         #submitBtn {
-            background: var(--gold); color: #000; border: none; padding: 15px 45px; border-radius: 50px; font-weight: bold; font-size: 18px;
-            opacity: 0; transform: translateY(20px); transition: 0.5s; box-shadow: 0 0 20px rgba(212,175,55,0.5); pointer-events: auto; display: none;
+            background: linear-gradient(135deg, var(--gold), #B8860B); color: #000; border: none; 
+            padding: 15px 50px; border-radius: 50px; font-weight: 900; font-size: 18px; letter-spacing: 2px;
+            opacity: 0; transform: translateY(20px); transition: 0.5s; box-shadow: 0 0 20px rgba(212,175,55,0.5); 
+            position: absolute; bottom: 40px; left: 50%; margin-left: -105px; pointer-events: none;
         }
-        #submitBtn.active { opacity: 1; transform: translateY(0); display: block; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%,100% { box-shadow: 0 0 15px rgba(212,175,55,0.5); } 50% { box-shadow: 0 0 30px var(--gold); } }
+        #submitBtn.active { opacity: 1; transform: translateY(0); pointer-events: auto; animation: pulse-btn 2s infinite; }
+        @keyframes pulse-btn { 0%,100% { box-shadow: 0 0 15px rgba(212,175,55,0.5); } 50% { box-shadow: 0 0 30px var(--gold); } }
 
-        .front-text {
-            color: #5C4033; font-size: 15px; font-weight: bold; text-align: center; width: 100%;
-            position: absolute; top: 50%; transform: translateY(-50%); text-shadow: 0 0 5px rgba(255,255,255,0.8);
-        }
-        .drop-in { animation: drop-in-anim 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        /* 💥 爆炸粒子層 */
+        #particle-container { position: fixed; inset: 0; z-index: 100; pointer-events: none; }
+        .particle { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 0 10px var(--gold); }
     </style>
 </head>
 <body>
+
     <canvas id="space-canvas"></canvas>
+    <div class="vignette"></div>
 
     <div id="lobby">
         <div class="lobby-title">命運解碼室</div>
-        <p style="color: #a0a0a0; margin-bottom: 30px; letter-spacing: 2px;">請凝神選擇欲指引的領域</p>
+        <p style="color: #a0a0a0; margin-bottom: 40px; letter-spacing: 2px;">請鎖定欲窺探之領域</p>
         <button class="topic-btn" data-topic="感情">💖 感情與糾葛</button>
         <button class="topic-btn" data-topic="事業">💼 事業與財富</button>
         <button class="topic-btn" data-topic="綜合">🌟 綜合與指引</button>
@@ -131,8 +145,7 @@
 
     <div id="tarot-room">
         <div class="top-section">
-            <div id="room-title" style="color:var(--gold); font-size: 1.2rem; font-weight: bold; letter-spacing: 3px;">專屬測算</div>
-            <div id="instruction" style="font-size: 13px; color: #fff; margin-top: 8px;">左右滑動星盤，憑直覺感應您的牌</div>
+            <div id="room-title" style="color:var(--gold); font-size: 1.1rem; font-weight: bold; letter-spacing: 4px;">領域感應中</div>
             <div class="slots">
                 <div class="slot" id="slot-0"><div class="slot-label">過去</div></div>
                 <div class="slot" id="slot-1"><div class="slot-label">現在</div></div>
@@ -140,162 +153,198 @@
             </div>
         </div>
 
-        <div class="wheel-area" id="wheel-wrapper">
-            <div class="bridge-container" id="bridge"></div>
+        <div class="core-area">
+            <div id="energy-core" class="pulse">
+                <div id="core-number">39</div>
+            </div>
         </div>
 
-        <div class="bottom-bar">
-            <button id="submitBtn">解開命運結界</button>
+        <div class="tuning-area" id="tuning-ui">
+            <div class="tuning-label" id="instruction">滑動儀表，注入靈力感應號碼</div>
+            <input type="range" id="frequency-slider" min="1" max="78" value="39">
         </div>
+        
+        <button id="submitBtn">解開結界</button>
     </div>
 
+    <div id="particle-container"></div>
+
     <script>
-        // --- 4. 完整恢復宇宙粒子引擎 (Intensity 35, TL->BR) ---
+        // --- 🌌 1. 永恆銀河引擎 ---
         const canvas = document.getElementById('space-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
-        function resizeCanvas() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resizeCanvas); resizeCanvas();
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
         
-        const INTENSITY = 35; 
-        const FREQUENCY = 0.005; 
-        const GALAXY_COLORS = ['rgba(138, 43, 226, OP)', 'rgba(212, 175, 55, OP)', 'rgba(65, 105, 225, OP)', 'rgba(255, 182, 193, OP)'];
-        
-        const stars = []; const galaxyParticles = []; const meteors = [];
+        const stars = []; const nebulas = []; const meteors = [];
         for(let i=0; i<150; i++) stars.push({x: Math.random()*width, y: Math.random()*height, r: Math.random()*1.5, a: Math.random()});
+        for(let i=0; i<300; i++) { // 旋轉星雲粒子
+            nebulas.push({ angle: Math.random()*Math.PI*2, radius: Math.random()*width*0.8, speed: (Math.random()*0.002)+0.0005, size: Math.random()*3, color: `rgba(${Math.random()>0.5?'212,175,55':'138,43,226'},${Math.random()*0.3})` });
+        }
         
-        const numGalaxy = Math.floor((INTENSITY / 100) * 1000); 
-        for(let i=0; i<numGalaxy; i++) {
-            const progress = Math.random();
-            const spread = (Math.random()-0.5)*(Math.random()*300); 
-            galaxyParticles.push({
-                x: (progress*width) - spread, y: (progress*height) + spread, r: Math.random()*3+1,
-                color: GALAXY_COLORS[Math.floor(Math.random()*GALAXY_COLORS.length)].replace('OP', Math.random()*0.5+0.1),
-                vx: (Math.random()-0.5)*0.1, vy: (Math.random()-0.5)*0.1
-            });
-        }
-
-        class Meteor {
-            constructor() {
-                this.x = Math.random() * (width / 2) - 100; this.y = -50;
-                this.vx = Math.random() * 3 + 4; this.vy = this.vx * (height/width) * (0.8 + Math.random()*0.4); 
-                this.life = 1; this.decay = Math.random() * 0.015 + 0.01;
-            }
-            update() { this.x += this.vx; this.y += this.vy; this.life -= this.decay; }
-            draw() {
-                ctx.beginPath();
-                const tailX = this.x - this.vx * 15; const tailY = this.y - this.vy * 15;
-                const grad = ctx.createLinearGradient(this.x, this.y, tailX, tailY);
-                grad.addColorStop(0, `rgba(255, 255, 255, ${this.life})`); grad.addColorStop(1, `rgba(212, 175, 55, 0)`);
-                ctx.strokeStyle = grad; ctx.lineWidth = 2; ctx.moveTo(this.x, this.y); ctx.lineTo(tailX, tailY); ctx.stroke();
-                ctx.beginPath(); ctx.arc(this.x, this.y, 1.5, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 255, 255, ${this.life})`; ctx.fill();
-            }
-        }
-
         function animateSpace() {
-            ctx.clearRect(0,0,width,height); 
+            ctx.clearRect(0,0,width,height);
+            // 畫星星
             ctx.fillStyle='#fff';
-            stars.forEach(s => { s.a += (Math.random()-0.5)*0.1; if(s.a<0)s.a=0; if(s.a>1)s.a=1; ctx.globalAlpha=s.a; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); });
+            stars.forEach(s => { s.a += (Math.random()-0.5)*0.1; if(s.a<0.1)s.a=0.1; if(s.a>1)s.a=1; ctx.globalAlpha=s.a; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); });
+            // 畫星雲 (旋轉)
             ctx.globalAlpha=1;
-            galaxyParticles.forEach(p => { p.x += p.vx; p.y += p.vy; ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill(); });
-            if(Math.random()<FREQUENCY) meteors.push(new Meteor());
-            for(let i=meteors.length-1; i>=0; i--) { meteors[i].update(); meteors[i].draw(); if(meteors[i].life<=0) meteors.splice(i,1); }
+            const cx = width/2, cy = height/2;
+            nebulas.forEach(n => { n.angle += n.speed; const x = cx + Math.cos(n.angle)*n.radius; const y = cy + Math.sin(n.angle)*n.radius; ctx.fillStyle = n.color; ctx.beginPath(); ctx.arc(x,y,n.size,0,Math.PI*2); ctx.fill(); });
+            // 畫流星
+            if(Math.random()<0.008) meteors.push({x: Math.random()*width, y: -50, vx: Math.random()*2+3, vy: 5, life: 1});
+            for(let i=meteors.length-1; i>=0; i--) {
+                let m = meteors[i]; m.x+=m.vx; m.y+=m.vy; m.life-=0.015;
+                const grad = ctx.createLinearGradient(m.x, m.y, m.x-m.vx*15, m.y-m.vy*15);
+                grad.addColorStop(0, `rgba(255,255,255,${m.life})`); grad.addColorStop(1, 'rgba(212,175,55,0)');
+                ctx.strokeStyle=grad; ctx.lineWidth=2; ctx.beginPath(); ctx.moveTo(m.x,m.y); ctx.lineTo(m.x-m.vx*15, m.y-m.vy*15); ctx.stroke();
+                if(m.life<=0) meteors.splice(i,1);
+            }
             requestAnimationFrame(animateSpace);
         }
         animateSpace();
 
-        // --- LIFF & 流程控制 ---
-        const LIFF_ID = "2009490171-yQF5PguK"; // 替換為你的 LIFF ID
-        liff.init({ liffId: LIFF_ID }).catch(err => console.error(err));
-
+        // --- 🔮 2. 靈魂標籤庫 (Emoji + 關鍵字) ---
+        // 為了極致效能，這裡精簡化產生 78 張牌的資料 (前 22 張大牌特別設定，其餘按花色產生)
+        const majorArcana = [ "愚者|🌀|無限潛能", "魔術師|🪄|顯化奇蹟", "女祭司|🌙|直覺奧秘", "女皇|👑|豐盛孕育", "皇帝|🦅|秩序建立", "教皇|⛪|精神指引", "戀人|👩‍❤️‍👨|靈魂契合", "戰車|🐎|意志征服", "力量|🦁|柔性堅韌", "隱士|🏮|內在尋道", "命運之輪|🎡|業力輪轉", "正義|⚖️|平衡裁決", "倒吊人|🪢|換位思考", "死神|🦋|毀滅重生", "節制|🌈|和諧煉金", "惡魔|⛓️|物質枷鎖", "高塔|⚡|粉碎重建", "星星|✨|希望指引", "月亮|🐺|潛意識恐懼", "太陽|☀️|生命喜悅", "審判|🎺|靈魂覺醒", "世界|🌍|圓滿達成" ];
+        const suits = [ {s:"權杖", e:"🔥", k:["新行動","抉擇","擴展","穩固","衝突","勝利","防禦","速達","疲憊","重擔","熱情","衝動","魅力","權威"]}, {s:"聖杯", e:"💧", k:["新情感","結合","慶祝","倦怠","失落","回憶","幻象","追尋","滿願","圓滿","溫柔","浪漫","直覺","包容"]}, {s:"寶劍", e:"⚔️", k:["新思想","盲點","悲痛","休養","爭執","渡過","欺瞞","束縛","焦慮","終結","機警","衝鋒","理智","嚴肅"]}, {s:"錢幣", e:"🪙", k:["新資源","波動","合作","守成","匱乏","施受","靜待","精進","豐收","傳承","務實","穩健","富足","基業"]} ];
+        const tarotData = majorArcana.map(str => { const [n,e,k] = str.split('|'); return {name: n, emoji: e, keyword: k}; });
+        suits.forEach(suit => { suit.k.forEach((kw, i) => { const ranks = ["一","二","三","四","五","六","七","八","九","十","侍者","騎士","王后","國王"]; tarotData.push({ name: `${suit.s}${ranks[i]}`, emoji: suit.e, keyword: kw }); }); });
+        
+        // --- 🕹️ 3. 核心互動邏輯 ---
+        const slider = document.getElementById('frequency-slider');
+        const coreNum = document.getElementById('core-number');
+        const coreCard = document.getElementById('energy-core');
+        const particleContainer = document.getElementById('particle-container');
         let currentTopic = "";
+        let drawnCount = 0;
+        let selectedCards = [];
+        let isAnimating = false;
+
+        // LIFF 初始化 (替換你的 ID)
+        liff.init({ liffId: "2009490171-yQF5PguK" }).catch(err => console.error(err));
+
+        // 進入塔羅房
         document.querySelectorAll('.topic-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 currentTopic = e.target.dataset.topic;
-                document.getElementById('room-title').innerText = `【${currentTopic}】專屬測算`;
+                document.getElementById('room-title').innerText = `【${currentTopic}】靈能調頻中`;
                 document.getElementById('lobby').classList.add('hidden');
                 document.getElementById('tarot-room').classList.add('active');
             });
         });
 
-        // --- 拱橋邏輯 ---
-        const bridge = document.getElementById('bridge');
-        const wheelWrapper = document.getElementById('wheel-wrapper');
-        const fullDeck = ["愚者", "魔術師", "女祭司", "女皇", "皇帝", "教皇", "戀人", "戰車", "力量", "隱士", "命運之輪", "正義", "倒吊人", "死神", "節制", "惡魔", "高塔", "星星", "月亮", "太陽", "審判", "世界", "權杖一", "權杖二", "權杖三", "權杖四", "權杖五", "權杖六", "權杖七", "權杖八", "權杖九", "權杖十", "權杖侍者", "權杖騎士", "權杖王后", "權杖國王", "聖杯一", "聖杯二", "聖杯三", "聖杯四", "聖杯五", "聖杯六", "聖杯七", "聖杯八", "聖杯九", "聖杯十", "聖杯侍者", "聖杯騎士", "聖杯王后", "聖杯國王", "寶劍一", "寶劍二", "寶劍三", "寶劍四", "寶劍五", "寶劍六", "寶劍七", "寶劍八", "寶劍九", "寶劍十", "寶劍侍者", "寶劍騎士", "寶劍王后", "寶劍國王", "錢幣一", "錢幣二", "錢幣三", "錢幣四", "錢幣五", "錢幣六", "錢幣七", "錢幣八", "錢幣九", "錢幣十", "錢幣侍者", "錢幣騎士", "錢幣王后", "錢幣國王"];
-        const shuffled = fullDeck.sort(() => 0.5 - Math.random());
+        // 數字調頻感應
+        slider.addEventListener('input', (e) => {
+            coreNum.innerText = e.target.value;
+            // 輕微閃爍特效
+            coreNum.style.transform = `scale(${1 + Math.random()*0.1})`;
+            coreNum.style.textShadow = `0 0 ${10+Math.random()*20}px #fff, 0 0 40px var(--gold)`;
+            setTimeout(() => { coreNum.style.transform = 'scale(1)'; }, 50);
+        });
 
-        let drawnCount = 0; let selectedCards = []; let focusedCard = null;
-        let currentRotation = 0; let startX = 0; let isDragging = false; let hasDragged = false;
-
-        const angleStep = 360 / 78;
-        for (let i = 0; i < 78; i++) {
-            const card = document.createElement('div');
-            card.className = 'card';
-            const angle = i * angleStep;
+        // 💥 靈力具現化 (點擊卡片爆炸)
+        coreCard.addEventListener('click', () => {
+            if(isAnimating || drawnCount >= 3) return;
+            const selectedIdx = parseInt(slider.value) - 1;
             
-            // 修正：依照半徑與圓心定位，避免偏移
-            card.style.transform = `rotate(${angle}deg)`;
-            card.dataset.angle = angle;
-            card.innerHTML = `<div class="card-num">${i + 1}</div>`;
+            // 檢查是否重複抽卡
+            if(selectedCards.some(c => c.index === selectedIdx)) {
+                document.getElementById('instruction').innerText = "⚠️ 此號碼之靈力已被提取，請重新調頻";
+                document.getElementById('instruction').style.color = "#FF6B6B";
+                setTimeout(()=> document.getElementById('instruction').style.color = "#aaa", 2000);
+                return;
+            }
 
-            card.addEventListener('click', () => {
-                if (hasDragged || drawnCount >= 3 || card.classList.contains('used')) return;
+            isAnimating = true;
+            const cardData = tarotData[selectedIdx];
+            selectedCards.push({ index: selectedIdx, name: cardData.name });
+            
+            const targetSlot = document.getElementById(`slot-${drawnCount}`);
+            const coreRect = coreCard.getBoundingClientRect();
+            const slotRect = targetSlot.getBoundingClientRect();
 
-                if (focusedCard !== card) {
-                    if (focusedCard) focusedCard.style.transform = `rotate(${focusedCard.dataset.angle}deg)`;
-                    focusedCard = card;
-                    card.style.transform = `rotate(${angle}deg) translateY(-40px) scale(1.15)`;
-                    
-                    currentRotation = -angle;
-                    bridge.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
-                    bridge.style.transform = `rotate(${currentRotation}deg)`;
-                    document.getElementById('instruction').innerHTML = `✨ 鎖定第 <b style='color:var(--gold)'>${i+1}</b> 號命運，再次點擊抽取`;
-                } else {
-                    card.classList.add('used'); card.style.opacity = '0'; card.style.pointerEvents = 'none';
-                    selectedCards.push(shuffled[i]);
-                    
-                    const slot = document.getElementById(`slot-${drawnCount}`);
-                    
-                    // ✨ 3. 觸發閃爍特效與文字掉落
-                    slot.classList.add('impact');
-                    setTimeout(() => { slot.classList.remove('impact'); }, 500);
-                    
-                    slot.style.backgroundImage = "url('https://branddecoderai.com/images/PK_BG2.jpg')";
-                    slot.style.border = "none";
-                    slot.innerHTML += `<div class="front-text drop-in">${shuffled[i]}</div>`;
-                    
-                    drawnCount++;
-                    focusedCard = null;
-                    
-                    if (drawnCount < 3) {
-                        document.getElementById('instruction').innerText = `請滑動尋找第 ${drawnCount+1} 枚印記...`;
-                    } else {
-                        document.getElementById('instruction').innerHTML = "🔮 契合完成，請啟動解碼";
-                        document.getElementById('submitBtn').classList.add('active');
-                        wheelWrapper.style.opacity = '0.3'; wheelWrapper.style.pointerEvents = 'none';
+            // 1. 隱藏核心卡
+            coreCard.style.opacity = '0';
+            coreCard.style.transform = 'scale(0.8)';
+
+            // 2. 粒子爆炸動畫 (Web Animations API)
+            const numParticles = 40;
+            let completedParticles = 0;
+            
+            for(let i=0; i<numParticles; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 4 + 2;
+                p.style.width = `${size}px`; p.style.height = `${size}px`;
+                particleContainer.appendChild(p);
+
+                // 計算起始與終點
+                const startX = coreRect.left + coreRect.width/2;
+                const startY = coreRect.top + coreRect.height/2;
+                const endX = slotRect.left + slotRect.width/2 + (Math.random()-0.5)*20;
+                const endY = slotRect.top + slotRect.height/2 + (Math.random()-0.5)*20;
+                
+                // 爆炸擴散點 (控制點)
+                const cpX = startX + (Math.random()-0.5) * 300;
+                const cpY = startY + (Math.random()-0.5) * 300;
+
+                const duration = 600 + Math.random() * 400; // 慢而細膩
+                
+                const anim = p.animate([
+                    { transform: `translate(${startX}px, ${startY}px) scale(1)`, opacity: 1, backgroundColor: '#fff' },
+                    { transform: `translate(${cpX}px, ${cpY}px) scale(1.5)`, opacity: 0.8, backgroundColor: '#D4AF37', offset: 0.3 },
+                    { transform: `translate(${endX}px, ${endY}px) scale(0)`, opacity: 0 }
+                ], { duration: duration, easing: 'cubic-bezier(0.25, 1, 0.5, 1)' });
+
+                anim.onfinish = () => {
+                    p.remove();
+                    completedParticles++;
+                    if(completedParticles === numParticles) {
+                        // 3. 具現化 (Impact & Simmer)
+                        targetSlot.classList.add('impact');
+                        setTimeout(() => { targetSlot.classList.add('simmer'); }, 600);
+                        
+                        // 填入正面圖與靈魂標籤
+                        targetSlot.style.backgroundImage = "url('https://branddecoderai.com/images/PK_BG2.jpg')";
+                        targetSlot.innerHTML = `
+                            <div class="card-front-content">
+                                <div class="front-emoji">${cardData.emoji}</div>
+                                <div class="front-name">${cardData.name}</div>
+                                <div class="front-keyword">${cardData.keyword}</div>
+                            </div>
+                        `;
+                        
+                        drawnCount++;
+                        
+                        // 4. 重置核心或結束
+                        if(drawnCount < 3) {
+                            setTimeout(() => {
+                                coreCard.style.opacity = '1';
+                                coreCard.style.transform = 'scale(1)';
+                                document.getElementById('instruction').innerText = `請調頻尋找第 ${drawnCount+1} 枚印記...`;
+                                isAnimating = false;
+                            }, 500);
+                        } else {
+                            document.getElementById('tuning-ui').style.opacity = '0';
+                            document.getElementById('submitBtn').classList.add('active');
+                            document.getElementById('room-title').innerText = "🔮 結界已成，請啟動解碼";
+                            isAnimating = false;
+                        }
                     }
-                }
-            });
-            bridge.appendChild(card);
-        }
+                };
+            }
+        });
 
-        const startDrag = (x) => { isDragging = true; hasDragged = false; startX = x; bridge.style.transition = 'none'; };
-        const onDrag = (x) => {
-            if (!isDragging) return;
-            const dx = x - startX; if (Math.abs(dx) > 3) hasDragged = true;
-            currentRotation += dx * 0.15; bridge.style.transform = `rotate(${currentRotation}deg)`; startX = x;
-        };
-        const endDrag = () => { isDragging = false; };
-        wheelWrapper.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientX));
-        wheelWrapper.addEventListener('touchmove', (e) => onDrag(e.touches[0].clientX));
-        wheelWrapper.addEventListener('touchend', endDrag);
-
+        // 送出資料至 LINE
         document.getElementById('submitBtn').addEventListener('click', () => {
-            const cmd = `[系統指令] 塔羅結算: [${currentTopic}] ${selectedCards.join(', ')}`;
+            const cardNames = selectedCards.map(c => c.name).join(', ');
+            const cmd = `[系統指令] 塔羅結算: [${currentTopic}] ${cardNames}`;
             if (liff.isInClient()) {
                 liff.sendMessages([{ type: 'text', text: cmd }]).then(() => liff.closeWindow());
             } else {
-                alert("【測試】成功送出指令：" + cmd);
+                alert("【測試環境】發送指令：\n" + cmd);
             }
         });
     </script>
