@@ -3,123 +3,273 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BrandDecoder 專屬塔羅占卜</title>
-    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <title>命運解碼室 - 塔羅占卜</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
-        :root { --gold: #D4AF37; --bg: #0B0C10; --card-bg: #1F2833; }
-        body { background-color: var(--bg); color: white; margin: 0; font-family: 'Helvetica Neue', sans-serif; overflow: hidden; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding-top: 40px; }
+        /* 🌌 全局黑金神秘視覺 */
+        :root {
+            --bg-color: #0B0C10;
+            --panel-bg: #1F2833;
+            --gold: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.6);
+            --text-main: #FFFFFF;
+            --text-sub: #888888;
+        }
+        body {
+            margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-main);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; overflow-x: hidden;
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
+        }
+
+        /* ==========================================
+           🏛️ 畫面一：前導大廳 (選主題)
+           ========================================== */
+        #lobby {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0B0C10 100%);
+            z-index: 50; transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        #lobby.hidden { opacity: 0; transform: scale(1.1); pointer-events: none; }
         
-        .header { text-align: center; color: var(--gold); letter-spacing: 2px; }
-        .header h2 { margin: 0 0 5px 0; font-size: 20px; }
-        .header p { margin: 0; font-size: 12px; color: #888; }
+        .lobby-title { color: var(--gold); font-size: 28px; font-weight: bold; letter-spacing: 3px; margin-bottom: 40px; text-shadow: 0 0 15px var(--gold-glow); }
+        .topic-btn {
+            background: rgba(31, 40, 51, 0.8); border: 1px solid var(--gold); color: var(--text-main);
+            width: 80%; max-width: 300px; padding: 20px; margin: 10px 0; border-radius: 12px;
+            font-size: 18px; font-weight: bold; letter-spacing: 2px; cursor: pointer;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5); transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .topic-btn:hover, .topic-btn:active { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold-glow); transform: translateY(-3px); }
 
-        .slots { display: flex; gap: 15px; z-index: 10; margin-top: 20px; }
-        .slot { width: 85px; height: 140px; border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 8px; position: relative; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); }
-        .slot::after { content: attr(data-label); position: absolute; bottom: -25px; font-size: 12px; color: var(--gold); }
+        /* ==========================================
+           🃏 畫面二：神聖牌陣 (抽牌區)
+           ========================================== */
+        #tarot-room {
+            width: 100%; display: flex; flex-direction: column; align-items: center;
+            opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease 0.3s, transform 0.8s ease 0.3s;
+            pointer-events: none; position: absolute; top: 0; padding-top: 20px;
+        }
+        #tarot-room.active { opacity: 1; transform: translateY(0); pointer-events: auto; position: relative; }
 
-        .deck-area { position: relative; width: 100%; height: 35vh; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 20px; }
-        .card { position: absolute; width: 70px; height: 115px; background: linear-gradient(135deg, #2C3E50, #000000); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 6px; cursor: pointer; transform-origin: center 250px; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.6); }
-        .card::after { content: '✨'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.2; font-size: 24px; }
-        
-        /* 抽中狀態 (翻牌效果) */
-        .card.selected { position: fixed; transform: rotateY(180deg) !important; width: 85px; height: 140px; background: #fff; border: 2px solid var(--gold); z-index: 100; cursor: default; }
-        .card.selected .card-face { display: flex; transform: rotateY(180deg); }
-        .card-face { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #000; font-weight: bold; font-size: 14px; text-align: center; padding: 5px; }
+        .header { text-align: center; width: 100%; }
+        .title { color: var(--gold); font-size: 24px; font-weight: bold; letter-spacing: 2px; margin-bottom: 5px; text-shadow: 0 0 10px var(--gold-glow); }
+        .instruction { color: var(--text-main); font-size: 15px; height: 24px; transition: 0.3s; }
 
-        .action-btn { position: absolute; bottom: 80px; background: linear-gradient(90deg, #D4AF37, #F3E5AB); color: #000; border: none; padding: 15px 40px; font-size: 16px; font-weight: bold; border-radius: 30px; cursor: pointer; display: none; z-index: 200; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+        /* 已選牌陣區 */
+        .slots-container { display: flex; justify-content: center; gap: 15px; margin: 30px 0; width: 100%; }
+        .slot { width: 80px; height: 120px; border: 2px dashed var(--text-sub); border-radius: 8px; position: relative; transition: 0.5s; }
+        .slot.filled { border-style: solid; border-color: var(--gold); background: linear-gradient(135deg, #2a2a2a, #111); box-shadow: 0 0 15px var(--gold-glow); }
+        .slot-label { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); font-size: 12px; color: var(--text-sub); width: 100%; text-align: center; }
+
+        /* 橫向無限畫廊 */
+        .deck-wrapper { width: 100%; padding: 20px 0; overflow-x: auto; scroll-snap-type: x mandatory; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+        .deck-wrapper::-webkit-scrollbar { display: none; }
+        .deck { display: inline-flex; padding: 20px 50%; gap: -20px; }
+        .card {
+            min-width: 90px; height: 140px; margin: 0 -15px; background: linear-gradient(135deg, #1a1a1a, #333);
+            border: 2px solid #555; border-radius: 8px; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative; scroll-snap-align: center; box-shadow: -5px 0 10px rgba(0,0,0,0.5);
+            background-image: radial-gradient(var(--gold) 1px, transparent 1px); background-size: 15px 15px;
+        }
+        .card.focused { transform: translateY(-25px) scale(1.1); z-index: 10; border-color: var(--gold); box-shadow: 0 0 20px var(--gold-glow); }
+        .card.drawn { opacity: 0; transform: translateY(-100px) scale(0.5); pointer-events: none; margin: 0 -45px; }
+
+        /* 解開命運按鈕 */
+        .action-btn {
+            background: linear-gradient(45deg, #b8860b, #ffd700); color: #000; border: none; padding: 15px 40px;
+            font-size: 18px; font-weight: bold; border-radius: 30px; margin-top: 20px; cursor: pointer;
+            opacity: 0; pointer-events: none; transition: 0.5s; box-shadow: 0 0 15px var(--gold-glow);
+        }
+        .action-btn.visible { opacity: 1; pointer-events: auto; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 10px var(--gold-glow); } 50% { box-shadow: 0 0 25px var(--gold-glow); } 100% { box-shadow: 0 0 10px var(--gold-glow); } }
+
+        /* ==========================================
+           🔯 畫面三：六芒星魔法陣轉場
+           ========================================== */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(11, 12, 16, 0.95);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 999; opacity: 0; pointer-events: none; transition: 0.5s;
+        }
+        .overlay.active { opacity: 1; pointer-events: auto; }
+        .hexagram { width: 100px; height: 100px; position: relative; animation: spin 4s linear infinite; filter: drop-shadow(0 0 10px var(--gold)); margin-bottom: 30px; }
+        .hexagram svg { width: 100%; height: 100%; stroke: var(--gold); stroke-width: 2; fill: transparent; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .overlay-text { color: var(--gold); font-size: 16px; letter-spacing: 1px; animation: blink 1.5s infinite; text-align: center; line-height: 1.5; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h2>BrandDecoder 塔羅占卜</h2>
-        <p>請憑直覺，依序抽出三張牌</p>
+    <div id="lobby">
+        <div class="lobby-title">命運解碼室</div>
+        <div style="color: var(--text-sub); margin-bottom: 20px; font-size: 14px;">請選擇您想尋求指引的領域</div>
+        <button class="topic-btn" data-topic="感情">💖 感情與糾葛</button>
+        <button class="topic-btn" data-topic="事業">💼 事業與財富</button>
+        <button class="topic-btn" data-topic="綜合">🌟 綜合與指引</button>
     </div>
 
-    <div class="slots">
-        <div class="slot" id="slot-0" data-label="過去/核心"></div>
-        <div class="slot" id="slot-1" data-label="現在/挑戰"></div>
-        <div class="slot" id="slot-2" data-label="未來/建議"></div>
+    <div id="tarot-room">
+        <div class="header">
+            <div class="title" id="room-title">專屬測算</div>
+            <div class="instruction" id="instruction">請在心中默念問題，並滑動選牌</div>
+        </div>
+
+        <div class="slots-container">
+            <div class="slot" id="slot-0"><div class="slot-label">過去</div></div>
+            <div class="slot" id="slot-1"><div class="slot-label">現在</div></div>
+            <div class="slot" id="slot-2"><div class="slot-label">未來</div></div>
+        </div>
+
+        <div class="deck-wrapper">
+            <div class="deck" id="deck"></div>
+        </div>
+
+        <button class="action-btn" id="submitBtn">🔮 解開命運</button>
     </div>
 
-    <button id="sendBtn" class="action-btn" onclick="sendResultToLine()">確認牌陣，解析命運</button>
+    <div class="overlay" id="loadingOverlay">
+        <div class="hexagram">
+            <svg viewBox="0 0 100 100">
+                <polygon points="50,5 90,75 10,75" />
+                <polygon points="50,95 90,25 10,25" />
+            </svg>
+        </div>
+        <div class="overlay-text">正在連結宇宙頻率<br>請稍候...</div>
+    </div>
 
-    <div class="deck-area" id="deckFan"></div>
-
-<script>
-    // 1. 初始化 LIFF
-    const LIFF_ID = "2009490171-yQF5PguK"; // ⚠️ 請換成你的 LIFF ID
-    liff.init({ liffId: LIFF_ID }).then(() => {
-        if (!liff.isLoggedIn()) liff.login();
-    }).catch(err => console.error("LIFF Init failed", err));
-
-    const majors = ["愚者", "魔術師", "女祭司", "女皇", "皇帝", "教皇", "戀人", "戰車", "力量", "隱士", "命運之輪", "正義", "倒吊人", "死神", "節制", "惡魔", "高塔", "星星", "月亮", "太陽", "審判", "世界"];
-    const deckFan = document.getElementById('deckFan');
-    const slots = [document.getElementById('slot-0'), document.getElementById('slot-1'), document.getElementById('slot-2')];
-    let selectedCards = [];
-
-    // 生成扇形牌堆 (簡化為 22 張大牌展示流暢度)
-    const shuffled = [...majors].sort(() => Math.random() - 0.5);
-    
-    shuffled.forEach((name, i) => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        const angle = (i - 11) * 4; // 扇形角度
-        card.style.transform = `rotate(${angle}deg)`;
-        card.style.zIndex = i;
+    <script>
+        // ==========================================
+        // 🚀 1. 初始化 LIFF SDK
+        // ==========================================
+        const LIFF_ID = "2009490171-yQF5PguK"; // ✅ 已換上你的專屬 ID
         
-        const face = document.createElement('div');
-        face.className = 'card-face';
-        face.innerHTML = `<span>🃏</span><br>${name}`;
-        card.appendChild(face);
-        
-        card.onclick = () => selectCard(card, name);
-        deckFan.appendChild(card);
-    });
-
-    function selectCard(cardEl, name) {
-        if (selectedCards.length >= 3 || cardEl.classList.contains('selected')) return;
-
-        const currentSlot = slots[selectedCards.length];
-        const rect = currentSlot.getBoundingClientRect();
-        
-        selectedCards.push(name);
-        
-        cardEl.classList.add('selected');
-        // 計算動畫飛往槽位的位置
-        cardEl.style.left = `${rect.left}px`;
-        cardEl.style.top = `${rect.top}px`;
-        
-        if (selectedCards.length === 3) {
-            document.getElementById('sendBtn').style.display = 'block';
-            deckFan.style.pointerEvents = 'none'; // 鎖定其他牌
+        async function initializeLiff() {
+            try {
+                await liff.init({ liffId: LIFF_ID });
+                if (!liff.isLoggedIn() && !liff.isInClient()) {
+                    liff.login(); // 若在外部瀏覽器，引導登入 LINE
+                }
+            } catch (err) {
+                console.error('LIFF 初始化失敗:', err);
+            }
         }
-    }
+        initializeLiff();
 
-    // 2. 傳送至 LINE 並自動關閉 (取代原本的複製貼上)
-    async function sendResultToLine() {
-        if (!liff.isInClient()) {
-            alert("請在 LINE 聊天室中開啟此功能喔！\n(抽中：" + selectedCards.join(", ") + ")");
-            return;
+        // ==========================================
+        // 🎭 2. 互動邏輯：大廳選題 ➔ 進入牌陣
+        // ==========================================
+        let currentTopic = "綜合";
+        const lobby = document.getElementById('lobby');
+        const tarotRoom = document.getElementById('tarot-room');
+        const roomTitle = document.getElementById('room-title');
+        const instruction = document.getElementById('instruction');
+
+        document.querySelectorAll('.topic-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                currentTopic = e.target.dataset.topic; // 取得按鈕上的主題
+                
+                // 設定塔羅牌室的文字
+                roomTitle.innerText = `【${currentTopic}】專屬測算`;
+                instruction.innerHTML = `請在心中默念您的<b>${currentTopic}</b>問題，並滑動選牌`;
+                
+                // 觸發滑順轉場動畫
+                lobby.classList.add('hidden');
+                tarotRoom.classList.add('active');
+            });
+        });
+
+        // ==========================================
+        // 🃏 3. 抽牌核心邏輯 (兩階段沉浸式)
+        // ==========================================
+        const deck = document.getElementById('deck');
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+
+        let drawnCount = 0;
+        let focusedCard = null;
+        let selectedCards = []; 
+
+        // 22 張大阿爾克那，並進行隨機洗牌
+        const majorArcana = ["愚者", "魔術師", "女祭司", "女皇", "皇帝", "教皇", "戀人", "戰車", "力量", "隱士", "命運之輪", "正義", "倒吊人", "死神", "節制", "惡魔", "高塔", "星星", "月亮", "太陽", "審判", "世界"];
+        const shuffledDeck = majorArcana.sort(() => 0.5 - Math.random());
+
+        for (let i = 0; i < 22; i++) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.dataset.cardName = shuffledDeck[i]; // 偷藏真實牌名
+            
+            card.addEventListener('click', () => {
+                if (drawnCount >= 3 || card.classList.contains('drawn')) return;
+
+                // 階段一：感應發光
+                if (focusedCard !== card) {
+                    if (focusedCard) focusedCard.classList.remove('focused');
+                    card.classList.add('focused');
+                    focusedCard = card;
+                    instruction.innerHTML = "✨ <b>感受到能量了嗎？再次點擊確認</b>";
+                    instruction.style.color = "#D4AF37";
+                    card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                } 
+                // 階段二：確認抽取飛出
+                else {
+                    card.classList.remove('focused');
+                    card.classList.add('drawn');
+                    focusedCard = null;
+
+                    selectedCards.push(card.dataset.cardName); // 紀錄牌名
+
+                    const slot = document.getElementById(`slot-${drawnCount}`);
+                    slot.classList.add('filled');
+                    slot.innerHTML += '<div style="width: 100%; height: 100%; background-image: radial-gradient(#D4AF37 1px, transparent 1px); background-size: 10px 10px; border-radius: 6px;"></div>';
+
+                    drawnCount++;
+
+                    if (drawnCount < 3) {
+                        instruction.innerHTML = `請繼續抽取第 ${drawnCount + 1} 張牌...`;
+                        instruction.style.color = "#FFFFFF";
+                    } else {
+                        instruction.innerHTML = "🎉 牌陣已確立！請點擊下方按鈕解開命運";
+                        submitBtn.classList.add('visible');
+                        document.querySelector('.deck-wrapper').style.opacity = '0.3';
+                        document.querySelector('.deck-wrapper').style.pointerEvents = 'none';
+                    }
+                }
+            });
+            deck.appendChild(card);
         }
 
-        const btn = document.getElementById('sendBtn');
-        btn.innerText = "正在傳送給命理師...";
-        btn.disabled = true;
+        // ==========================================
+        // 🔯 4. 送出指令並關閉網頁
+        // ==========================================
+        submitBtn.addEventListener('click', () => {
+            // 啟動六芒星轉場
+            loadingOverlay.classList.add('active');
+            document.querySelector('.overlay-text').innerHTML = `正在為您解碼【${currentTopic}】牌陣<br>請返回聊天室接收解析...`;
+            
+            // 組裝準備送給後端 Cloud Run 大腦的隱藏指令
+            const secretCommand = `[系統指令] 塔羅結算: [${currentTopic}] ${selectedCards.join(', ')}`;
 
-        // 組合特定的系統指令格式，讓你的 Cloud Run 攔截
-        const messageText = `[系統指令] 塔羅結算: ${selectedCards.join(", ")}`;
-
-        try {
-            await liff.sendMessages([{ type: "text", text: messageText }]);
-            // 發送成功後，自動關閉網頁
-            liff.closeWindow(); 
-        } catch (error) {
-            alert("發送失敗，請重試：" + error);
-            btn.innerText = "確認牌陣，解析命運";
-            btn.disabled = false;
-        }
-    }
-</script>
+            // 延遲 2 秒，確保使用者看夠了帥氣的魔法陣動畫
+            setTimeout(() => {
+                if (liff.isInClient()) {
+                    liff.sendMessages([{
+                        type: 'text',
+                        text: secretCommand
+                    }]).then(() => {
+                        liff.closeWindow(); // 傳送完畢，自動關閉視窗
+                    }).catch((err) => {
+                        console.error('傳送訊息失敗', err);
+                        alert("傳送失敗，請確認網路連線。");
+                        loadingOverlay.classList.remove('active');
+                    });
+                } else {
+                    // 電腦版除錯模式
+                    alert(`【開發者測試】\n系統即將送出以下指令給 LINE：\n\n${secretCommand}\n\n(在真實手機 LINE 環境下，此時網頁會自動關閉)`);
+                    loadingOverlay.classList.remove('active');
+                }
+            }, 2000);
+        });
+    </script>
 </body>
 </html>
