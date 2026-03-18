@@ -1,1 +1,369 @@
 
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>靈魂儀表板 | 命運解碼室</title>
+    
+    <script src="../env.js"></script> 
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <style>
+        :root {
+            --gold: #D4AF37; --gold-light: #F9E498; --bg-deep: #050508;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(212, 175, 55, 0.2);
+        }
+
+        * { box-sizing: border-box; font-family: 'PingFang TC', 'Noto Serif TC', serif; }
+
+        body {
+            margin: 0; padding: 0; background-color: var(--bg-deep); color: #fff;
+            min-height: 100vh; overflow-x: hidden;
+        }
+
+        /* 🌌 背景特效 */
+        #bg-canvas { position: fixed; inset: 0; z-index: -10; pointer-events: none; }
+        .vignette { position: fixed; inset: 0; background: radial-gradient(circle at center, transparent 30%, #000 120%); z-index: -9; pointer-events: none; }
+
+        /* 📱 主容器 */
+        .container {
+            max-width: 500px; margin: 0 auto; padding: 20px;
+            padding-bottom: 80px; /* 留出底部空間 */
+        }
+
+        /* 🏷️ 頂部導航 */
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .header h1 { margin: 0; font-size: 20px; color: var(--gold); letter-spacing: 2px; text-shadow: 0 0 10px rgba(212,175,55,0.5); }
+        .back-btn { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 5px 15px; border-radius: 20px; font-size: 12px; cursor: pointer; }
+
+        /* 🪞 玻璃卡片共用樣式 */
+        .glass-card {
+            background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border); border-radius: 15px; padding: 20px; margin-bottom: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        /* 👤 個人名片區 */
+        .profile-section { display: flex; align-items: center; gap: 15px; }
+        .avatar { width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; box-shadow: 0 0 15px rgba(212,175,55,0.4); }
+        .profile-info h2 { margin: 0 0 5px 0; font-size: 18px; letter-spacing: 1px; }
+        .soul-rank { display: inline-block; background: rgba(212,175,55,0.2); color: var(--gold-light); padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+        .join-date { font-size: 11px; color: #888; margin-top: 5px; }
+
+        /* ⚡ 能量核心區 */
+        .energy-section { text-align: center; position: relative; overflow: hidden; }
+        .energy-section::before { content: ''; position: absolute; top: -50px; left: 50%; transform: translateX(-50%); width: 150px; height: 150px; background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 70%); z-index: -1; }
+        .energy-title { font-size: 12px; color: #aaa; letter-spacing: 2px; margin-bottom: 10px; }
+        .energy-points { font-size: 48px; font-weight: bold; color: var(--gold-light); text-shadow: 0 0 20px var(--gold); margin: 0; line-height: 1; }
+        .recharge-btn {
+            background: linear-gradient(135deg, var(--gold), #B8860B); color: #000; border: none;
+            padding: 10px 30px; border-radius: 25px; font-weight: bold; font-size: 14px; letter-spacing: 1px;
+            margin-top: 20px; cursor: pointer; box-shadow: 0 0 15px rgba(212,175,55,0.4); transition: 0.3s;
+        }
+        .recharge-btn:active { transform: scale(0.95); }
+
+        /* 📈 運勢圖表區 */
+        .chart-section h3 { margin: 0 0 15px 0; font-size: 14px; color: var(--gold); letter-spacing: 1px; }
+        .chart-container { position: relative; height: 200px; width: 100%; }
+
+        /* 📜 歷史紀錄區 */
+        .history-section h3 { margin: 0 0 15px 0; font-size: 14px; color: var(--gold); letter-spacing: 1px; }
+        .history-list { display: flex; flex-direction: column; gap: 10px; }
+        .history-item {
+            background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+            padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; transition: 0.2s;
+        }
+        .history-item:active { background: rgba(212,175,55,0.1); }
+        .history-left { display: flex; flex-direction: column; gap: 4px; }
+        .history-type { font-size: 12px; color: var(--gold-light); font-weight: bold; }
+        .history-topic { font-size: 14px; color: #ddd; }
+        .history-date { font-size: 10px; color: #666; }
+        .history-points { font-size: 16px; font-weight: bold; }
+        .points-plus { color: #4CAF50; }
+        .points-minus { color: #FF6B6B; }
+
+        /* 彈出視窗 (Modal) */
+        #detail-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            z-index: 999; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: 0.3s; padding: 20px;
+        }
+        #detail-modal.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: #111; border: 1px solid var(--gold); border-radius: 15px; padding: 25px;
+            width: 100%; max-width: 400px; max-height: 80vh; overflow-y: auto; color: #eee;
+        }
+        .modal-close {
+            background: none; border: 1px solid #555; color: #aaa; padding: 8px 0; width: 100%;
+            border-radius: 8px; margin-top: 20px; cursor: pointer; font-size: 14px;
+        }
+
+        /* ⏳ Loading 畫面 */
+        #loader {
+            position: fixed; inset: 0; z-index: 9999; background: var(--bg-deep);
+            display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.5s;
+        }
+        .spinner { width: 50px; height: 50px; border: 3px solid rgba(212,175,55,0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+    <div class="vignette"></div>
+
+    <div id="loader">
+        <div class="spinner"></div>
+        <p style="color: var(--gold); letter-spacing: 2px; margin-top: 20px; font-size: 14px;">同步星盤數據中...</p>
+    </div>
+
+    <div class="container" style="display: none;" id="main-content">
+        
+        <div class="header">
+            <h1>靈魂儀表板</h1>
+            <button class="back-btn" onclick="window.location.href='../tarot/flip_card.html'">返回結界</button>
+        </div>
+
+        <div class="glass-card profile-section">
+            <img src="" alt="Avatar" class="avatar" id="ui-avatar">
+            <div class="profile-info">
+                <h2 id="ui-name">讀取中...</h2>
+                <div class="soul-rank" id="ui-rank">靈能感應中</div>
+                <div class="join-date" id="ui-date">入室時間：--</div>
+            </div>
+        </div>
+
+        <div class="glass-card energy-section">
+            <div class="energy-title">當前靈力儲備 (Points)</div>
+            <div class="energy-points" id="ui-points">--</div>
+            <button class="recharge-btn" onclick="alert('🔮 靈能市集即將開放，敬請期待！')">補充靈力</button>
+        </div>
+
+        <div class="glass-card chart-section">
+            <h3>📈 近期能量波動</h3>
+            <div class="chart-container">
+                <canvas id="energyChart"></canvas>
+            </div>
+        </div>
+
+        <div class="glass-card history-section">
+            <h3>📜 命運回顧</h3>
+            <div class="history-list" id="ui-history-list">
+                </div>
+        </div>
+
+    </div>
+
+    <div id="detail-modal">
+        <div class="modal-content">
+            <h3 style="color: var(--gold); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px;" id="modal-title">報告標題</h3>
+            <div id="modal-body" style="font-size: 14px; line-height: 1.6; color: #ccc; margin-top: 15px; white-space: pre-wrap;">
+                詳細內容...
+            </div>
+            <button class="modal-close" onclick="closeModal()">關閉回顧</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 🌌 背景特效 (輕量版) ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+        const stars = Array.from({length: 100}, () => ({x: Math.random()*width, y: Math.random()*height, r: Math.random()*1.5, a: Math.random()}));
+        function animate() {
+            ctx.clearRect(0,0,width,height);
+            ctx.fillStyle='#fff';
+            stars.forEach(s => { s.a += (Math.random()-0.5)*0.05; if(s.a<0.1)s.a=0.1; if(s.a>1)s.a=1; ctx.globalAlpha=s.a; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        // --- ⚙️ 核心數據邏輯 ---
+        let rawHistoryData = [];
+
+        async function initDashboard() {
+            try {
+                // 1. 初始化 LIFF
+                await liff.init({ liffId: ENV.LIFF_ID });
+                
+                if (!liff.isLoggedIn()) {
+                    liff.login({ redirectUri: window.location.href });
+                    return;
+                }
+
+                const accessToken = liff.getAccessToken();
+                if(!accessToken) throw new Error("無法取得安全通行證");
+
+                // 2. 同步發送 API 請求 (名片 + 歷史紀錄)
+                const headers = { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' };
+                
+                const [profileRes, historyRes] = await Promise.all([
+                    fetch(`${ENV.API_BASE}/api/user/profile`, { headers }),
+                    fetch(`${ENV.API_BASE}/api/user/history?limit=10`, { headers })
+                ]);
+
+                if (!profileRes.ok || !historyRes.ok) throw new Error("伺服器結界異常，請稍後再試");
+
+                const profileData = await profileRes.json();
+                const historyData = await historyRes.json();
+
+                if(profileData.success) renderProfile(profileData.data);
+                if(historyData.success) {
+                    rawHistoryData = historyData.data;
+                    renderHistory(historyData.data);
+                    renderChart(profileData.data.points, historyData.data);
+                }
+
+                // 3. 隱藏 Loading，顯示主畫面
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                }, 500);
+
+            } catch (error) {
+                console.error("初始化失敗:", error);
+                alert("🚨 " + error.message);
+            }
+        }
+
+        // 🎨 渲染個人名片
+        function renderProfile(data) {
+            document.getElementById('ui-avatar').src = data.pictureUrl || "https://static.line-scdn.net/liff/edge/2/images/logo.svg";
+            document.getElementById('ui-name').innerText = data.displayName || "神祕旅人";
+            document.getElementById('ui-points').innerText = data.points;
+            
+            // 計算靈魂位階
+            let rank = "靈能學徒";
+            if (data.points >= 500) rank = "高階祭司";
+            else if (data.points >= 200) rank = "覺醒者";
+            else if (data.points < 20) rank = "靈能枯竭";
+            document.getElementById('ui-rank').innerText = rank;
+
+            // 格式化日期
+            if (data.createdAt) {
+                const d = new Date(data.createdAt);
+                document.getElementById('ui-date').innerText = `入室時間：${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`;
+            }
+        }
+
+        // 📜 渲染歷史列表
+        function renderHistory(historyArray) {
+            const list = document.getElementById('ui-history-list');
+            list.innerHTML = "";
+
+            if (historyArray.length === 0) {
+                list.innerHTML = `<div style="text-align:center; color:#666; padding: 20px 0; font-size:12px;">星盤尚無軌跡，快去進行第一次占卜吧。</div>`;
+                return;
+            }
+
+            historyArray.forEach((item, index) => {
+                const isTarot = item.type === "tarot";
+                const typeText = isTarot ? "🔮 塔羅解碼" : "✨ 每日一抽";
+                const topicText = isTarot ? `領域：${item.topic}` : `指引：${item.result_card}`;
+                const pointsClass = item.points_change > 0 ? "points-plus" : "points-minus";
+                const pointsText = item.points_change > 0 ? `+${item.points_change}` : item.points_change;
+                
+                const dateObj = new Date(item.timestamp);
+                const dateStr = `${dateObj.getMonth()+1}/${dateObj.getDate()} ${String(dateObj.getHours()).padStart(2,'0')}:${String(dateObj.getMinutes()).padStart(2,'0')}`;
+
+                const html = `
+                    <div class="history-item" onclick="showModal(${index})">
+                        <div class="history-left">
+                            <div class="history-type">${typeText}</div>
+                            <div class="history-topic">${topicText}</div>
+                            <div class="history-date">${dateStr}</div>
+                        </div>
+                        <div class="history-points ${pointsClass}">${pointsText}</div>
+                    </div>
+                `;
+                list.insertAdjacentHTML('beforeend', html);
+            });
+        }
+
+        // 📈 渲染能量波動圖 (Chart.js)
+        function renderChart(currentPoints, historyArray) {
+            const ctx = document.getElementById('energyChart').getContext('2d');
+            
+            // 演算法：從現在的點數，依據歷史的增減往回推算，產生數據點
+            let pointsData = [currentPoints];
+            let labels = ["現在"];
+            
+            let tempPoints = currentPoints;
+            // historyArray 是從最新到最舊，所以我們依序減去變動值就能推算過去
+            for(let i = 0; i < Math.min(historyArray.length, 7); i++) {
+                const item = historyArray[i];
+                tempPoints = tempPoints - item.points_change;
+                pointsData.unshift(tempPoints); // 加到陣列開頭
+                
+                const d = new Date(item.timestamp);
+                labels.unshift(`${d.getMonth()+1}/${d.getDate()}`);
+            }
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '靈力值',
+                        data: pointsData,
+                        borderColor: '#D4AF37',
+                        backgroundColor: 'rgba(212,175,55,0.1)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#F9E498',
+                        pointBorderColor: '#000',
+                        pointRadius: 4,
+                        fill: true,
+                        tension: 0.4 // 讓曲線平滑
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { 
+                            beginAtZero: false, 
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { color: '#888' }
+                        },
+                        x: { 
+                            grid: { display: false },
+                            ticks: { color: '#888', font: {size: 10} }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 🪟 Modal 控制
+        function showModal(index) {
+            const item = rawHistoryData[index];
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+
+            if (item.type === 'tarot') {
+                title.innerText = `🔮 塔羅解碼：${item.topic}`;
+                body.innerHTML = `<b>牌陣：</b>${item.cards.join('、')}<br><br>${item.aiText || "（資料同步中...）"}`;
+            } else {
+                title.innerText = `✨ 每日一抽：${item.result_card}`;
+                body.innerText = item.aiText || "（資料同步中...）";
+            }
+
+            document.getElementById('detail-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('detail-modal').classList.remove('active');
+        }
+
+        // 🚀 啟動儀表板
+        document.addEventListener('DOMContentLoaded', initDashboard);
+
+    </script>
+</body>
+</html>
