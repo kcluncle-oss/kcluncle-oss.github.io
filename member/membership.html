@@ -187,8 +187,8 @@
 
         async function initDashboard() {
             try {
-                // 1. 初始化 LIFF
-                await liff.init({ liffId: ENV.LIFF_ID });
+                // 使用 ENV 變數，整齊又專業
+                await liff.init({ liffId: ENV.MEMBER_LIFF_ID });
                 
                 if (!liff.isLoggedIn()) {
                     liff.login({ redirectUri: window.location.href });
