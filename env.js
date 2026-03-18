@@ -12,7 +12,7 @@ const ENV = {
     
     // 🔮 當前功能設定
     TYPE: "tarot",
-    VERSION: "v4.3",
+    VERSION: "v4.4",
     
     // 🖼️ 圖片資源路徑 (建議用絕對路徑避免目錄出錯)
     IMG_BACK: "https://branddecoderai.com/images/PK_BG.jpg",
