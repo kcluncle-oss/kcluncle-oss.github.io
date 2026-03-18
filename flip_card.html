@@ -467,25 +467,30 @@
             const loader = document.getElementById('ritual-loader');
             loader.classList.add('active');
 
-            // 抓取已登入用戶 ID
-            let userId = "TEST_USER_ID"; // 測試預設值
+            // 🌟 1. 抓取已登入用戶 ID 與「門禁金鑰 (Access Token)」
+            let userId = "TEST_USER_ID"; 
+            let accessToken = ""; // 新增變數來裝 Token
+
             if (liff.isInClient() || liff.isLoggedIn()) {
                 try {
                     const profile = await liff.getProfile();
                     userId = profile.userId;
-                } catch (e) { console.warn("無法取得 Profile", e); }
+                    accessToken = liff.getAccessToken(); // 🔑 關鍵：向 LINE 索取當下有效的通行證
+                } catch (e) { console.warn("無法取得 Profile 或 Token", e); }
             }
 
             const cardNames = selectedCards.map(c => c.name);
 
-            // 🚨🚨🚨 【重要設定】已經幫你換上正確的 GCP 網址與 /ticket 路徑 🚨🚨🚨
             const API_URL = "https://bastro-bot-217800246535.asia-east1.run.app/api/tarot/ticket"; 
 
             try {
-                // 呼叫 API 領取「票根」
+                // 🌟 2. 呼叫 API 領取「票根」，並在 Headers 夾帶通行證
                 const response = await fetch(API_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}` // 🛡️ 關鍵突破：把通行證遞給後端門神！
+                    },
                     body: JSON.stringify({
                         userId: userId,
                         topic: currentTopic,
