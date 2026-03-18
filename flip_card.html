@@ -278,8 +278,50 @@
         let isAnimating = false;
         let isSubmitting = false; // 防連點機制
 
-        // LIFF 初始化 (替換你的 ID)
-        liff.init({ liffId: "2009490171-yQF5PguK" }).catch(err => console.error(err));
+        // ==========================================
+        // 🚀 初始化 LIFF 與 門禁防護系統
+        // ==========================================
+        liff.init({ liffId: "你的LIFF_ID" }).then(async () => {
+            
+            // 🛡️ 門禁策略：判斷是否在 LINE App 的內部瀏覽器中
+            if (!liff.isInClient()) {
+                // 🚫 如果在外部瀏覽器 (Chrome, Safari, 電腦版) 打開，直接用美觀的提示替換整個畫面
+                document.body.innerHTML = `
+                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; background-color: #0A0B10; color: #D4AF37; text-align: center; padding: 20px; font-family: 'Noto Serif TC', serif, sans-serif;">
+                        <div style="font-size: 60px; margin-bottom: 20px; animation: float 3s ease-in-out infinite;">🔮</div>
+                        <h2 style="margin-bottom: 15px; letter-spacing: 2px;">結界能量不穩</h2>
+                        <p style="color: #E0E0E0; line-height: 1.8; font-size: 16px;">
+                            為了維持靈能結界的純粹與穩定，<br>
+                            請關閉此網頁，並回到 <b>LINE 官方帳號</b> 內<br>
+                            點擊圖文選單重新開啟此空間。
+                        </p>
+                    </div>
+                `;
+                return; // ⛔ 中斷後續所有塔羅牌的渲染與程式碼執行
+            }
+
+            // 🟢 如果乖乖在 LINE 裡面打開，就正常執行
+            if (liff.isLoggedIn()) {
+                const profile = await liff.getProfile();
+                
+                // 🚀 數據漏斗埋點：紀錄用戶進入頁面 (Stage 1: Open LIFF)
+                fetch("https://bastro-bot-217800246535.asia-east1.run.app/api/log/stage", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        userId: profile.userId, 
+                        stage: "Stage 1: Open LIFF",
+                        type: "tarot"
+                    })
+                }).catch(e => console.log("埋點發送忽略:", e));
+                
+            } else {
+                // 預防萬一：在 LINE 內卻沒登入的極罕見情況
+                liff.login(); 
+            }
+        }).catch((err) => {
+            console.error("LIFF 初始化失敗", err);
+        });
 
         // 進入塔羅房
         document.querySelectorAll('.topic-btn').forEach(btn => {
