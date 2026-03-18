@@ -27,7 +27,6 @@
         #lobby {
             position: fixed; inset: 0; display: flex; flex-direction: column; 
             justify-content: center; align-items: center; z-index: 50; 
-            /* 降低透明度與模糊度，讓底層銀河完全透視 */
             background: rgba(5, 5, 8, 0.2); 
             backdrop-filter: blur(2px);
             transition: opacity 0.8s ease, transform 0.8s ease;
@@ -69,7 +68,7 @@
         .slot.impact { animation: impact-flash 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; border-style: solid; border-width: 2px; }
         .slot.simmer { animation: persistent-simmer 3s infinite ease-in-out; border-style: solid; border-width: 2px; border-color: var(--gold);}
 
-        /* 卡片正面文字樣式 (Emoji + 名稱 + 關鍵字) */
+        /* 卡片正面文字樣式 */
         .card-front-content {
             position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
             color: #5C4033; text-shadow: 0 0 5px rgba(255,255,255,0.9); padding: 5px; text-align: center;
@@ -90,7 +89,7 @@
             display: flex; justify-content: center; align-items: center; z-index: 10;
         }
 
-        /* 🃏 洗牌疊影特效 (核心) */
+        /* 🃏 洗牌疊影特效 */
         #energy-core::before, #energy-core::after {
             content: ''; position: absolute; inset: 0;
             background-image: url('https://branddecoderai.com/images/PK_BG.jpg');
@@ -100,47 +99,30 @@
             opacity: 0; transform: scale(0.95);
         }
 
-        /* 滑動時的洗牌狀態：疊影彈出與高頻震動 */
         #energy-core.shuffling {
             animation: card-jitter 0.08s infinite alternate;
             filter: brightness(1.2) contrast(1.1);
             box-shadow: 0 0 40px rgba(212,175,55,0.8), 0 0 80px rgba(255,255,255,0.3);
         }
-        #energy-core.shuffling::before {
-            opacity: 0.7; transform: translateX(-20px) scale(0.92) rotate(-5deg);
-        }
-        #energy-core.shuffling::after {
-            opacity: 0.7; transform: translateX(20px) scale(0.92) rotate(5deg);
-        }
+        #energy-core.shuffling::before { opacity: 0.7; transform: translateX(-20px) scale(0.92) rotate(-5deg); }
+        #energy-core.shuffling::after { opacity: 0.7; transform: translateX(20px) scale(0.92) rotate(5deg); }
 
-        @keyframes card-jitter {
-            0% { transform: translateY(-3px); }
-            100% { transform: translateY(3px); }
-        }
-
-        /* 待命脈動 */
+        @keyframes card-jitter { 0% { transform: translateY(-3px); } 100% { transform: translateY(3px); } }
         @keyframes core-pulse { 0%, 100% { box-shadow: 0 0 30px rgba(212,175,55,0.3); border-color: rgba(212,175,55,0.5); } 50% { box-shadow: 0 0 50px rgba(212,175,55,0.7); border-color: var(--gold-light); } }
+        
         #energy-core.pulse { animation: core-pulse 3s infinite; }
         #energy-core:active { transform: scale(0.95); }
         
         #core-number {
             font-size: 80px; font-family: 'Times New Roman', serif; font-weight: bold;
             color: var(--gold-light); text-shadow: 0 0 15px rgba(0,0,0,1), 0 0 30px var(--gold);
-            pointer-events: none; transition: 0.05s; z-index: 2;
-        }
-        
-        #core-number {
-            font-size: 80px; font-family: 'Times New Roman', serif; font-weight: bold;
-            color: var(--gold-light); text-shadow: 0 0 15px rgba(0,0,0,1), 0 0 30px var(--gold);
-            pointer-events: none; transition: 0.1s;
+            pointer-events: none; transition: 0.1s; z-index: 2;
         }
 
-        /* 🎛️ 底部調頻儀 (Slider) */
-        .tuning-area { padding: 0 30px 40px 30px; text-align: center; z-index: 20; }
+        /* 🎛️ 底部調頻儀 */
+        .tuning-area { padding: 0 30px 40px 30px; text-align: center; z-index: 20; transition: 0.5s; }
         .tuning-label { color: #aaa; font-size: 13px; letter-spacing: 2px; margin-bottom: 15px; }
-        input[type=range] {
-            -webkit-appearance: none; width: 100%; background: transparent; height: 40px;
-        }
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; height: 40px; }
         input[type=range]:focus { outline: none; }
         input[type=range]::-webkit-slider-runnable-track {
             width: 100%; height: 4px; cursor: pointer;
@@ -153,19 +135,39 @@
         }
         input[type=range]:active::-webkit-slider-thumb { transform: scale(1.3); box-shadow: 0 0 25px #fff; }
 
-        /* 傳送按鈕 */
+        /* 🚀 傳送按鈕 (加入頂層防護) */
         #submitBtn {
             background: linear-gradient(135deg, var(--gold), #B8860B); color: #000; border: none; 
             padding: 15px 50px; border-radius: 50px; font-weight: 900; font-size: 18px; letter-spacing: 2px;
             opacity: 0; transform: translateY(20px); transition: 0.5s; box-shadow: 0 0 20px rgba(212,175,55,0.5); 
             position: absolute; bottom: 40px; left: 50%; margin-left: -105px; pointer-events: none;
+            z-index: 999; /* 確保在最上層 */
         }
-        #submitBtn.active { opacity: 1; transform: translateY(0); pointer-events: auto; animation: pulse-btn 2s infinite; }
+        #submitBtn.active { opacity: 1; transform: translateY(0); pointer-events: auto; animation: pulse-btn 2s infinite; cursor: pointer; }
+        #submitBtn:disabled { filter: grayscale(1); animation: none; pointer-events: none; }
         @keyframes pulse-btn { 0%,100% { box-shadow: 0 0 15px rgba(212,175,55,0.5); } 50% { box-shadow: 0 0 30px var(--gold); } }
 
-        /* 💥 爆炸粒子層 */
+        /* 💥 爆炸粒子層 (移除點擊阻擋) */
         #particle-container { position: fixed; inset: 0; z-index: 100; pointer-events: none; }
         .particle { position: absolute; border-radius: 50%; background: #fff; box-shadow: 0 0 10px var(--gold); }
+
+        /* ⏳ 儀式感 Loading 遮罩 */
+        #ritual-loader {
+            position: fixed; inset: 0; z-index: 9999; background: rgba(5,5,8,0.85);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: 0.5s ease; backdrop-filter: blur(6px);
+        }
+        #ritual-loader.active { opacity: 1; pointer-events: auto; }
+        .loader-ring {
+            width: 80px; height: 80px; border: 3px solid transparent;
+            border-top-color: var(--gold); border-bottom-color: var(--gold);
+            border-radius: 50%; animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+            margin-bottom: 25px; box-shadow: 0 0 20px rgba(212,175,55,0.3);
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loader-text { color: var(--gold-light); font-size: 16px; font-weight: bold; letter-spacing: 4px; animation: pulse-text 2s infinite; }
+        @keyframes pulse-text { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; text-shadow: 0 0 15px var(--gold); } }
+
     </style>
 </head>
 <body>
@@ -205,10 +207,15 @@
         <button id="submitBtn">解開結界</button>
     </div>
 
+    <div id="ritual-loader">
+        <div class="loader-ring"></div>
+        <div class="loader-text">靈力運作中，請稍待...</div>
+    </div>
+
     <div id="particle-container"></div>
 
     <script>
-        // --- 🌌 1. 永恆銀河引擎 ---
+        // --- 🌌 1. 永恆銀河引擎 (保留你的參數) ---
         const canvas = document.getElementById('space-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -218,26 +225,21 @@
         const stars = []; const nebulas = []; const meteors = [];
         for(let i=0; i<200; i++) stars.push({x: Math.random()*width, y: Math.random()*height, r: Math.random()*1.0, a: Math.random()});
         
-        // 稍微提亮星雲粒子的透明度 (從 0.3 提升到 0.45)
         for(let i=0; i<300; i++) { 
             nebulas.push({ angle: Math.random()*Math.PI*2, radius: Math.random()*width*0.8, speed: (Math.random()*0.009)+0.0005, size: Math.random()*3, color: `rgba(${Math.random()>0.5?'212,175,55':'138,43,226'},${Math.random()*0.45})` });
         }
         
-        // 💫 迎賓流星：強制在載入瞬間從右上角劃過一顆流星，建立第一眼衝擊
         meteors.push({x: width * 0.8, y: -50, vx: -4, vy: 5, life: 1.2});
 
         function animateSpace() {
             ctx.clearRect(0,0,width,height);
-            // 畫星星
             ctx.fillStyle='#fff';
             stars.forEach(s => { s.a += (Math.random()-0.5)*0.1; if(s.a<0.1)s.a=0.1; if(s.a>1)s.a=1; ctx.globalAlpha=s.a; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill(); });
             
-            // 畫星雲 (旋轉)
             ctx.globalAlpha=1;
             const cx = width/2, cy = height/2;
             nebulas.forEach(n => { n.angle += n.speed; const x = cx + Math.cos(n.angle)*n.radius; const y = cy + Math.sin(n.angle)*n.radius; ctx.fillStyle = n.color; ctx.beginPath(); ctx.arc(x,y,n.size,0,Math.PI*2); ctx.fill(); });
             
-            // 畫流星 (稍微提高日常出現機率至 0.015)
             if(Math.random()<0.025) meteors.push({x: Math.random()*width, y: -50, vx: Math.random()*2+3, vy: 5, life: 1});
             for(let i=meteors.length-1; i>=0; i--) {
                 let m = meteors[i]; m.x+=m.vx; m.y+=m.vy; m.life-=0.020;
@@ -250,8 +252,7 @@
         }
         animateSpace();
 
-        // --- 🔮 2. 靈魂標籤庫 (Emoji + 關鍵字) ---
-        // 為了極致效能，這裡精簡化產生 78 張牌的資料 (前 22 張大牌特別設定，其餘按花色產生)
+        // --- 🔮 2. 靈魂標籤庫 ---
         const majorArcana = [ "愚者|🌀|無限潛能", "魔術師|🪄|顯化奇蹟", "女祭司|🌙|直覺奧秘", "女皇|👑|豐盛孕育", "皇帝|🦅|秩序建立", "教皇|⛪|精神指引", "戀人|👩‍❤️‍👨|靈魂契合", "戰車|🐎|意志征服", "力量|🦁|柔性堅韌", "隱士|🏮|內在尋道", "命運之輪|🎡|業力輪轉", "正義|⚖️|平衡裁決", "倒吊人|🪢|換位思考", "死神|🦋|毀滅重生", "節制|🌈|和諧煉金", "惡魔|⛓️|物質枷鎖", "高塔|⚡|粉碎重建", "星星|✨|希望指引", "月亮|🐺|潛意識恐懼", "太陽|☀️|生命喜悅", "審判|🎺|靈魂覺醒", "世界|🌍|圓滿達成" ];
         const suits = [ {s:"權杖", e:"🔥", k:["新行動","抉擇","擴展","穩固","衝突","勝利","防禦","速達","疲憊","重擔","熱情","衝動","魅力","權威"]}, {s:"聖杯", e:"💧", k:["新情感","結合","慶祝","倦怠","失落","回憶","幻象","追尋","滿願","圓滿","溫柔","浪漫","直覺","包容"]}, {s:"寶劍", e:"⚔️", k:["新思想","盲點","悲痛","休養","爭執","渡過","欺瞞","束縛","焦慮","終結","機警","衝鋒","理智","嚴肅"]}, {s:"錢幣", e:"🪙", k:["新資源","波動","合作","守成","匱乏","施受","靜待","精進","豐收","傳承","務實","穩健","富足","基業"]} ];
         const tarotData = majorArcana.map(str => { const [n,e,k] = str.split('|'); return {name: n, emoji: e, keyword: k}; });
@@ -266,6 +267,7 @@
         let drawnCount = 0;
         let selectedCards = [];
         let isAnimating = false;
+        let isSubmitting = false; // 防連點機制
 
         // LIFF 初始化 (替換你的 ID)
         liff.init({ liffId: "2009490171-yQF5PguK" }).catch(err => console.error(err));
@@ -280,27 +282,41 @@
             });
         });
 
-        // 數字調頻感應 (加入高頻洗牌邏輯)
-        let shuffleTimeout; // 用來偵測滑動是否停止
+        // 🎛️ 數字調頻感應 (加入幽靈殘影邏輯)
+        let shuffleTimeout;
         
         slider.addEventListener('input', (e) => {
-            coreNum.innerText = e.target.value;
-            
-            // 1. 啟動洗牌狀態 (彈出疊影、震動卡片)
-            coreCard.classList.remove('pulse'); // 暫停緩慢脈動
-            coreCard.classList.add('shuffling');
+            const val = parseInt(e.target.value);
+            const isUsed = selectedCards.some(c => c.index === (val - 1));
 
-            // 2. 數字高頻閃爍特效
-            coreNum.style.transform = `scale(${1 + Math.random()*0.15})`;
-            coreNum.style.textShadow = `0 0 ${15+Math.random()*30}px #fff, 0 0 60px var(--gold)`;
+            if (isUsed) {
+                // 👻 靈魂抽離狀態：半透明且灰階
+                coreNum.innerText = ""; 
+                coreCard.style.opacity = "0.35"; 
+                coreCard.style.filter = "grayscale(1) blur(1px)"; 
+                coreCard.style.pointerEvents = "none"; 
+                coreCard.classList.remove('shuffling', 'pulse');
+            } else {
+                // ✨ 能量充沛狀態
+                coreNum.innerText = val;
+                coreCard.style.opacity = "1";
+                coreCard.style.filter = "grayscale(0) blur(0px)"; 
+                coreCard.style.pointerEvents = "auto";
+                
+                coreCard.classList.remove('pulse');
+                coreCard.classList.add('shuffling');
 
-            // 3. 停止滑動後的恢復機制 (0.15秒沒滑動，視為停止)
+                coreNum.style.transform = `scale(${1 + Math.random()*0.15})`;
+                coreNum.style.textShadow = `0 0 ${15+Math.random()*30}px #fff, 0 0 60px var(--gold)`;
+            }
+
             clearTimeout(shuffleTimeout);
             shuffleTimeout = setTimeout(() => {
-                coreCard.classList.remove('shuffling');
-                coreCard.classList.add('pulse'); // 恢復緩慢脈動
-                coreNum.style.transform = 'scale(1)';
-                coreNum.style.textShadow = `0 0 15px rgba(0,0,0,1), 0 0 30px var(--gold)`;
+                if (!isUsed) {
+                    coreCard.classList.remove('shuffling');
+                    coreCard.classList.add('pulse');
+                    coreNum.style.transform = 'scale(1)';
+                }
             }, 150);
         });
 
@@ -309,13 +325,8 @@
             if(isAnimating || drawnCount >= 3) return;
             const selectedIdx = parseInt(slider.value) - 1;
             
-            // 檢查是否重複抽卡
-            if(selectedCards.some(c => c.index === selectedIdx)) {
-                document.getElementById('instruction').innerText = "⚠️ 此號碼之靈力已被提取，請重新調頻";
-                document.getElementById('instruction').style.color = "#FF6B6B";
-                setTimeout(()=> document.getElementById('instruction').style.color = "#aaa", 2000);
-                return;
-            }
+            // 雙重防護：防意外點擊
+            if(selectedCards.some(c => c.index === selectedIdx)) return;
 
             isAnimating = true;
             const cardData = tarotData[selectedIdx];
@@ -325,11 +336,9 @@
             const coreRect = coreCard.getBoundingClientRect();
             const slotRect = targetSlot.getBoundingClientRect();
 
-            // 1. 隱藏核心卡
             coreCard.style.opacity = '0';
             coreCard.style.transform = 'scale(0.8)';
 
-            // 2. 粒子爆炸動畫 (Web Animations API)
             const numParticles = 40;
             let completedParticles = 0;
             
@@ -340,17 +349,15 @@
                 p.style.width = `${size}px`; p.style.height = `${size}px`;
                 particleContainer.appendChild(p);
 
-                // 計算起始與終點
                 const startX = coreRect.left + coreRect.width/2;
                 const startY = coreRect.top + coreRect.height/2;
                 const endX = slotRect.left + slotRect.width/2 + (Math.random()-0.5)*20;
                 const endY = slotRect.top + slotRect.height/2 + (Math.random()-0.5)*20;
                 
-                // 爆炸擴散點 (控制點)
                 const cpX = startX + (Math.random()-0.5) * 300;
                 const cpY = startY + (Math.random()-0.5) * 300;
 
-                const duration = 600 + Math.random() * 400; // 慢而細膩
+                const duration = 600 + Math.random() * 400;
                 
                 const anim = p.animate([
                     { transform: `translate(${startX}px, ${startY}px) scale(1)`, opacity: 1, backgroundColor: '#fff' },
@@ -362,11 +369,9 @@
                     p.remove();
                     completedParticles++;
                     if(completedParticles === numParticles) {
-                        // 3. 具現化 (Impact & Simmer)
                         targetSlot.classList.add('impact');
                         setTimeout(() => { targetSlot.classList.add('simmer'); }, 600);
                         
-                        // 填入正面圖與靈魂標籤
                         targetSlot.style.backgroundImage = "url('https://branddecoderai.com/images/PK_BG2.jpg')";
                         targetSlot.innerHTML = `
                             <div class="card-front-content">
@@ -377,34 +382,92 @@
                         `;
                         
                         drawnCount++;
+                        isAnimating = false; // 解除邏輯鎖定
                         
-                        // 4. 重置核心或結束
                         if(drawnCount < 3) {
                             setTimeout(() => {
-                                coreCard.style.opacity = '1';
+                                slider.dispatchEvent(new Event('input')); // 檢查 Slider 當前位置是否幽靈化
                                 coreCard.style.transform = 'scale(1)';
                                 document.getElementById('instruction').innerText = `請調頻尋找第 ${drawnCount+1} 枚印記...`;
-                                isAnimating = false;
                             }, 500);
                         } else {
+                            // 選完三張，呼叫按鈕
                             document.getElementById('tuning-ui').style.opacity = '0';
-                            document.getElementById('submitBtn').classList.add('active');
+                            document.getElementById('tuning-ui').style.pointerEvents = 'none';
+                            const sBtn = document.getElementById('submitBtn');
+                            sBtn.classList.add('active');
                             document.getElementById('room-title').innerText = "🔮 結界已成，請啟動解碼";
-                            isAnimating = false;
                         }
                     }
                 };
             }
         });
 
-        // 送出資料至 LINE
-        document.getElementById('submitBtn').addEventListener('click', () => {
-            const cardNames = selectedCards.map(c => c.name).join(', ');
-            const cmd = `[系統指令] 塔羅結算: [${currentTopic}] ${cardNames}`;
-            if (liff.isInClient()) {
-                liff.sendMessages([{ type: 'text', text: cmd }]).then(() => liff.closeWindow());
-            } else {
-                alert("【測試環境】發送指令：\n" + cmd);
+        // 🚀 API 背景傳送邏輯 (防連點 + 隱形結界)
+        document.getElementById('submitBtn').addEventListener('click', async () => {
+            if (isSubmitting) return; // 防呆攔截
+            isSubmitting = true;
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true; // 鎖死按鈕
+            btn.innerText = "解碼中...";
+
+            // 啟動全螢幕 Loading 儀式
+            const loader = document.getElementById('ritual-loader');
+            loader.classList.add('active');
+
+            // 抓取已登入用戶 ID
+            let userId = "TEST_USER_ID"; // 測試預設值
+            if (liff.isInClient() || liff.isLoggedIn()) {
+                try {
+                    const profile = await liff.getProfile();
+                    userId = profile.userId;
+                } catch (e) { console.warn("無法取得 Profile", e); }
+            }
+
+            const cardNames = selectedCards.map(c => c.name);
+
+            // 🚨🚨🚨 【重要設定】請將下方網址換成你 GCP 伺服器的真實網址 🚨🚨🚨
+            const API_URL = "https://bastro-bot-217800246535.asia-east1.run.app/api/tarot"; 
+
+            try {
+                // 強制延遲 1.5 秒，確保 Loading 的視覺儀式感
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        userId: userId,
+                        topic: currentTopic,
+                        cards: cardNames
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    if (liff.isInClient()) {
+                        liff.closeWindow(); // 成功後直接無縫關閉視窗
+                    } else {
+                        alert("【測試環境】背景呼叫成功！請至 LINE 查看圖文報告。");
+                        loader.classList.remove('active');
+                    }
+                } else {
+                    alert("⚠️ 宇宙訊號異常：" + data.message);
+                    loader.classList.remove('active');
+                    btn.disabled = false;
+                    btn.innerText = "解開結界";
+                    isSubmitting = false;
+                }
+
+            } catch (error) {
+                console.error("API Fetch 失敗:", error);
+                alert("⚠️ 連線中斷，請確認您的 GCP 伺服器已啟動且 CORS 設定正確。");
+                loader.classList.remove('active');
+                btn.disabled = false;
+                btn.innerText = "解開結界";
+                isSubmitting = false;
             }
         });
     </script>
