@@ -187,7 +187,7 @@
 
         async function initDashboard() {
             try {
-                // 使用 ENV 變數，整齊又專業
+                // 1. 初始化 LIFF
                 await liff.init({ liffId: ENV.MEMBER_LIFF_ID });
                 
                 if (!liff.isLoggedIn()) {
@@ -198,20 +198,54 @@
                 const accessToken = liff.getAccessToken();
                 if(!accessToken) throw new Error("無法取得安全通行證");
 
-                // 2. 同步發送 API 請求 (名片 + 歷史紀錄)
+                // 🌟 新增：取得 LINE 最新個人資料 (準備用於同步)
+                let currentProfile = null;
+                try {
+                    currentProfile = await liff.getProfile();
+                } catch(e) {
+                    console.error("取得 LINE Profile 失敗:", e);
+                }
+
+                // 2. 同步發送 API 請求 (名片 + 歷史紀錄 + 🌟背景同步資料)
                 const headers = { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' };
                 
-                const [profileRes, historyRes] = await Promise.all([
+                const apiPromises = [
                     fetch(`${ENV.API_BASE}/api/user/profile`, { headers }),
-                    fetch(`${targetApiBase}/api/user/history?days=7`, { headers })
-                ]);
+                    fetch(`${ENV.API_BASE}/api/user/history?days=7`, { headers }) // 確保使用 ENV.API_BASE
+                ];
+
+                // 如果有抓到最新資料，就順便打一支 API 去後端更新 (這支 API 我們等下要在 index.js 加)
+                if (currentProfile) {
+                    apiPromises.push(
+                        fetch(`${ENV.API_BASE}/api/user/sync-profile`, {
+                            method: 'POST',
+                            headers: headers,
+                            body: JSON.stringify({
+                                displayName: currentProfile.displayName,
+                                pictureUrl: currentProfile.pictureUrl || ""
+                            })
+                        }).catch(e => console.error("背景同步失敗:", e))
+                    );
+                }
+
+                const responses = await Promise.all(apiPromises);
+                const profileRes = responses[0];
+                const historyRes = responses[1];
 
                 if (!profileRes.ok || !historyRes.ok) throw new Error("伺服器結界異常，請稍後再試");
 
                 const profileData = await profileRes.json();
                 const historyData = await historyRes.json();
 
-                if(profileData.success) renderProfile(profileData.data);
+                if(profileData.success) {
+                    // 🌟 如果剛剛有抓到 LINE 的最新名字，前端就直接顯示最新的，不用等後端回傳舊的
+                    if (currentProfile) {
+                        profileData.data.displayName = currentProfile.displayName;
+                        profileData.data.pictureUrl = currentProfile.pictureUrl;
+                    }
+                    renderProfile(profileData.data);
+                }
+                
                 if(historyData.success) {
                     rawHistoryData = historyData.data;
                     renderHistory(historyData.data);
