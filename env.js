@@ -4,7 +4,8 @@
 // ==========================================
 const ENV = {
     // 🏷️ LINE LIFF 相關 (每個功能可能不同)
-    LIFF_ID: "2009490171-yQF5PguK",
+    TAROT_LIFF_ID: "2009490171-yQF5PguK", 
+    MEMBER_LIFF_ID: "2009490171-ZuAjXwno",
     
     // 🌐 後端 API 基底網址
     API_BASE: "https://bastro-bot-217800246535.asia-east1.run.app",
