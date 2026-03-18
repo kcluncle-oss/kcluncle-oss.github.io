@@ -403,16 +403,16 @@
             }
         });
 
-        // 🚀 API 背景傳送邏輯 (防連點 + 隱形結界)
+        // 🚀 API 背景傳送邏輯 (v3.0 票根防護 + 咒語拋出)
         document.getElementById('submitBtn').addEventListener('click', async () => {
             if (isSubmitting) return; // 防呆攔截
             isSubmitting = true;
 
             const btn = document.getElementById('submitBtn');
             btn.disabled = true; // 鎖死按鈕
-            btn.innerText = "解碼中...";
+            btn.innerText = "結界凝聚中...";
 
-            // 啟動全螢幕 Loading 儀式
+            // 啟動全螢幕 Loading 儀式 (等待票根核發的短暫過場)
             const loader = document.getElementById('ritual-loader');
             loader.classList.add('active');
 
@@ -427,13 +427,11 @@
 
             const cardNames = selectedCards.map(c => c.name);
 
-            // 🚨🚨🚨 【重要設定】請將下方網址換成你 GCP 伺服器的真實網址 🚨🚨🚨
-            const API_URL = "https://bastro-bot-217800246535.asia-east1.run.app/api/tarot"; 
+            // 🚨🚨🚨 【重要設定】已經幫你換上正確的 GCP 網址與 /ticket 路徑 🚨🚨🚨
+            const API_URL = "https://bastro-bot-217800246535.asia-east1.run.app/api/tarot/ticket"; 
 
             try {
-                // 強制延遲 1.5 秒，確保 Loading 的視覺儀式感
-                await new Promise(resolve => setTimeout(resolve, 1500));
-
+                // 呼叫 API 領取「票根」
                 const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -448,13 +446,16 @@
 
                 if (data.success) {
                     if (liff.isInClient()) {
-                        liff.closeWindow(); // 成功後直接無縫關閉視窗
+                        // 🎟️ 票根核發成功！自動拋出通關咒語，然後關閉視窗
+                        const spell = `🔮 祈求宇宙指引：[${currentTopic}] 領域`;
+                        await liff.sendMessages([{ type: 'text', text: spell }]);
+                        liff.closeWindow(); 
                     } else {
-                        alert("【測試環境】背景呼叫成功！請至 LINE 查看圖文報告。");
+                        alert("【測試環境】票根已建立！請在 LINE 中手動輸入：\n🔮 祈求宇宙指引：[" + currentTopic + "] 領域");
                         loader.classList.remove('active');
                     }
                 } else {
-                    alert("⚠️ 宇宙訊號異常：" + data.message);
+                    alert("⚠️ 結界異常：" + data.message);
                     loader.classList.remove('active');
                     btn.disabled = false;
                     btn.innerText = "解開結界";
@@ -463,7 +464,7 @@
 
             } catch (error) {
                 console.error("API Fetch 失敗:", error);
-                alert("⚠️ 連線中斷，請確認您的 GCP 伺服器已啟動且 CORS 設定正確。");
+                alert("⚠️ 連線中斷，請確認您的 GCP 伺服器已更新完畢。");
                 loader.classList.remove('active');
                 btn.disabled = false;
                 btn.innerText = "解開結界";
