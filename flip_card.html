@@ -515,7 +515,9 @@
 
             } catch (error) {
                 console.error("API Fetch 失敗:", error);
-                alert("⚠️ 連線中斷，請確認您的 GCP 伺服器已更新完畢。");
+                // 讓系統說實話，印出真正的錯誤訊息
+                alert("🚨 系統錯誤: " + error.message);
+                console.error("詳細錯誤:", error);
                 loader.classList.remove('active');
                 btn.disabled = false;
                 btn.innerText = "解開結界";
