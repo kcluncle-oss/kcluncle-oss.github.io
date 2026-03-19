@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -8,7 +7,8 @@
     
     <script src="/env.js?v=2"></script>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
         :root {
             --gold: #D4AF37; --gold-light: #F9E498; --bg-deep: #050508;
             --glass-bg: rgba(255, 255, 255, 0.05);
@@ -29,7 +29,7 @@
         /* 📱 主容器 */
         .container {
             max-width: 500px; margin: 0 auto; padding: 20px;
-            padding-bottom: 80px; /* 留出底部空間 */
+            padding-bottom: 80px;
         }
 
         /* 🏷️ 頂部導航 */
@@ -84,27 +84,47 @@
         .points-plus { color: #4CAF50; }
         .points-minus { color: #FF6B6B; }
 
-        /* 彈出視窗 (Modal) */
-        #detail-modal {
+        /* 彈出視窗 (Modal) 共用 */
+        .modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
             z-index: 999; display: flex; justify-content: center; align-items: center;
             opacity: 0; pointer-events: none; transition: 0.3s; padding: 20px;
         }
-        #detail-modal.active { opacity: 1; pointer-events: auto; }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-content {
             background: #111; border: 1px solid var(--gold); border-radius: 15px; padding: 25px;
-            width: 100%; max-width: 400px; max-height: 80vh; overflow-y: auto; color: #eee;
+            width: 100%; max-width: 400px; max-height: 80vh; overflow-y: auto; color: #eee; position: relative;
         }
-        .modal-close {
+        .modal-close-btn {
             background: none; border: 1px solid #555; color: #aaa; padding: 8px 0; width: 100%;
             border-radius: 8px; margin-top: 20px; cursor: pointer; font-size: 14px;
         }
 
+        /* 🔮 儲值祭壇專屬樣式 */
+        .tier-grid { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .tier-card {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px;
+            padding: 15px; display: flex; justify-content: space-between; align-items: center;
+            cursor: pointer; position: relative; overflow: hidden; transition: 0.3s;
+        }
+        .tier-card:active { transform: scale(0.98); background: rgba(212,175,55,0.1); }
+        .tier-card.popular { border-color: var(--gold); box-shadow: 0 0 15px rgba(212,175,55,0.3); }
+        .tier-card.popular::before {
+            content: '推薦主力'; position: absolute; top: 0; left: 0; background: var(--gold); color: #000;
+            font-size: 10px; font-weight: bold; padding: 2px 8px; border-bottom-right-radius: 8px;
+        }
+        .tier-info { display: flex; flex-direction: column; gap: 5px; }
+        .tier-points { font-size: 20px; font-weight: bold; color: var(--gold-light); }
+        .tier-bonus { font-size: 12px; color: #FF6B6B; font-weight: bold; display: none; } /* 預設隱藏，由JS控制 */
+        .tier-price { background: #222; border: 1px solid var(--gold); color: var(--gold); padding: 5px 15px; border-radius: 20px; font-weight: bold; }
+        
         /* ⏳ Loading 畫面 */
-        #loader {
+        #loader, #pay-loader {
             position: fixed; inset: 0; z-index: 9999; background: var(--bg-deep);
             display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.5s;
         }
+        #pay-loader { background: rgba(0,0,0,0.9); opacity: 0; pointer-events: none; }
+        #pay-loader.active { opacity: 1; pointer-events: auto; }
         .spinner { width: 50px; height: 50px; border: 3px solid rgba(212,175,55,0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
@@ -117,6 +137,11 @@
     <div id="loader">
         <div class="spinner"></div>
         <p style="color: var(--gold); letter-spacing: 2px; margin-top: 20px; font-size: 14px;">同步星盤數據中...</p>
+    </div>
+
+    <div id="pay-loader">
+        <div class="spinner"></div>
+        <p style="color: #00C300; letter-spacing: 2px; margin-top: 20px; font-size: 14px;">正在連結 LINE Pay 結界...</p>
     </div>
 
     <div class="container" style="display: none;" id="main-content">
@@ -138,7 +163,7 @@
         <div class="glass-card energy-section">
             <div class="energy-title">當前靈力儲備 (Points)</div>
             <div class="energy-points" id="ui-points">--</div>
-            <button class="recharge-btn" onclick="alert('🔮 靈能市集即將開放，敬請期待！')">補充靈力</button>
+            <button class="recharge-btn" onclick="openRechargeModal()">補充靈力</button>
         </div>
 
         <div class="glass-card chart-section">
@@ -156,13 +181,25 @@
 
     </div>
 
-    <div id="detail-modal">
+    <div id="detail-modal" class="modal-overlay">
         <div class="modal-content">
             <h3 style="color: var(--gold); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px;" id="modal-title">報告標題</h3>
             <div id="modal-body" style="font-size: 14px; line-height: 1.6; color: #ccc; margin-top: 15px; white-space: pre-wrap;">
                 詳細內容...
             </div>
-            <button class="modal-close" onclick="closeModal()">關閉回顧</button>
+            <button class="modal-close-btn" onclick="closeModal('detail-modal')">關閉回顧</button>
+        </div>
+    </div>
+
+    <div id="recharge-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 style="color: var(--gold); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; text-align: center;">靈力補充祭壇</h3>
+            <p style="text-align: center; font-size: 12px; color: #888; margin-top: 10px;">請選擇您要注入的能量級別</p>
+            
+            <div class="tier-grid" id="tier-grid">
+                </div>
+            
+            <button class="modal-close-btn" onclick="closeModal('recharge-modal')">離開祭壇</button>
         </div>
     </div>
 
@@ -184,10 +221,20 @@
 
         // --- ⚙️ 核心數據邏輯 ---
         let rawHistoryData = [];
+        let userProfileData = null; // 儲存用戶資料，包含首充紀錄
+        let currentAccessToken = "";
+
+        // 定義計費方案
+        const pricingTiers = [
+            { price: 99, points: 990, isPopular: false },
+            { price: 199, points: 2000, isPopular: true },  // 主力
+            { price: 299, points: 3100, isPopular: true },  // 主力
+            { price: 599, points: 6300, isPopular: false },
+            { price: 999, points: 10600, isPopular: false }
+        ];
 
         async function initDashboard() {
             try {
-                // 1. 初始化 LIFF
                 await liff.init({ liffId: ENV.MEMBER_LIFF_ID });
                 
                 if (!liff.isLoggedIn()) {
@@ -195,35 +242,24 @@
                     return;
                 }
 
-                const accessToken = liff.getAccessToken();
-                if(!accessToken) throw new Error("無法取得安全通行證");
+                currentAccessToken = liff.getAccessToken();
+                if(!currentAccessToken) throw new Error("無法取得安全通行證");
 
-                // 🌟 新增：取得 LINE 最新個人資料 (準備用於同步)
                 let currentProfile = null;
-                try {
-                    currentProfile = await liff.getProfile();
-                } catch(e) {
-                    console.error("取得 LINE Profile 失敗:", e);
-                }
+                try { currentProfile = await liff.getProfile(); } catch(e) { console.error("Profile 失敗", e); }
 
-                // 2. 同步發送 API 請求 (名片 + 歷史紀錄 + 🌟背景同步資料)
-                const headers = { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' };
+                const headers = { 'Authorization': `Bearer ${currentAccessToken}`, 'Content-Type': 'application/json' };
                 
                 const apiPromises = [
                     fetch(`${ENV.API_BASE}/api/user/profile`, { headers }),
-                    fetch(`${ENV.API_BASE}/api/user/history?days=7`, { headers }) // 確保使用 ENV.API_BASE
+                    fetch(`${ENV.API_BASE}/api/user/history?days=7`, { headers })
                 ];
 
-                // 如果有抓到最新資料，就順便打一支 API 去後端更新 (這支 API 我們等下要在 index.js 加)
                 if (currentProfile) {
                     apiPromises.push(
                         fetch(`${ENV.API_BASE}/api/user/sync-profile`, {
-                            method: 'POST',
-                            headers: headers,
-                            body: JSON.stringify({
-                                displayName: currentProfile.displayName,
-                                pictureUrl: currentProfile.pictureUrl || ""
-                            })
+                            method: 'POST', headers: headers,
+                            body: JSON.stringify({ displayName: currentProfile.displayName, pictureUrl: currentProfile.pictureUrl || "" })
                         }).catch(e => console.error("背景同步失敗:", e))
                     );
                 }
@@ -238,11 +274,11 @@
                 const historyData = await historyRes.json();
 
                 if(profileData.success) {
-                    // 🌟 如果剛剛有抓到 LINE 的最新名字，前端就直接顯示最新的，不用等後端回傳舊的
                     if (currentProfile) {
                         profileData.data.displayName = currentProfile.displayName;
                         profileData.data.pictureUrl = currentProfile.pictureUrl;
                     }
+                    userProfileData = profileData.data; // 儲存至全域供首充判斷使用
                     renderProfile(profileData.data);
                 }
                 
@@ -252,7 +288,6 @@
                     renderChart(profileData.data.points, historyData.data);
                 }
 
-                // 3. 隱藏 Loading，顯示主畫面
                 document.getElementById('loader').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('loader').style.display = 'none';
@@ -265,27 +300,23 @@
             }
         }
 
-        // 🎨 渲染個人名片
         function renderProfile(data) {
             document.getElementById('ui-avatar').src = data.pictureUrl || "https://static.line-scdn.net/liff/edge/2/images/logo.svg";
             document.getElementById('ui-name').innerText = data.displayName || "神祕旅人";
             document.getElementById('ui-points').innerText = data.points;
             
-            // 計算靈魂位階
             let rank = "靈能學徒";
             if (data.points >= 500) rank = "高階祭司";
             else if (data.points >= 200) rank = "覺醒者";
             else if (data.points < 20) rank = "靈能枯竭";
             document.getElementById('ui-rank').innerText = rank;
 
-            // 格式化日期
             if (data.createdAt) {
                 const d = new Date(data.createdAt);
                 document.getElementById('ui-date').innerText = `入室時間：${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`;
             }
         }
 
-        // 📜 渲染歷史列表
         function renderHistory(historyArray) {
             const list = document.getElementById('ui-history-list');
             list.innerHTML = "";
@@ -306,7 +337,7 @@
                 const dateStr = `${dateObj.getMonth()+1}/${dateObj.getDate()} ${String(dateObj.getHours()).padStart(2,'0')}:${String(dateObj.getMinutes()).padStart(2,'0')}`;
 
                 const html = `
-                    <div class="history-item" onclick="showModal(${index})">
+                    <div class="history-item" onclick="showHistoryModal(${index})">
                         <div class="history-left">
                             <div class="history-type">${typeText}</div>
                             <div class="history-topic">${topicText}</div>
@@ -319,25 +350,21 @@
             });
         }
 
-        // 📈 渲染雙線運勢圖 (Chart.js - 塔羅金線 vs 每日銀藍線)
         function renderChart(currentPoints, historyArray) {
             const ctx = document.getElementById('energyChart').getContext('2d');
-            
             let labels = [];
             let tarotData = [];
             let dailyData = [];
             
-            // 將 API 拿到的最新到最舊，反轉成「最舊到最新」的畫圖順序
             const sortedHistory = [...historyArray].reverse();
 
             sortedHistory.forEach(item => {
                 const d = new Date(item.timestamp);
                 labels.push(`${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`);
                 
-                // 🛡️ 兼容舊資料：如果有 AI 分數就用，沒有的話給個基本盤 50 分
+                // 這裡如果 item.fortune_score 是空值，會預設為 50。當你有新資料就會產生波動。
                 const score = item.fortune_score !== undefined ? item.fortune_score : 50;
 
-                // 判斷是塔羅還是每日一抽，分開寫入兩條線的陣列 (沒有的填 null)
                 if (item.type === 'tarot') {
                     tarotData.push(score);
                     dailyData.push(null);
@@ -357,54 +384,35 @@
                         {
                             label: '🔮 塔羅深度運勢',
                             data: tarotData,
-                            borderColor: '#D4AF37', // 尊貴金
+                            borderColor: '#D4AF37', 
                             backgroundColor: 'rgba(212,175,55,0.1)',
-                            borderWidth: 3,
-                            pointBackgroundColor: '#FFF',
-                            pointBorderColor: '#D4AF37',
-                            pointRadius: 5,
-                            spanGaps: true, // 🌟 關鍵：允許跨越空值連線
-                            tension: 0.3 
+                            borderWidth: 3, pointBackgroundColor: '#FFF', pointBorderColor: '#D4AF37', pointRadius: 5,
+                            spanGaps: true, tension: 0.3 
                         },
                         {
                             label: '✨ 每日基礎能量',
                             data: dailyData,
-                            borderColor: '#4A90E2', // 銀藍色
-                            borderWidth: 2,
-                            borderDash: [5, 5], // 虛線區隔
-                            pointBackgroundColor: '#4A90E2',
-                            pointRadius: 3,
-                            spanGaps: true,
-                            tension: 0.4
+                            borderColor: '#4A90E2', 
+                            borderWidth: 2, borderDash: [5, 5], 
+                            pointBackgroundColor: '#4A90E2', pointRadius: 3,
+                            spanGaps: true, tension: 0.4
                         }
                     ]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { 
-                            display: true, 
-                            labels: { color: '#CCC', font: { size: 10 } } 
-                        } 
-                    },
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: true, labels: { color: '#CCC', font: { size: 10 } } } },
                     scales: {
-                        y: { 
-                            min: 0, max: 100, // 分數固定 0~100
-                            grid: { color: 'rgba(255,255,255,0.05)' },
-                            ticks: { color: '#888' }
-                        },
-                        x: { 
-                            grid: { display: false },
-                            ticks: { color: '#888', font: {size: 9}, maxRotation: 45 }
-                        }
+                        y: { min: 0, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#888' } },
+                        x: { grid: { display: false }, ticks: { color: '#888', font: {size: 9}, maxRotation: 45 } }
                     }
                 }
             });
         }
 
-        // 🪟 Modal 控制
-        function showModal(index) {
+        // --- 🪟 Modal 控制區 ---
+        
+        function showHistoryModal(index) {
             const item = rawHistoryData[index];
             const title = document.getElementById('modal-title');
             const body = document.getElementById('modal-body');
@@ -416,15 +424,101 @@
                 title.innerText = `✨ 每日一抽：${item.result_card}`;
                 body.innerText = item.aiText || "（資料同步中...）";
             }
-
             document.getElementById('detail-modal').classList.add('active');
         }
 
-        function closeModal() {
-            document.getElementById('detail-modal').classList.remove('active');
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
         }
 
-        // 🚀 啟動儀表板
+        // --- 💰 靈力儲值與金流邏輯 ---
+
+        // 1. 計算當前「2個月為一期」的週期代碼 (例：2026年3月 -> "2026-2")
+        function getCurrentRechargePeriod() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const periodNum = Math.ceil((now.getMonth() + 1) / 2);
+            return `${year}-${periodNum}`;
+        }
+
+        // 2. 打開儲值祭壇並渲染方案
+        function openRechargeModal() {
+            const currentPeriod = getCurrentRechargePeriod();
+            // 如果後端還沒存 lastFirstRechargePeriod，預設為 null，代表從未首充過
+            const lastPeriod = userProfileData.lastFirstRechargePeriod || null;
+            
+            // 判斷是否享有「本週期首充 +10%」資格
+            const isFirstRechargeAvailable = (currentPeriod !== lastPeriod);
+
+            const grid = document.getElementById('tier-grid');
+            grid.innerHTML = ""; // 清空
+
+            pricingTiers.forEach(tier => {
+                let finalPoints = tier.points;
+                let bonusHtml = "";
+                
+                // 首充加碼邏輯
+                if (isFirstRechargeAvailable) {
+                    const bonusPoints = Math.floor(tier.points * 0.1); // +10%
+                    finalPoints += bonusPoints;
+                    bonusHtml = `<span class="tier-bonus" style="display:inline;">首充 +${bonusPoints} 點</span>`;
+                }
+
+                const popularClass = tier.isPopular ? "popular" : "";
+                
+                const html = `
+                    <div class="tier-card ${popularClass}" onclick="requestLinePay(${tier.price}, ${finalPoints}, '${currentPeriod}')">
+                        <div class="tier-info">
+                            <span class="tier-points">💎 ${finalPoints} 靈力</span>
+                            ${bonusHtml}
+                        </div>
+                        <div class="tier-price">NT$ ${tier.price}</div>
+                    </div>
+                `;
+                grid.insertAdjacentHTML('beforeend', html);
+            });
+
+            document.getElementById('recharge-modal').classList.add('active');
+        }
+
+        // 3. 發起 LINE Pay 請求
+        async function requestLinePay(amount, pointsToGive, periodCode) {
+            const confirmMsg = `即將透過 LINE Pay 支付 NT$ ${amount} 元\n獲取 ${pointsToGive} 點靈力。\n\n確定前往結帳嗎？`;
+            if(!confirm(confirmMsg)) return;
+
+            // 顯示暗黑版 Loading
+            document.getElementById('pay-loader').classList.add('active');
+
+            try {
+                const response = await fetch(`${ENV.API_BASE}/api/pay/request`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${currentAccessToken}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        amount: amount, 
+                        productName: `${pointsToGive} 點靈力儲值`,
+                        pointsGiven: pointsToGive, // 後端可以根據這個決定要發多少點
+                        periodCode: periodCode     // 後端確認付款後，把這個寫入資料庫的 lastFirstRechargePeriod
+                    })
+                });
+
+                const data = await response.json();
+                
+                if(data.success && data.url) {
+                    // 跳轉至 LINE Pay 綠色付款頁
+                    window.location.href = data.url;
+                } else {
+                    alert("🚨 呼叫 LINE Pay 結界失敗：" + (data.msg || "未知錯誤"));
+                    document.getElementById('pay-loader').classList.remove('active');
+                }
+
+            } catch(e) {
+                console.error(e);
+                alert("🚨 網路結界不穩定，請重試。");
+                document.getElementById('pay-loader').classList.remove('active');
+            }
+        }
+
+        // 🚀 啟動
         document.addEventListener('DOMContentLoaded', initDashboard);
 
     </script>
