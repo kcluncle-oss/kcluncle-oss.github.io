@@ -69,7 +69,20 @@
 
         /* 📜 歷史紀錄區 */
         .history-section h3 { margin: 0 0 15px 0; font-size: 14px; color: var(--gold); letter-spacing: 1px; }
-        .history-list { display: flex; flex-direction: column; gap: 10px; }
+        
+        /* 🌟 優化：限制高度、開啟內部滑動 */
+        .history-list { 
+            display: flex; flex-direction: column; gap: 10px; 
+            max-height: 350px; /* 超過這個高度就會出現捲軸 */
+            overflow-y: auto; padding-right: 5px; 
+        }
+        
+        /* 🌟 優化：客製化極簡風的金色捲軸 */
+        .history-list::-webkit-scrollbar { width: 4px; }
+        .history-list::-webkit-scrollbar-track { background: transparent; }
+        .history-list::-webkit-scrollbar-thumb { background: rgba(212,175,55,0.4); border-radius: 4px; }
+        .history-list::-webkit-scrollbar-thumb:hover { background: rgba(212,175,55,0.8); }
+
         .history-item {
             background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
             padding: 12px 15px; display: flex; justify-content: space-between; align-items: center;
@@ -80,8 +93,8 @@
         .history-type { font-size: 12px; color: var(--gold-light); font-weight: bold; }
         .history-topic { font-size: 14px; color: #ddd; }
         .history-date { font-size: 10px; color: #666; }
-        .history-points { font-size: 16px; font-weight: bold; }
-        .points-plus { color: #4CAF50; }
+        .history-points { font-size: 18px; font-weight: bold; } /* 分數稍微放大一點 */
+        .points-plus { color: #4CAF50; } /* 儲值的綠色 */
         .points-minus { color: #FF6B6B; }
 
         /* 彈出視窗 (Modal) 共用 */
@@ -167,7 +180,7 @@
         </div>
 
         <div class="glass-card chart-section">
-            <h3>📈 近期能量波動</h3>
+            <h3>📈 近期能量波動 <span style="cursor:pointer; font-size:12px; background:rgba(212,175,55,0.2); padding:2px 6px; border-radius:50%; margin-left:5px; vertical-align: middle;" onclick="document.getElementById('chart-info-modal').classList.add('active')">❓</span></h3>
             <div class="chart-container">
                 <canvas id="energyChart"></canvas>
             </div>
@@ -200,6 +213,18 @@
                 </div>
             
             <button class="modal-close-btn" onclick="closeModal('recharge-modal')">離開祭壇</button>
+        </div>
+    </div>
+
+
+    <div id="chart-info-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3 style="color: var(--gold); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px;">📊 能量波動說明</h3>
+            <div style="font-size: 14px; line-height: 1.6; color: #ccc; margin-top: 15px;">
+                <p>這裡未來可以填寫你對金線與藍線的詳細說明文案...</p>
+                <p>例如：金線代表塔羅的深度運勢，藍線則是每日基礎能量的走勢喔！</p>
+            </div>
+            <button class="modal-close-btn" onclick="closeModal('chart-info-modal')">我知道了</button>
         </div>
     </div>
 
@@ -317,6 +342,7 @@
             }
         }
 
+        // 📜 渲染歷史列表 (更新版：活潑的儲值紀錄 + 效能優化截斷)
         function renderHistory(historyArray) {
             const list = document.getElementById('ui-history-list');
             list.innerHTML = "";
@@ -326,20 +352,42 @@
                 return;
             }
 
-            historyArray.forEach((item, index) => {
-                const isTarot = item.type === "tarot";
-                const typeText = isTarot ? "🔮 塔羅解碼" : "✨ 每日一抽";
-                const topicText = isTarot ? `領域：${item.topic}` : `指引：${item.result_card}`;
+            // 🌟 效能優化：即使圖表抓了 7 天，下方列表最多只顯示「最近 30 筆」，避免手機卡頓
+            const displayList = historyArray.slice(0, 30);
+
+            displayList.forEach((item, index) => {
+                let typeText, topicText, extraHtml = "";
                 const pointsClass = item.points_change > 0 ? "points-plus" : "points-minus";
                 const pointsText = item.points_change > 0 ? `+${item.points_change}` : item.points_change;
+                
+                // 🌟 分流判斷：如果是「儲值紀錄」
+                if (item.type === "recharge") {
+                    typeText = "💎 靈力充能";
+                    topicText = `💸 成功支付 NT$ ${item.amount_paid || 0}`;
+                    // 加上活潑的小標籤
+                    extraHtml = `<span style="font-size: 10px; color: #4CAF50; border: 1px solid rgba(76,175,80,0.4); padding: 1px 5px; border-radius: 8px; margin-left: 8px; vertical-align: middle;">🎉 能量注入</span>`;
+                } 
+                // 🌟 否則就是塔羅或每日一抽
+                else {
+                    const isTarot = item.type === "tarot";
+                    typeText = isTarot ? "🔮 塔羅解碼" : "✨ 每日一抽";
+                    topicText = isTarot ? `領域：${item.topic}` : `指引：${item.result_card}`;
+                    
+                    const score = item.fortune_score !== undefined && item.fortune_score !== null ? item.fortune_score : '--';
+                    extraHtml = `<span style="font-size: 10px; color: #F9E498; border: 1px solid rgba(212,175,55,0.4); padding: 1px 5px; border-radius: 8px; margin-left: 8px; vertical-align: middle;">能量 ${score} 分</span>`;
+                }
                 
                 const dateObj = new Date(item.timestamp);
                 const dateStr = `${dateObj.getMonth()+1}/${dateObj.getDate()} ${String(dateObj.getHours()).padStart(2,'0')}:${String(dateObj.getMinutes()).padStart(2,'0')}`;
 
+                // 儲值紀錄點擊沒有 Modal (占卜才有)，並把儲值的卡片外框染上一點綠光
+                const clickAction = item.type === "recharge" ? "" : `onclick="showHistoryModal(${index})"`;
+                const activeStyle = item.type === "recharge" ? "style='cursor:default; border-color: rgba(76,175,80,0.3);'" : "";
+
                 const html = `
-                    <div class="history-item" onclick="showHistoryModal(${index})">
+                    <div class="history-item" ${clickAction} ${activeStyle}>
                         <div class="history-left">
-                            <div class="history-type">${typeText}</div>
+                            <div class="history-type">${typeText} ${extraHtml}</div>
                             <div class="history-topic">${topicText}</div>
                             <div class="history-date">${dateStr}</div>
                         </div>
@@ -348,6 +396,11 @@
                 `;
                 list.insertAdjacentHTML('beforeend', html);
             });
+
+            // 🌟 如果用戶真的算超過 30 筆，在最底下給個小提示
+            if (historyArray.length > 30) {
+                 list.insertAdjacentHTML('beforeend', `<div style="text-align:center; font-size:10px; color:#666; margin-top:5px; padding-bottom:10px;">僅顯示最近 30 筆動態...</div>`);
+            }
         }
 
         // 📈 渲染雙線運勢圖 (改版：近 7 日平均演算法)
