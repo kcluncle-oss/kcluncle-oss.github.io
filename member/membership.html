@@ -219,12 +219,29 @@
 
     <div id="chart-info-modal" class="modal-overlay">
         <div class="modal-content">
-            <h3 style="color: var(--gold); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px;">📊 能量波動說明</h3>
+            <h3 style="color: var(--gold); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px;">📊 能量波動觀測指南</h3>
             <div style="font-size: 14px; line-height: 1.6; color: #ccc; margin-top: 15px;">
-                <p>這裡未來可以填寫你對金線與藍線的詳細說明文案...</p>
-                <p>例如：金線代表塔羅的深度運勢，藍線則是每日基礎能量的走勢喔！</p>
+                
+                <p><span style="color: var(--gold); font-weight: bold;">🔮 塔羅深度運勢 (尊貴金線)：</span><br>
+                呈現您進行「塔羅解碼」時的綜合能量評分。若您在同一天內尋求多次指引，星盤將自動為您計算出<span style="color: #fff; font-weight: bold;">「當日平均值」</span>，以展現最平穩的運勢走向，避免單一波動干擾您的直覺判斷。</p>
+                
+                <p style="margin-top: 15px;"><span style="color: #4A90E2; font-weight: bold;">✨ 每日基礎能量 (星芒藍線)：</span><br>
+                反映您每日「簽到抽牌」所獲得的基礎靈能，是您當日運勢的基石。</p>
+
+                <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-top: 15px; border-left: 3px solid #888;">
+                    <strong style="color: #eee; font-size: 13px;">⏳ 星軌觀測限制與說明：</strong>
+                    <ul style="margin: 5px 0 0 0; padding-left: 20px; font-size: 13px; color: #aaa;">
+                        <li><strong>觀測區間：</strong>圖表固定展現您<span style="color: #ddd;">近 7 日</span>的能量起伏。</li>
+                        <li><strong>承載上限：</strong>為維持儀表板的運作流暢，下方的「命運回顧」最多僅顯示<span style="color: #ddd;">最近 30 筆</span>動態。但請放心，圖表的平均值計算會包含您當日<strong>所有</strong>的占卜軌跡。</li>
+                    </ul>
+                </div>
+
+                <p style="margin-top: 15px; font-size: 13px; color: var(--gold-light); text-align: center; font-weight: bold;">
+                💡 觀測秘訣：點擊圖表上的發光節點，<br>即可揭曉當日匯聚了多少筆運勢能量喔！
+                </p>
+
             </div>
-            <button class="modal-close-btn" onclick="closeModal('chart-info-modal')">我知道了</button>
+            <button class="modal-close-btn" onclick="closeModal('chart-info-modal')">關閉指南</button>
         </div>
     </div>
 
