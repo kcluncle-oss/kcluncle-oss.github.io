@@ -186,14 +186,14 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
-        // 🚨 這裡必須填寫你 GCP/Firebase 後台的設定檔！
+        // 🚨 這是公開的專案識別碼，放在前端是 100% 安全且標準的做法
         const firebaseConfig = {
-            apiKey: ENV.FIREBASE_API_KEY || "你的_API_KEY",
-            authDomain: ENV.FIREBASE_AUTH_DOMAIN || "你的_AUTH_DOMAIN",
+            apiKey: "AIzaSyAQ9vBNu6amWmOG9o-fQa0ft6dO1kumt5c",
+            authDomain: "lllcnd.firebaseapp.com",
             projectId: "lllcnd",
             storageBucket: "lllcnd.appspot.com",
-            messagingSenderId: "你的_SENDER_ID",
-            appId: "你的_APP_ID"
+            messagingSenderId: "217800246535",
+            appId: "1:217800246535:web:ecb1f386c5bbf4ed6771a2"
         };
 
         const app = initializeApp(firebaseConfig);
