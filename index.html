@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>品牌解碼室 | 從 0 打造您的 AI 商業引擎</title>
+    <title>品牌解碼室 | 打造您的 AI 商業獲利閉環</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
@@ -12,9 +12,9 @@
         :root {
             --bg-white: #FFFFFF;
             --bg-soft: #F8FAFC; 
-            --text-main: #0F172A; /* 深鐵灰，大師質感 */
+            --text-main: #0F172A; 
             --text-sub: #64748B;
-            --accent-blue: #2563EB; /* 鈷藍色 */
+            --accent-blue: #2563EB; 
             --accent-hover: #1D4ED8;
             --line-green: #06C755;
             --border: #E2E8F0;
@@ -24,7 +24,6 @@
         html { scroll-behavior: smooth; }
         body { background-color: var(--bg-white); color: var(--text-main); line-height: 1.8; overflow-x: hidden; }
         
-        /* --- 導覽列 --- */
         header {
             padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
             position: fixed; width: 100%; top: 0; z-index: 1000;
@@ -36,44 +35,42 @@
         .logo-title { font-size: 1.2rem; font-weight: 900; letter-spacing: 1px; }
         .logo-title span { display: block; font-size: 0.7rem; color: var(--text-sub); font-weight: normal; letter-spacing: 2px; }
         
-        .nav-btn { background: var(--accent-blue); color: #fff !important; padding: 10px 25px; border-radius: 50px; font-weight: bold; font-size: 0.9rem; transition: 0.3s; }
+        .nav-btn { background: var(--accent-blue); color: #fff !important; padding: 10px 25px; border-radius: 50px; font-weight: bold; font-size: 0.9rem; transition: 0.3s; text-decoration: none;}
         .nav-btn:hover { background: var(--accent-hover); box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3); }
 
-        /* --- Hero Section --- */
         .hero {
             min-height: 100vh; padding: 160px 5% 100px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             text-align: center; background: radial-gradient(circle at top, #f1f5f9 0%, #ffffff 70%);
         }
         .hero-tag { font-size: 0.9rem; font-weight: 800; color: var(--accent-blue); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
-        .hero h1 { font-size: 4.2rem; font-weight: 900; line-height: 1.1; margin-bottom: 30px; letter-spacing: -2px; }
+        .hero h1 { font-size: 4rem; font-weight: 900; line-height: 1.1; margin-bottom: 30px; letter-spacing: -2px; }
         .hero h1 span { color: var(--accent-blue); }
         .hero p.lead { font-size: 1.4rem; color: var(--text-sub); max-width: 800px; margin-bottom: 40px; font-weight: 400; }
         
         .hero-manifesto {
-            background: #fff; border: 1px solid var(--border); padding: 30px; border-radius: 12px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.03); max-width: 850px; margin-bottom: 50px; border-left: 6px solid var(--accent-blue);
+            background: #fff; border: 1px solid var(--border); padding: 40px; border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03); max-width: 900px; margin-bottom: 50px; border-left: 8px solid var(--accent-blue);
             text-align: left;
         }
-        .hero-manifesto strong { color: var(--accent-blue); font-size: 1.2rem; }
+        .hero-manifesto h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--text-main); font-weight: 900; }
+        .hero-manifesto p { font-size: 1.1rem; color: var(--text-main); margin-bottom: 0; }
+        .hero-manifesto strong { color: var(--accent-blue); }
 
-        /* --- Section Common --- */
         .section { padding: 100px 5%; max-width: 1300px; margin: 0 auto; }
         .section-h { text-align: center; margin-bottom: 70px; }
         .section-h h2 { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; }
-        .section-h p { color: var(--text-sub); font-size: 1.1rem; }
+        .section-h p { color: var(--text-sub); font-size: 1.1rem; max-width: 800px; margin: 0 auto;}
 
-        /* --- Mindset Grid --- */
-        .m-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 50px; }
-        .m-card { padding: 50px; border-radius: 20px; border: 1px solid var(--border); transition: 0.3s; }
-        .m-card h3 { font-size: 1.6rem; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; }
-        .m-card ul li { margin-bottom: 18px; display: flex; gap: 12px; font-size: 1.1rem; color: var(--text-sub); }
-        .m-card.bad { background: #fcfcfc; }
-        .m-card.good { background: #fff; border-top: 8px solid var(--accent-blue); box-shadow: 0 15px 40px rgba(0,0,0,0.05); }
-        .m-card.good ul li { color: var(--text-main); font-weight: 500; }
-        .m-card.good i { color: var(--accent-blue); }
+        /* --- 夢想閉環：SOP 視覺化 --- */
+        .loop-container { background: var(--bg-soft); padding: 80px 5%; border-radius: 40px; margin: 50px 0; border: 1px solid var(--border); }
+        .loop-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; position: relative; }
+        .loop-item { background: #fff; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); position: relative; z-index: 2; border: 1px solid var(--border); }
+        .loop-item i { font-size: 2.5rem; color: var(--accent-blue); margin-bottom: 20px; }
+        .loop-item h4 { font-size: 1.4rem; font-weight: 900; margin-bottom: 15px; }
+        .loop-item p { color: var(--text-sub); font-size: 1rem; }
+        .loop-arrow { position: absolute; top: 50%; transform: translateY(-50%); color: var(--border); font-size: 2rem; z-index: 1; }
 
-        /* --- System Showroom --- */
         .sys-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
         .sys-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: 0.4s; }
         .sys-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
@@ -81,27 +78,18 @@
         .video-box i { font-size: 3rem; margin-bottom: 10px; }
         .sys-body { padding: 30px; }
         .sys-body h3 { font-size: 1.2rem; font-weight: 900; margin-bottom: 15px; }
-        .sys-body p { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 20px; height: 80px; }
-        .sys-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .sys-tags span { font-size: 0.75rem; background: #f1f5f9; padding: 4px 10px; border-radius: 4px; font-weight: bold; color: var(--accent-blue); }
+        .sys-body p { font-size: 0.95rem; color: var(--text-sub); margin-bottom: 20px; height: 100px; }
 
-        /* --- Delivery Modes (教學模式) --- */
-        .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 50px; }
-        .mode-card { background: #fff; border: 1px solid var(--border); padding: 40px; border-radius: 20px; position: relative; }
-        .mode-card.premium { border: 2px solid var(--accent-blue); }
-        .mode-card h4 { font-size: 1.4rem; margin-bottom: 15px; color: var(--accent-blue); }
-        .mode-card .price-logic { background: var(--bg-soft); padding: 20px; border-radius: 10px; margin-top: 20px; font-size: 0.9rem; }
-
-        /* --- CTA --- */
-        .cta { text-align: center; padding: 120px 5%; background: var(--bg-soft); }
-        .cta-inner { max-width: 800px; margin: 0 auto; }
-        .btn-lg-line { background: var(--line-green); color: #fff; padding: 20px 60px; border-radius: 50px; font-size: 1.3rem; font-weight: 900; display: inline-flex; align-items: center; gap: 15px; margin-top: 40px; box-shadow: 0 10px 25px rgba(6, 199, 85, 0.3); }
+        .cta { text-align: center; padding: 120px 5%; background: linear-gradient(180deg, #fff 0%, #f1f5f9 100%); }
+        .btn-lg-line { background: var(--line-green); color: #fff; padding: 22px 60px; border-radius: 100px; font-size: 1.4rem; font-weight: 900; display: inline-flex; align-items: center; gap: 15px; box-shadow: 0 20px 40px rgba(6, 199, 85, 0.25); text-decoration: none; transition: 0.3s; }
+        .btn-lg-line:hover { transform: scale(1.05); background: #05A546; }
 
         footer { padding: 60px 5%; text-align: center; border-top: 1px solid var(--border); color: var(--text-sub); font-size: 0.9rem; }
 
         @media (max-width: 992px) {
             .hero h1 { font-size: 3rem; }
-            .m-grid, .sys-grid, .mode-grid { grid-template-columns: 1fr; }
+            .loop-grid, .sys-grid { grid-template-columns: 1fr; }
+            .loop-arrow { display: none; }
         }
     </style>
 </head>
@@ -110,166 +98,110 @@
     <header>
         <div class="logo-area">
             <div class="logo-box">BD</div>
-            <div class="logo-title">品牌解碼室<span>實戰派 AI 系統架構師</span></div>
+            <div class="logo-title">品牌解碼室<span>讓夢想擁有一條自動化的生產線</span></div>
         </div>
-        <a href="https://lin.ee/wZAv8yY" target="_blank" class="nav-btn">預約 1 對 1 諮詢</a>
+        <a href="https://lin.ee/wZAv8yY" target="_blank" class="nav-btn">預約大師諮詢</a>
     </header>
 
     <section class="hero">
-        <div class="hero-tag">IDEAS TO PRODUCTS</div>
-        <h1>別讓技術的高牆，困住你腦中<br><span>價值百萬的點子。</span></h1>
-        <p class="lead">只要你有「想法」，剩下的全部交給 AI 引擎。這是一場不需要工程師參與的造局行動。</p>
+        <div class="hero-tag">THE DIGITAL MONOPOLY BLUEPRINT</div>
+        <h1>只要你有「想法」，剩下的<br>我們幫你<span>實現成真。</span></h1>
+        <p class="lead">這不是一場課程，這是一次將靈感轉化為「全自動生產線」的商業賦能。</p>
         
         <div class="hero-manifesto">
-            <strong>不寫一行代碼、不碰資料庫、不需美術基礎。</strong><br>
-            我們不教你虛無縹緲的咒語，更不教你與機器人無意義聊天。我們帶領你透過實戰，把你腦中的商業邏輯，直接具現化為 24 小時為你賺錢的超級系統。
+            <h3>這是一場關於「商業主權」的革命</h3>
+            <p>
+                <strong>不寫程式、不碰資料庫、不需任何美術設計基礎。</strong><br>
+                在《品牌解碼室》，我們不談虛浮的科技名詞。我們只做一件事：<strong>把您的商業才華，封裝進一套 24 小時為您精準獲客、自動成交的 AI 閉環系統中。</strong>
+            </p>
         </div>
 
-        <a href="#contact" class="btn-primary" style="background:var(--accent-blue); color:#fff; padding:18px 45px; border-radius:8px; font-weight:bold; font-size:1.1rem;">
-            開始您的實戰計畫 <i class="fa-solid fa-arrow-right"></i>
+        <a href="https://lin.ee/wZAv8yY" target="_blank" class="nav-btn" style="background:var(--accent-blue); padding:20px 50px; font-size:1.2rem; border-radius:12px;">
+            立即解碼您的商業閉環 <i class="fa-solid fa-arrow-right" style="margin-left: 10px;"></i>
         </a>
     </section>
 
     <section class="section">
         <div class="section-h">
-            <h2>懂想法的人，永遠比懂技術的人值錢</h2>
-            <p>拋棄「工具人」式的碎片學習，進入「架構師」級別的系統落地。</p>
+            <h2>這就是您即將擁有的<span>夢想生產線</span></h2>
+            <p>我們將台灣最強的「公域獲客 ➔ 私域變現」SOP，轉化為您手中心隨意動的自動化武器。</p>
         </div>
 
-        <div class="m-grid">
-            <div class="m-card bad">
-                <h3><i class="bi bi-x-circle-fill" style="color:#ef4444;"></i> 一般的 AI 課程</h3>
-                <ul>
-                    <li><i class="bi bi-dash"></i> 糾結手指畫對沒？浪費時間在生圖</li>
-                    <li><i class="bi bi-dash"></i> 依賴死板咒語，無法應對真實商場</li>
-                    <li><i class="bi bi-dash"></i> 聽完課回到公司，依然架不出系統</li>
-                </ul>
-            </div>
-            <div class="m-card good">
-                <h3><i class="bi bi-check-circle-fill"></i> 品牌解碼室 實戰計畫</h3>
-                <ul>
-                    <li><i class="bi bi-check-lg"></i> 大腦外包：你定戰略，AI 自動執行</li>
-                    <li><i class="bi bi-check-lg"></i> 無程式碼串接：拖拉之間完成系統</li>
-                    <li><i class="bi bi-check-lg"></i> 結果導向：結訓當天帶走賺錢引擎</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section class="section" style="background:var(--bg-soft); border-top:1px solid var(--border); border-bottom:1px solid var(--border); max-width:100%;">
-        <div class="section" style="padding:0;">
-            <div class="section-h">
-                <h2>親手打造您的<span>商業武器</span></h2>
-                <p>我們不打嘴砲，我們直接進入機房，幫您把這些實戰系統架設完成。</p>
-            </div>
-            <div class="sys-grid">
-                <div class="sys-card">
-                    <div class="video-box"><i class="bi bi-play-circle"></i><span>實戰錄影 / 直播預留區</span></div>
-                    <div class="sys-body">
-                        <h3>LINE OA 智能導購系統</h3>
-                        <p>具備「漏斗記憶」的超級業務，能在對話中察言觀色並主動逼單。</p>
-                        <div class="sys-tags"><span>主動導購</span><span>意圖識別</span><span>自動促單</span></div>
-                    </div>
+        <div class="loop-container">
+            <div class="loop-grid">
+                <div class="loop-item">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <h4>1. 靈感解碼</h4>
+                    <p>無論您是教瑜珈、命理還是室內設計。只要你有想法，我們就為其注入 AI 靈魂，打造出專屬的品牌大腦。</p>
                 </div>
-                <div class="sys-card">
-                    <div class="video-box"><i class="bi bi-play-circle"></i><span>實戰錄影 / 直播預留區</span></div>
-                    <div class="sys-body">
-                        <h3>LINE OA 企業智庫服務</h3>
-                        <p>導入產品規格與售後政策，讓 AI 擋下 80% 客服，並支援多語系。</p>
-                        <div class="sys-tags"><span>知識庫串接</span><span>多語接待</span><span>24H客服</span></div>
-                    </div>
-                </div>
-                <div class="sys-card">
-                    <div class="video-box"><i class="bi bi-play-circle"></i><span>實戰錄影 / 直播預留區</span></div>
-                    <div class="sys-body">
-                        <h3>Meta 內容自動化生成系統</h3>
-                        <p>解放小編。抓取時事、套用人設、一鍵生成多平台圖文分鏡引擎。</p>
-                        <div class="sys-tags"><span>時事監控</span><span>多重宇宙生成</span><span>一鍵發佈</span></div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="margin-top: 60px; background: linear-gradient(145deg, #0F172A, #1E293B); color: #fff; border-radius: 20px; padding: 50px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); position: relative; overflow: hidden;">
-                <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(37, 99, 235, 0.2); filter: blur(50px); border-radius: 50%;"></div>
+                <div class="loop-arrow" style="left: 31%;"><i class="fa-solid fa-chevron-right"></i></div>
                 
-                <div style="display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 40px; position: relative; z-index: 2;">
-                    
-                    <div style="flex: 1; min-width: 300px;">
-                        <div style="display: inline-block; padding: 6px 16px; background: rgba(37, 99, 235, 0.3); color: #60A5FA; border: 1px solid rgba(96, 165, 250, 0.5); border-radius: 50px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; letter-spacing: 2px;">
-                            <i class="fa-solid fa-microchip" style="margin-right: 5px;"></i> BEYOND AUTOMATION
-                        </div>
-                        <h3 style="font-size: 2rem; font-weight: 900; margin-bottom: 15px; line-height: 1.3;">不只是自動化。<br>為您打造專屬的 <span style="color: #60A5FA;">AI Agent 企業大腦</span>。</h3>
-                        <p style="color: #94A3B8; font-size: 1.05rem; line-height: 1.8; margin-bottom: 0;">
-                            如果您有更宏大的商業想像，我們提供最高階的 Agent 客製化建置。它不僅是一個工具，更是具備「感知、思考、行動」的超級數位員工。只要您能描繪出業務場景，我們就能把它寫進大腦的基因裡。
-                        </p>
-                    </div>
+                <div class="loop-item">
+                    <i class="fa-solid fa-gears"></i>
+                    <h4>2. 系統實現</h4>
+                    <p>實戰教學帶您親手完成「Meta 流量引擎」與「LINE 導購中樞」。讓技術成為你的僕人，而非門檻。</p>
+                </div>
+                <div class="loop-arrow" style="left: 65%;"><i class="fa-solid fa-chevron-right"></i></div>
 
-                    <div style="flex: 1; min-width: 320px; display: grid; grid-template-columns: 1fr; gap: 20px;">
-                        
-                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 12px; display: flex; gap: 15px;">
-                            <i class="fa-solid fa-chart-pie" style="font-size: 1.5rem; color: #60A5FA; margin-top: 3px;"></i>
-                            <div>
-                                <h4 style="font-size: 1.1rem; font-weight: bold; margin-bottom: 5px;">數據洞察戰情室</h4>
-                                <p style="color: #94A3B8; font-size: 0.9rem; margin: 0;">巨量數據自動爬梳，即時生成可視化 ROI 報表與銷售趨勢預測。</p>
-                            </div>
-                        </div>
-
-                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 12px; display: flex; gap: 15px;">
-                            <i class="fa-brands fa-telegram" style="font-size: 1.5rem; color: #60A5FA; margin-top: 3px;"></i>
-                            <div>
-                                <h4 style="font-size: 1.1rem; font-weight: bold; margin-bottom: 5px;">Telegram 決策按鈕與營運通報</h4>
-                                <p style="color: #94A3B8; font-size: 0.9rem; margin: 0;">庫存預警、訂單異動自動通報。老闆只需在 TG 點擊按鈕，即可遠端授權審核。</p>
-                            </div>
-                        </div>
-
-                        <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 12px; display: flex; gap: 15px;">
-                            <i class="fa-solid fa-photo-film" style="font-size: 1.5rem; color: #60A5FA; margin-top: 3px;"></i>
-                            <div>
-                                <h4 style="font-size: 1.1rem; font-weight: bold; margin-bottom: 5px;">全模態內容與大數據引擎</h4>
-                                <p style="color: #94A3B8; font-size: 0.9rem; margin: 0;">自動監控全網熱門新聞，一條龍完成腳本撰寫、圖文分鏡、甚至動態影片生成。</p>
-                            </div>
-                        </div>
-
-                    </div>
+                <div class="loop-item">
+                    <i class="fa-solid fa-infinity"></i>
+                    <h4>3. 達成閉環</h4>
+                    <p>結訓當天，生產線正式啟動。讓 AI 幫你在公域抓流量、在私域收現金。您只需專注於實現更大的夢想。</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="section" id="modes">
+    <section class="section" style="background: #fff; border-top: 1px solid var(--border);">
         <div class="section-h">
-            <h2>選擇最適合您的<span>賦能場域</span></h2>
-            <p>無論您在世界哪個角落，我們都能為您部署 AI 大腦。</p>
+            <h2>三大核心引擎，<span>徹底解放您的時間</span></h2>
+            <p>您買下的不只是工具，而是每天幫您節省 8 小時瑣碎工作的數位特種部隊。</p>
         </div>
-        <div class="mode-grid">
-            <div class="mode-card">
-                <h4>全球無界視訊 (Remote)</h4>
-                <p>打破地理限制的高效數位協作。適合行程滿檔、身處海外的經理人。</p>
-                <div class="price-logic">
-                    <i class="bi bi-info-circle"></i> <strong>計費優勢：</strong> 僅收標準教學時數費。免收任何額外差旅與時間成本。
+
+        <div class="sys-grid">
+            <div class="sys-card" style="border-top: 5px solid var(--accent-blue);">
+                <div class="video-box"><i class="bi bi-broadcast"></i><span>公域流量收割・實戰影片</span></div>
+                <div class="sys-body">
+                    <h3>Meta 爆款內容引擎</h3>
+                    <p>自動追蹤全網時事與熱門新聞。AI 會以您的人設精準發文，在 FB/IG/Threads 為您大規模捕捉潛在客戶的注意力。</p>
                 </div>
             </div>
-            <div class="mode-card premium">
-                <h4>實體沉浸私塾 (In-Person)</h4>
-                <p>親赴指定商務空間。面對面的手把手調教，適合追求極致互動感的團隊。</p>
-                <div class="price-logic">
-                    <i class="bi bi-info-circle"></i> <strong>計費規則：</strong> 除教學時數外，另依實際地點加收「顧問差旅時數費」與交通規費。
+            <div class="sys-card" style="border-top: 5px solid var(--line-green);">
+                <div class="video-box"><i class="bi bi-wallet2"></i><span>私域變現轉化・實戰影片</span></div>
+                <div class="sys-body">
+                    <h3>LINE OA 智能成交業務</h3>
+                    <p>承接所有湧入的流量。24 小時不休息地進行意圖識別、問題解答與主動逼單。讓您的 LINE 不只是聊天，更是提款機。</p>
+                </div>
+            </div>
+            <div class="sys-card" style="border-top: 5px solid var(--text-main);">
+                <div class="video-box"><i class="bi bi-cpu"></i><span>高階 AI Agent 客製</span></div>
+                <div class="sys-body">
+                    <h3>企業級大腦定製 (SaaS)</h3>
+                    <p>如需數據戰情室、Telegram 遠端審核或庫存通報，我們能為您的 Agent 掛載專屬 Tools，讓 AI 真正參與決策。</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="cta" id="contact">
+    <section class="cta">
         <div class="cta-inner">
-            <h2>只要你有「想法」，我們就把它變成現實。</h2>
-            <p>不要讓您的系統夢想停留在草稿。加入官方 LINE，預約 1 對 1 諮詢與系統 Demo，開啟您的 AI 協作世界。</p>
-            <a href="https://lin.ee/wZAv8yY" target="_blank" class="btn-lg-line"><i class="fab fa-line"></i> 加入 LINE 智能官方客服</a>
-            <p style="margin-top:25px; font-size:0.9rem;">或搜尋LINEID: <strong>@178maxda</strong></p>
+            <h2 style="font-size: 3rem; font-weight: 900; margin-bottom: 20px;">這不是一個選項，<br>這是一張通往<span>未來商業的門票。</span></h2>
+            <p style="font-size: 1.25rem;">別再讓技術細節磨損您的鬥志。現在就與我們聯繫，讓我們幫您把點子，變成這輩子最穩定的生產線。</p>
+            
+            <a href="https://lin.ee/wZAv8yY" target="_blank" class="btn-lg-line">
+                <i class="fab fa-line"></i> 立即開啟您的夢想閉環
+            </a>
+            
+            <div style="margin-top: 40px; display: flex; justify-content: center; gap: 40px; color: var(--text-sub); font-weight: bold;">
+                <span><i class="fa-solid fa-check"></i> 不限產業</span>
+                <span><i class="fa-solid fa-check"></i> 0 技術背景需求</span>
+                <span><i class="fa-solid fa-check"></i> 1對1專屬對接</span>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 品牌解碼室 BrandDecoder Studio. All Rights Reserved.</p>
+        <p>&copy; 2026 Brand Decoder Studio | 品牌解碼室 | 讓夢想在代碼中落地</p>
     </footer>
 
 </body>
